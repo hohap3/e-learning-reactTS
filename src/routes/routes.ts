@@ -10,6 +10,7 @@ import RegisterCoursePage from "pages/RegisteredCoursePage";
 import PersonalMainPage from "pages/PersonalMainPage";
 import AboutPage from "pages/AboutPage";
 import ContactPage from "pages/ContactPage";
+import CoursePage from "pages/CoursePage";
 
 const clientRoute: Route[] = [
   {
@@ -45,6 +46,10 @@ const clientRoute: Route[] = [
       {
         path: "/contact",
         component: ContactPage,
+      },
+      {
+        path: "/courses",
+        component: CoursePage,
       },
     ],
   },

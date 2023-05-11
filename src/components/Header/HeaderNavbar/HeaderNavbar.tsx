@@ -94,7 +94,17 @@ function HeaderNavbar() {
           About
         </NavLink>
       </div>
-      <div className={styles["header__navbar-item"]}>Courses</div>
+      <div className={styles["header__navbar-item"]}>
+        <NavLink
+          to="/courses"
+          className={({ isActive, isPending }) => {
+            return isActive ? "text-[#06bbcc]" : "text-black";
+          }}
+          onClick={() => (document.documentElement.scrollTop = 0)}
+        >
+          Courses
+        </NavLink>
+      </div>
       <div className={styles["header__navbar-item"]}>
         <NavLink
           to="/contact"
