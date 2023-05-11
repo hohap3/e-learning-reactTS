@@ -25,6 +25,7 @@ function CourseItemDetail({ courseItem, onRegister }: Props) {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const divRef = useRef<null | HTMLDivElement>(null);
   const [valueRating, setValueRating] = useState<number>(4.6);
+
   const loginInfo = useAppSelector(selectLoginInfo);
   const { courseId } = useParams();
   const loading = useAppSelector(selectLoadingCourse);

@@ -23,6 +23,7 @@ function CourseItemPage() {
   const [showScrollBtn, setShowScrollBtn] = useState<boolean>(false);
   const accessToken = getLocalStorageData(ACCESS_TOKEN);
   const loginInfo = useAppSelector(selectLoginInfo);
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -97,6 +98,9 @@ function CourseItemPage() {
 
       dispatch(courseAction.doneLoading());
       if (!loading) successMessage();
+      setTimeout(() => {
+        window.location.reload();
+      }, 800);
     } catch (error: any) {
       console.log(error);
       dispatch(courseAction.doneLoading());
