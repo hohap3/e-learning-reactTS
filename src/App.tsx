@@ -1,7 +1,8 @@
 import userApi from "api/userAPI";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppDispatch } from "app/hooks";
 import { CourseItem, ListResponseAccount, Status } from "./models";
 
+import NotFound from "pages/NotFound";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { userAction } from "redux/User/userSlice";
@@ -58,6 +59,8 @@ function App() {
             </Route>
           );
         })}
+
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </>
   );
