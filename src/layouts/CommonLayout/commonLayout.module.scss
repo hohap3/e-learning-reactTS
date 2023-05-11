@@ -1,0 +1,35 @@
+@import "../../SCSS/root.scss";
+
+.commonLayout {
+  h6 {
+    color: $c-primary;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0 1rem;
+    margin-bottom: 10px;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 2px;
+      top: 4px;
+      left: -40px;
+      background-color: $bg-primary;
+      width: calc(100% + 80px);
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 2px;
+      bottom: 5px;
+      left: -60px;
+      background-color: $bg-primary;
+      width: calc(100% + 120px);
+      z-index: -1;
+    }
+  }
+}

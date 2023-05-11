@@ -1,0 +1,12 @@
+@import "../../SCSS/root.scss";
+
+.course-layout-common {
+  margin-top: 74px;
+  height: 16rem;
+  color: $c-white;
+  background-image: url("../../assets/CommonBanner/background-2.jpg");
+  background-position: center bottom;
+  background-size: cover;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}

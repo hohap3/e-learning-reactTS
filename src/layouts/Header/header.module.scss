@@ -1,0 +1,23 @@
+@import "../../SCSS/root.scss";
+
+.header {
+  height: $header-height;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 999;
+
+  background-color: $bg-white;
+  border-bottom: thin solid rgba($color: #000, $alpha: 0.4);
+  box-shadow: 0 2px 4px 4px rgba($color: #000000, $alpha: 0.2);
+  &__content {
+  }
+
+  &__logo {
+    display: flex;
+    color: $bg-primary;
+    align-items: center;
+    gap: 0.6rem;
+  }
+}

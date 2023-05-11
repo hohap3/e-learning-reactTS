@@ -1,0 +1,57 @@
+@import "../../SCSS/root.scss";
+
+.carousel-item {
+  position: relative;
+
+  img {
+    display: block;
+  }
+
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: $bg-overlay-carousel;
+    display: flex;
+    align-items: center;
+  }
+
+  .carousel-item-text {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%);
+    left: 20%;
+  }
+
+  .carousel-action {
+    button.carousel-action-button {
+      padding: 1rem 3rem;
+      text-transform: capitalize;
+      background-color: $bg-white;
+      color: $c-text;
+    }
+
+    button.primary {
+      background-color: $bg-primary;
+      color: $c-white;
+    }
+  }
+
+  .carousel-navigate {
+    button {
+      width: 20px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $c-white;
+      background-color: transparent;
+      border: thin solid $c-white;
+      border-radius: 0;
+      transition: all 0.4s;
+
+      &:hover {
+        background-color: $bg-primary;
+      }
+    }
+  }
+}

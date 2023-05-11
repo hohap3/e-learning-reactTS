@@ -1,0 +1,8 @@
+export enum Status {
+  SUCCESS = 200,
+  CREATE_SUCCESS = 201,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+  FORBIDDEN = 403,
+  SERVER_ERROR = 500,
+}

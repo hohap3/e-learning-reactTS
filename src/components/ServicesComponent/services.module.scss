@@ -1,0 +1,29 @@
+@import "../../SCSS/root.scss";
+
+.service-item {
+  padding: 24px;
+  transform: translateY(0);
+  transition: all 0.5s;
+
+  .service-icon {
+    transition: all 0.5s;
+  }
+
+  .service-text {
+    text-align: center;
+    transition: all 0.5s;
+  }
+
+  &:hover {
+    transform: translateY(-8%);
+    background-color: $bg-primary;
+
+    .service-icon {
+      color: $c-white;
+    }
+
+    .service-text {
+      color: $c-white;
+    }
+  }
+}

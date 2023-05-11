@@ -1,0 +1,35 @@
+@import "../../SCSS/root.scss";
+
+.instructor-item {
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+
+  .instructor-image {
+    overflow: hidden;
+    img {
+      transform: scale(1);
+      transition: all 0.4s;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.08);
+      }
+    }
+  }
+
+  .instructor-contact {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 4px 0;
+    background-color: $bg-instructor;
+    z-index: 10;
+  }
+
+  .instructor-info {
+    background: $bg-instructor;
+  }
+}

@@ -1,0 +1,8 @@
+@import "../../../SCSS/root.scss";
+
+.header__logo {
+  display: flex;
+  color: $bg-primary;
+  align-items: center;
+  gap: 0.6rem;
+}
