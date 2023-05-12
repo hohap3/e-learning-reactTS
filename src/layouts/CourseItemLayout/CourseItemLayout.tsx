@@ -42,8 +42,12 @@ function CourseItemLayout({ courseItem }: Props) {
 
   useEffect(() => {
     function handleErrorImage(e: any) {
+      if (!courseItemRef.current) return;
       const { target } = e;
-      const defaultImagePath = getDefaultImagePath({ width: 449, height: 314 });
+      const defaultImagePath = getDefaultImagePath({
+        width: courseItemRef.current.clientWidth,
+        height: 314,
+      });
 
       target.src = defaultImagePath;
     }

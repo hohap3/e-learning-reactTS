@@ -1,10 +1,32 @@
+import CoursesComp from "components/CoursesComp/CoursesComp";
+import ScrollToTop from "components/ScrollToTopBtn/ScrollToTop";
+import GeneralLayout from "layouts/CourseListLayout/GeneralLayout";
 import WithFooterLayout from "layouts/WithFooter/WithFooterLayout";
-import React from "react";
+import { useEffect, useState } from "react";
 
 function CoursePage() {
+  const [showScrollBtn, setShowScrollBtn] = useState<boolean>(false);
+  useEffect(() => {
+    function handleShowScrollBtn() {
+      setShowScrollBtn(window.scrollY >= 600);
+    }
+
+    window.addEventListener("scroll", handleShowScrollBtn);
+
+    return () => {
+      window.removeEventListener("scroll", handleShowScrollBtn);
+    };
+  }, []);
+
   return (
     <WithFooterLayout>
-      <section className="mt-[74px]">CoursePage</section>
+      <GeneralLayout title="Home" text="Courses">
+        <>
+          <CoursesComp />
+
+          {showScrollBtn && <ScrollToTop />}
+        </>
+      </GeneralLayout>
     </WithFooterLayout>
   );
 }

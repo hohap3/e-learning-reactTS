@@ -25,8 +25,6 @@ function GeneralLayout({ text, title, children }: Props) {
         </div>
       </div>
       <div>{children}</div>
-
-      <Footer />
     </div>
   );
 }
