@@ -1,6 +1,7 @@
 import { useAppDispatch } from "app/hooks";
 import CourseList from "components/CourseList/CourseList";
 import GeneralLayout from "layouts/CourseListLayout/GeneralLayout";
+import WithFooterLayout from "layouts/WithFooter/WithFooterLayout";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { courseAction } from "redux/Course/courseSlice";
@@ -21,9 +22,11 @@ function CourseListPage() {
 
   return (
     <section className="mt-[74px]">
-      <GeneralLayout title="Category" text={categoryId as string}>
-        <CourseList />
-      </GeneralLayout>
+      <WithFooterLayout>
+        <GeneralLayout title="Category" text={categoryId as string}>
+          <CourseList />
+        </GeneralLayout>
+      </WithFooterLayout>
     </section>
   );
 }

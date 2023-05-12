@@ -1,6 +1,12 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { Category, CourseItem, ListParams, Pagination } from "../../models";
+import {
+  Category,
+  CourseItem,
+  ListParams,
+  ListResponse,
+  Pagination,
+} from "../../models";
 import { categoryImage } from "constants/common";
 
 export interface CourseState {
@@ -10,6 +16,7 @@ export interface CourseState {
   filter: ListParams;
   pagination: Pagination;
   popularCourseList: CourseItem[];
+  courseList: CourseItem[];
   selectCourseItem: Partial<CourseItem>;
 }
 
@@ -17,10 +24,17 @@ const initialState: CourseState = {
   loading: false,
   categoryList: [],
   courseListByCategory: [],
-  filter: {},
-  pagination: {},
+  filter: {
+    page: 1,
+    pageSize: 10,
+  },
+  pagination: {
+    currentPage: 1,
+    count: 10,
+  },
   popularCourseList: [],
   selectCourseItem: {},
+  courseList: [],
 };
 
 const courseSlice = createSlice({
@@ -41,6 +55,32 @@ const courseSlice = createSlice({
 
     fetchCourseListCategory(state, action: PayloadAction<string>) {
       state.loading = true;
+    },
+
+    fetchCourseListPagination(state, action: PayloadAction<ListParams>) {
+      state.loading = true;
+    },
+
+    fetchCourseListPaginationSuccess(
+      state,
+      action: PayloadAction<ListResponse<CourseItem>>
+    ) {
+      state.loading = false;
+      state.courseList = action.payload.items;
+      state.pagination = {
+        currentPage: action.payload.currentPage,
+        count: action.payload.count,
+        totalPages: action.payload.totalPages,
+        totalCount: action.payload.totalCount,
+      };
+    },
+
+    fetchCourseListPaginationFailed(state) {
+      state.loading = false;
+    },
+
+    insertFilter(state, action: PayloadAction<ListParams>) {
+      state.filter = action.payload;
     },
 
     fetchCourseListCategorySuccess(state, action: PayloadAction<CourseItem[]>) {
@@ -106,6 +146,10 @@ export const selectLoadingCourse = (state: RootState) => state.course.loading;
 
 export const selectCourseListCategory = (state: RootState) =>
   state.course.courseListByCategory;
+
+export const selectFilter = (state: RootState) => state.course.filter;
+export const selectCourseList = (state: RootState) => state.course.courseList;
+export const selectPagination = (state: RootState) => state.course.pagination;
 
 // reducers
 const courseReducer = courseSlice.reducer;

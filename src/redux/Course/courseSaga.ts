@@ -1,6 +1,6 @@
 import { fork, put, all, call, takeLatest, delay } from "redux-saga/effects";
 import { courseAction } from "./courseSlice";
-import { Category, CourseItem, ListResponse } from "../../models";
+import { Category, CourseItem, ListParams, ListResponse } from "../../models";
 import courseAPI from "api/courseAPI";
 import { getMultipleRandom } from "../../utils";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -52,11 +52,29 @@ function* fetchCourseListCategory(action: PayloadAction<string>) {
   }
 }
 
+function* fetchCourseListByPagination(action: PayloadAction<ListParams>) {
+  try {
+    yield delay(500);
+    const res: ListResponse<CourseItem> = yield call(() =>
+      courseAPI.getCourseListByPage(action.payload)
+    );
+
+    yield put(courseAction.fetchCourseListPaginationSuccess(res));
+    yield put(courseAction.insertFilter(action.payload));
+  } catch (error) {
+    yield put(courseAction.fetchCourseListPaginationFailed());
+  }
+}
+
 function* courseSaga() {
   yield takeLatest(courseAction.fetchCourse.type, fetchCourse);
   yield takeLatest(
     courseAction.fetchCourseListCategory.type,
     fetchCourseListCategory
+  );
+  yield takeLatest(
+    courseAction.fetchCourseListPagination.type,
+    fetchCourseListByPagination
   );
 }
 
