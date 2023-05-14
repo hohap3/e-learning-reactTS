@@ -10,12 +10,12 @@ function About() {
     <section className={`${styles.about} py-[3rem]`}>
       <section className="container mx-auto">
         <section className="grid grid-cols-12 gap-8">
-          <div className="col-span-6 wow fadeInUp" data-wow-delay="0.5s">
+          <div className="col-span-12  lg:col-span-6 fadeInUp">
             <div className={`${styles["about-item"]}`}>
               <img src={about} />
             </div>
           </div>
-          <div className="col-span-6 wow fadeInUp" data-wow-delay="1s">
+          <div className="col-span-12  lg:col-span-6 fadeInUp">
             <div className={`${styles["about-item"]} px-4`}>
               <h6 className="uppercase mb-4">About us</h6>
 

@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import userApi from "api/userAPI";
 import { useAppDispatch } from "app/hooks";
 import { ToastType } from "../../../constants";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,7 @@ import { userAction } from "redux/User/userSlice";
 import Swal from "sweetalert2";
 import {
   CourseItem,
+  CourseItemRegister,
   ListResponse,
   ListResponseAccount,
   SignInParams,
@@ -18,6 +19,7 @@ import {
 import { signInSchema } from "../../../schemas";
 import { saveLocalStorage, toastMessage } from "../../../utils";
 import InputField from "../form-control/InputField";
+import courseAPI from "api/courseAPI";
 
 function FormSignIn() {
   const dispatch = useAppDispatch();
@@ -38,23 +40,36 @@ function FormSignIn() {
   async function handleSignIn(formValues: SignInParams) {
     try {
       const res: UserSignIn = await userApi.signIn(formValues);
+      const res2: CourseItem[] = await courseAPI.getAllCourse({
+        MaNhom: COURSE_GROUP,
+      });
 
       const { accessToken } = res;
-
-      const successMessage = toastMessage(
-        "Sign in successfully!",
-        ToastType.SUCCESS
-      );
-      successMessage();
 
       // save Localstorage
       saveLocalStorage(ACCESS_TOKEN, accessToken);
       const secondRes: ListResponseAccount<CourseItem> =
         await userApi.getUserInfo();
 
-      const { matKhau, ...restResponse } = secondRes;
+      console.log(secondRes);
 
-      dispatch(userAction.fetchLogin(restResponse));
+      const { matKhau, chiTietKhoaHocGhiDanh, ...restResponse } = secondRes;
+
+      const courseListUserRegisterd = res2.filter((course) =>
+        chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
+      );
+
+      dispatch(
+        userAction.fetchLogin({
+          chiTietKhoaHocGhiDanh: courseListUserRegisterd,
+          ...restResponse,
+        })
+      );
+      const successMessage = toastMessage(
+        "Sign in successfully!",
+        ToastType.SUCCESS
+      );
+      successMessage();
 
       navigate("/");
     } catch (error: any) {

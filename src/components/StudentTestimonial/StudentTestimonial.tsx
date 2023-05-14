@@ -21,6 +21,14 @@ function StudentTestimonial() {
         speed={1000}
         autoplay={{ delay: 3000, disableOnInteraction: true }}
         centeredSlides
+        breakpoints={{
+          1024: {
+            slidesPerView: 3,
+          },
+          320: {
+            slidesPerView: 1,
+          },
+        }}
       >
         {userListTestimonial?.map((user, idx) => (
           <SwiperSlide key={idx}>

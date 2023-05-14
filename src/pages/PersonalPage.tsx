@@ -1,20 +1,20 @@
+import userApi from "api/userAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import Personal from "components/Personal/Personal";
 import { ACCESS_TOKEN } from "constants/common";
-import React, { useEffect, useRef } from "react";
+import AuthLayout from "layouts/AuthLayout/AuthLayout";
+import Header from "layouts/Header/Header";
+import WithoutFooter from "layouts/WithoutFooter/WithoutFooter";
+import { useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   selectHasLogin,
   selectLoginInfo,
   userAction,
 } from "redux/User/userSlice";
-import { getLocalStorageData } from "../utils";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import Header from "layouts/Header/Header";
-import userApi from "api/userAPI";
-import { CourseItem, ListResponseAccount } from "../models";
-import WithoutFooter from "layouts/WithoutFooter/WithoutFooter";
-import AuthLayout from "layouts/AuthLayout/AuthLayout";
-import Personal from "components/Personal/Personal";
+import { CourseItem, CourseRegister, ListResponseAccount } from "../models";
+import { getLocalStorageData } from "../utils";
 
 function PersonalPage() {
   const accessToken = getLocalStorageData(ACCESS_TOKEN) ?? null;
@@ -23,7 +23,7 @@ function PersonalPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       if (!accessToken) {
         Swal.fire({
@@ -43,15 +43,11 @@ function PersonalPage() {
           }
         });
         return;
-      } else {
-        const res: ListResponseAccount<CourseItem> =
-          await userApi.getUserInfo();
-        dispatch(userAction.fetchLoginSuccess(res));
       }
     })();
 
     document.documentElement.scrollTop = 0;
-  }, []);
+  }, [accessToken]);
 
   return (
     <WithoutFooter>

@@ -8,10 +8,10 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
 function Personal() {
   return (
-    <div className="h-screen">
-      <div className="grid grid-cols-12 h-screen">
+    <div className="h-full">
+      <div className="grid grid-cols-12 h-full">
         <div className="col-span-2">
-          <div className="border-2 border-r-2 border-t-0 border-l-0 border-b-0 h-screen">
+          <div className="border-2 border-r-2 border-t-0 border-l-0 border-b-0 h-full">
             <nav>
               <NavLink
                 to="/personal-info/home"

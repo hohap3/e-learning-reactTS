@@ -3,7 +3,11 @@ import { RootState } from "./../../app/store";
 import { User, UserSignIn } from "./../../models/user";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { studentImage } from "constants/common";
-import { ListResponseAccount, CourseItem } from "../../models";
+import {
+  ListResponseAccount,
+  CourseItem,
+  CourseItemRegister,
+} from "../../models";
 
 export interface UserState {
   loading: boolean;

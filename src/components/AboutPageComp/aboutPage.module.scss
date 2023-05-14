@@ -55,6 +55,10 @@
       background-color: $bg-white;
       border-radius: 50rem;
       font-weight: 600;
+
+      @media screen and (max-width: 1023px) {
+        padding: 10px 24px;
+      }
     }
   }
 }

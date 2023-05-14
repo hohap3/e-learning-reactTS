@@ -1,2 +1,2 @@
-export * from "./randomCourse";
+export * from "./getRandom";
 export * from "./common";

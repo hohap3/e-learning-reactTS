@@ -31,6 +31,7 @@ function authHOC(WrapComponent: FC<any>) {
           },
           willClose: () => {
             if (timeIntervalId.current) clearInterval(timeIntervalId.current);
+            navigate("/");
           },
         }).then((result) => {
           /* Read more about handling dismissals below */
