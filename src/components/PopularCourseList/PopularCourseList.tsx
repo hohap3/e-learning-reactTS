@@ -14,7 +14,10 @@ function PopularCourseList() {
         {popularCourseList.length > 0 && (
           <div className="grid grid-cols-12 gap-4">
             {popularCourseList.map((courseItem) => (
-              <div key={courseItem.maKhoaHoc} className="col-span-4">
+              <div
+                key={courseItem.maKhoaHoc}
+                className="col-span-6 lg:col-span-4"
+              >
                 <CourseItemLayout courseItem={courseItem} />
               </div>
             ))}

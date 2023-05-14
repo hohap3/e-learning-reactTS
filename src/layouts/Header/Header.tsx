@@ -6,9 +6,10 @@ import HeaderNavbar from "components/Header/HeaderNavbar/HeaderNavbar";
 function Header() {
   return (
     <header className={styles.header}>
-      <section className={`container mx-auto h-full`}>
+      <section className={`container mx-auto h-full px-4 lg:px-0`}>
         <section className="flex items-center justify-between h-full">
           <HeaderLogo />
+
           <HeaderNavbar />
         </section>
       </section>

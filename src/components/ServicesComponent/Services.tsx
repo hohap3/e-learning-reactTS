@@ -12,19 +12,25 @@ function Services() {
     <section className=" py-[3rem] px-[0.75rem]">
       <section className="container mx-auto">
         <section className="grid grid-cols-12 gap-4">
-          <div className="col-span-3 wow fadeInUp" data-wow-delay="0.1s">
+          <div
+            className="col-span-6 md:col-span-6 lg:col-span-3 "
+            data-wow-delay="0.1s"
+          >
             <ServiceItem icon={SchoolIcon} title="Skilled Instructors" />
           </div>
 
-          <div className="col-span-3 fadeInUp" data-wow-delay="0.3s">
+          <div
+            className="col-span-6 md:col-span-6 lg:col-span-3 "
+            data-wow-delay="0.3s"
+          >
             <ServiceItem icon={PublicIcon} title="Online Classes" />
           </div>
 
-          <div className="col-span-3">
+          <div className="col-span-6 md:col-span-6 lg:col-span-3">
             <ServiceItem icon={HouseIcon} title="Home Projects" />
           </div>
 
-          <div className="col-span-3">
+          <div className="col-span-6 md:col-span-6 lg:col-span-3">
             <ServiceItem icon={LibraryBooksIcon} title="Book Library" />
           </div>
         </section>

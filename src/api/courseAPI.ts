@@ -43,6 +43,11 @@ const courseAPI = {
       },
     });
   },
+
+  getAllCourse(params: ListParams): Promise<CourseItem[]> {
+    const url = `QuanLyKhoaHoc/LayDanhSachKhoaHoc`;
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default courseAPI;

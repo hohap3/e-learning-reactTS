@@ -1,12 +1,19 @@
 import userApi from "api/userAPI";
 import { useAppDispatch } from "app/hooks";
-import { CourseItem, ListResponseAccount, Status } from "./models";
+import {
+  CourseItem,
+  CourseItemRegister,
+  ListResponseAccount,
+  Status,
+} from "./models";
 
 import NotFound from "pages/NotFound";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { userAction } from "redux/User/userSlice";
 import { clientRoute, personalRoute } from "routes/routes";
+import courseAPI from "api/courseAPI";
+import { COURSE_GROUP } from "constants/common";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -14,12 +21,22 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const res: ListResponseAccount<CourseItem> =
-          await userApi.getUserInfo();
+        const res = await userApi.getUserInfo();
+        const res2: CourseItem[] = await courseAPI.getAllCourse({
+          MaNhom: COURSE_GROUP,
+        });
 
-        const { matKhau, ...restProps } = res;
+        const { matKhau, chiTietKhoaHocGhiDanh, ...restProps } = res;
+        const courseListUserRegisterd = res2.filter((course) =>
+          chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
+        );
 
-        dispatch(userAction.fetchLoginSuccess(restProps));
+        dispatch(
+          userAction.fetchLoginSuccess({
+            chiTietKhoaHocGhiDanh: courseListUserRegisterd,
+            ...restProps,
+          })
+        );
       } catch (error: any) {
         const { status } = error.response;
         if (status === Status.UNAUTHORIZED) return;

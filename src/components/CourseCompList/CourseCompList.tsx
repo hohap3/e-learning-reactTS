@@ -14,9 +14,9 @@ function CourseCompList() {
   if (courseList.length < 1 || loading) return <LoadingCircle />;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-12 gap-4">
       {courseList.map((courseItem) => (
-        <div className="col-span-1">
+        <div className="col-span-6 lg:col-span-4">
           <CourseItemLayout courseItem={courseItem} />
         </div>
       ))}

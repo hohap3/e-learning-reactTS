@@ -26,3 +26,14 @@ export interface CourseItem {
   nguoiTao: AdminCreate;
   danhMucKhoaHoc: CourseCategory;
 }
+
+export interface CourseItemRegister {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  biDanh: string;
+  moTa: string;
+  luotXem: number;
+  hinhAnh: string;
+  ngayTao: string;
+  danhGia: number;
+}

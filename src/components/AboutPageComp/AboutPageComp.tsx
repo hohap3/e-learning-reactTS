@@ -26,16 +26,16 @@ function AboutPageComp() {
   return (
     <section className={`${styles["about-page"]}`}>
       <div className={`${styles["about-page-ceo"]}`}>
-        <div className="container mx-auto">
+        <div className="container mx-auto lg:px-0 px-4">
           <div className="grid grid-cols-12 gap-0">
-            <div className="col-span-3">
+            <div className="col-span-6 lg:col-span-3">
               <div className={`${styles["about-page-ceo-item"]}`}>
                 <img src={Ceo} alt="CEO" className="rounded" />
               </div>
             </div>
-            <div className="col-span-9">
+            <div className="col-span-6 lg:col-span-9">
               <div
-                className={`${styles["about-page-ceo-item"]} py-[64px] px-[48px]`}
+                className={`${styles["about-page-ceo-item"]} px-[20px] py-[0.4rem] lg:py-[64px] lg:px-[48px]`}
               >
                 <h3 className="text-[1.4rem] font-semibold">
                   Message From CEO
@@ -70,7 +70,7 @@ function AboutPageComp() {
                 </h2>
 
                 <div className="grid grid-cols-12 gap-12 z-10 relative mt-12 py-12">
-                  <div className="col-span-3">
+                  <div className="col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -82,7 +82,7 @@ function AboutPageComp() {
                         {({ countUpRef }) => (
                           <div>
                             <span className="text-5xl" ref={countUpRef}></span>
-                            <p className="text-xl font-semibold">
+                            <p className="text-base lg:text-xl font-semibold">
                               Cases Solved
                             </p>
                           </div>
@@ -90,7 +90,7 @@ function AboutPageComp() {
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -102,7 +102,7 @@ function AboutPageComp() {
                         {({ countUpRef }) => (
                           <div>
                             <span className="text-5xl" ref={countUpRef}></span>
-                            <p className="text-xl font-semibold">
+                            <p className="text-base lg:text-xl font-semibold">
                               Expert Teacher
                             </p>
                           </div>
@@ -110,7 +110,7 @@ function AboutPageComp() {
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -122,13 +122,15 @@ function AboutPageComp() {
                         {({ countUpRef }) => (
                           <div>
                             <span className="text-5xl" ref={countUpRef}></span>
-                            <p className="text-xl font-semibold">Students</p>
+                            <p className="text-base lg:text-xl font-semibold">
+                              Students
+                            </p>
                           </div>
                         )}
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -140,7 +142,7 @@ function AboutPageComp() {
                         {({ countUpRef }) => (
                           <div>
                             <span className="text-5xl" ref={countUpRef}></span>
-                            <p className="text-xl font-semibold">
+                            <p className="text-base lg:text-xl font-semibold">
                               Satisfied clients
                             </p>
                           </div>
@@ -157,11 +159,16 @@ function AboutPageComp() {
 
       <div className={`${styles["about-page-contact"]}`}>
         <div className="container mx-auto">
-          <div className="flex gap-2 justify-between">
-            <p className="text-3xl">
+          <div className="flex gap-2 justify-between items-center px-4 lg:px-0">
+            <p className="text-xl lg:text-3xl">
               If you have any query related investment... we are available 24/7
             </p>
-            <button onClick={() => navigate("/contact")}>Contact Us</button>
+            <button
+              className="text-sm lg:text-xl"
+              onClick={() => navigate("/contact")}
+            >
+              Contact Us
+            </button>
           </div>
         </div>
       </div>

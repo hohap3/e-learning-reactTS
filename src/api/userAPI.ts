@@ -1,6 +1,7 @@
 import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
 import {
   CourseItem,
+  CourseItemRegister,
   ListResponseAccount,
   ResponseUpdateUserInfo,
   SignInParams,
@@ -32,7 +33,7 @@ const userApi = {
   },
 
   getUserInfo(): Promise<ListResponseAccount<CourseItem>> {
-    const url = `/QuanLyNguoiDung/ThongTinNguoiDung`;
+    const url = `QuanLyNguoiDung/ThongTinNguoiDung`;
     const accessToken = getLocalStorageData(ACCESS_TOKEN);
 
     return axiosClient.post(url, null, {

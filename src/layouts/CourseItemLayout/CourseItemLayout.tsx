@@ -134,19 +134,21 @@ function CourseItemLayout({ courseItem }: Props) {
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center">
                 <PersonIcon sx={{ color: "#06bbcc" }} />
-                {limitWordLength(hoTen, 10)}
+                <p className="text-[12px] lg:text-base">
+                  {limitWordLength(hoTen, 10)}
+                </p>
               </div>
             </div>
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center border border-x-2 border-t-0 border-b-0">
                 <WatchLaterIcon sx={{ color: "#06bbcc" }} />
-                5.0 Hrs
+                <p className="text-[12px] lg:text-base">5.0 Hrs</p>
               </div>
             </div>
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center">
                 <RemoveRedEyeIcon sx={{ color: "#06bbcc" }} />
-                {luotXem} Views
+                <p className="text-[12px] lg:text-base">{luotXem} Views</p>
               </div>
             </div>
           </div>

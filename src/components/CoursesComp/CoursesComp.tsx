@@ -57,7 +57,7 @@ function CoursesComp() {
           <h2 className="uppercase text-4xl"> Course List </h2>
         </div>
 
-        <div className={`${styles["courses-container"]}`}>
+        <div className={`${styles["courses-container"]} px-4 lg:px-0`}>
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12">
               <div className={`${styles["courses-item"]}`}>
