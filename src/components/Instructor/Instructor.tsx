@@ -42,7 +42,7 @@ function Instructor() {
       <section className="container mx-auto">
         <div className="grid grid-cols-12 gap-4">
           {mapInstructor.map(({ id, name, description, imgSrc }) => (
-            <div key={id} className="lg:col-span-3 col-span-6">
+            <div key={id} className="lg:col-span-3 md:col-span-6 col-span-12">
               <InstructorItem
                 name={name}
                 imgSrc={imgSrc}

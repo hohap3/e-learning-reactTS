@@ -28,12 +28,12 @@ function AboutPageComp() {
       <div className={`${styles["about-page-ceo"]}`}>
         <div className="container mx-auto lg:px-0 px-4">
           <div className="grid grid-cols-12 gap-0">
-            <div className="col-span-6 lg:col-span-3">
+            <div className="col-span-12 md:col-span-6 lg:col-span-3">
               <div className={`${styles["about-page-ceo-item"]}`}>
                 <img src={Ceo} alt="CEO" className="rounded" />
               </div>
             </div>
-            <div className="col-span-6 lg:col-span-9">
+            <div className="col-span-12 md:col-span-6 lg:col-span-9">
               <div
                 className={`${styles["about-page-ceo-item"]} px-[20px] py-[0.4rem] lg:py-[64px] lg:px-[48px]`}
               >
@@ -57,20 +57,22 @@ function AboutPageComp() {
       </div>
       <div className={`${styles["about-page-count-up"]}`}>
         <div className={`${styles["about-page-count-up-bg"]}`}>
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-2 md:px-4">
             <div className="flex gap-1 my-20 relative z-10">
-              <CheckCircleOutlineIcon
-                sx={{ fontSize: "3.4rem", color: "#fddd53" }}
-              />
+              <div className="hidden md:block">
+                <CheckCircleOutlineIcon
+                  sx={{ fontSize: "3.4rem", color: "#fddd53" }}
+                />
+              </div>
               <div>
-                <h2 className="text-5xl text-[#fddd53] font-semibold">
+                <h2 className="text-3xl md:text-5xl text-[#fddd53] font-semibold">
                   Take the right step,
                   <br></br>
                   <span className="text-white">do the big things.</span>
                 </h2>
 
-                <div className="grid grid-cols-12 gap-12 z-10 relative mt-12 py-12">
-                  <div className="col-span-6 md:col-span-3">
+                <div className="grid grid-cols-12 gap-12 z-10 relative mt-12 py-12 px-2 md:px-0">
+                  <div className="col-span-5 md:col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -90,7 +92,7 @@ function AboutPageComp() {
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-6 md:col-span-3">
+                  <div className="col-span-5 md:col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -110,7 +112,7 @@ function AboutPageComp() {
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-6 md:col-span-3">
+                  <div className="col-span-5 md:col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -130,7 +132,7 @@ function AboutPageComp() {
                       </CountUp>
                     </div>
                   </div>
-                  <div className="col-span-6 md:col-span-3">
+                  <div className="col-span-5 md:col-span-6 md:col-span-3">
                     <div className={`${styles["about-page-count-up-item"]}`}>
                       <CountUp
                         start={0}
@@ -160,7 +162,7 @@ function AboutPageComp() {
       <div className={`${styles["about-page-contact"]}`}>
         <div className="container mx-auto">
           <div className="flex gap-2 justify-between items-center px-4 lg:px-0">
-            <p className="text-xl lg:text-3xl">
+            <p className="text-base md:text-xl lg:text-3xl">
               If you have any query related investment... we are available 24/7
             </p>
             <button

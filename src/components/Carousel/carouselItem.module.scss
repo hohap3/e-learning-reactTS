@@ -28,6 +28,10 @@
       text-transform: capitalize;
       background-color: $bg-white;
       color: $c-text;
+
+      @media screen and (max-width: 763px) {
+        padding: 0.6rem;
+      }
     }
 
     button.primary {

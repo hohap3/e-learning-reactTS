@@ -16,7 +16,7 @@ function PopularCourseList() {
             {popularCourseList.map((courseItem) => (
               <div
                 key={courseItem.maKhoaHoc}
-                className="col-span-6 lg:col-span-4"
+                className="col-span-12 md:col-span-6 lg:col-span-4"
               >
                 <CourseItemLayout courseItem={courseItem} />
               </div>

@@ -14,7 +14,9 @@ function AuthLayout({ children }: Props) {
     <section className={`${styles.auth}`}>
       <div className={`${styles["auth-overlay"]}`}></div>
       <div className={`${styles["auth-detail"]}`}>
-        <div className="bg-[#fff] w-[700px] p-4 rounded">{children}</div>
+        <div className="bg-[#fff] w-[410px] md:w-[700px] p-4 rounded">
+          {children}
+        </div>
       </div>
     </section>
   );

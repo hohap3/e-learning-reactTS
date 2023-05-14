@@ -20,7 +20,7 @@ function CategoryList() {
           categoryMapList.map((category, idx) => {
             if (idx < 1)
               return (
-                <div key={idx} className="col-span-4 row-span-2">
+                <div key={idx} className="col-span-6 md:col-span-4 row-span-2">
                   <CategoryItem category={category} />
                 </div>
               );
@@ -28,9 +28,9 @@ function CategoryList() {
               return (
                 <div
                   key={idx}
-                  className={clsx(`row-span-2`, {
-                    ["col-span-2"]: idx < 3,
-                    ["col-span-4 lg:col-span-2"]: idx === 3,
+                  className={clsx(`col-span-6 row-span-2`, {
+                    ["md:col-span-2"]: idx < 3,
+                    ["md:col-span-4 lg:col-span-2"]: idx === 3,
                   })}
                 >
                   <CategoryItem category={category} />
@@ -40,7 +40,7 @@ function CategoryList() {
               return (
                 <div
                   key={idx}
-                  className="col-span-3 lg:col-span-1 lg:row-span-2"
+                  className="col-span-6 md:col-span-3 lg:col-span-1 lg:row-span-2"
                 >
                   <CategoryItem category={category} />
                 </div>

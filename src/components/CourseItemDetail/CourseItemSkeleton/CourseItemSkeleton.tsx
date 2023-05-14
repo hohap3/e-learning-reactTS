@@ -18,7 +18,7 @@ function CourseDetailSkeleton() {
         <div className="container mx-auto">
           <div className={`${styles["course-item-container"]}`}>
             <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-8">
+              <div className="col-span-12 md:col-span-8">
                 <div className={`${styles["course-item-grid-item"]}`}>
                   <h4 className="text-[#06bbcc] font-medium text-xl">
                     <Skeleton
@@ -92,7 +92,7 @@ function CourseDetailSkeleton() {
                 </div>
               </div>
 
-              <div className="col-span-4" ref={divRef}>
+              <div className="col-span-12 md:col-span-4" ref={divRef}>
                 <div
                   className={`${styles["course-item-grid-item"]} bg-white border border-2 border-white rounded`}
                 >

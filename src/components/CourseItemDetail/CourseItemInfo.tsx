@@ -8,7 +8,7 @@ import Volkswagen from "assets/companies/volkswagen-dark.svg";
 
 function CourseItemInfo() {
   return (
-    <section className="my-8">
+    <section className="my-8 px-4 lg:px-0">
       <div className="container mx-auto">
         <div className="mb-8 rounded border border-2 p-6">
           <h2 className="font-semibold mb-4 text-xl">What you'll learn</h2>
@@ -44,7 +44,7 @@ function CourseItemInfo() {
             trusted by businesses worldwide
           </p>
 
-          <nav className="flex items-center gap-4 mt-4">
+          <nav className="flex items-center gap-4 mt-4 flex-col md:flex-row">
             <img src={Box} />
             <img src={EventBrite} />
             <img src={Nasdaq} />

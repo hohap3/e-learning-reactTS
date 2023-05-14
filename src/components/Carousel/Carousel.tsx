@@ -11,7 +11,7 @@ import carousel2 from "assets/carousel/carousel-2.jpg";
 
 function Carousel() {
   return (
-    <div className="mt-[74px] mb-[3rem]">
+    <div className="mt-[74px] mb-[3rem] md:h-auto">
       <Swiper
         spaceBetween={0}
         slidesPerView={1}

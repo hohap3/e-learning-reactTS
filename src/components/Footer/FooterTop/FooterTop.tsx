@@ -21,7 +21,7 @@ function FooterTop() {
   return (
     <section className={`${styles["footer__top"]}`}>
       <section className="grid grid-cols-12 gap-8">
-        <div className="col-span-6  lg:col-span-3">
+        <div className="col-span-12 md:col-span-6  lg:col-span-3">
           <div className="footer__item">
             <h3 className="capitalize text-white text-2xl mb-4">Quick link</h3>
             <nav>
@@ -67,7 +67,7 @@ function FooterTop() {
             </nav>
           </div>
         </div>
-        <div className="col-span-6  lg:col-span-3">
+        <div className="col-span-12 md:col-span-6  lg:col-span-3">
           <div className="footer__item">
             <h3 className="capitalize text-white text-2xl mb-4">Contact</h3>
             <nav>
@@ -105,7 +105,7 @@ function FooterTop() {
             </div>
           </div>
         </div>
-        <div className="col-span-6  lg:col-span-3 overflow-hidden">
+        <div className="col-span-12 md:col-span-6  lg:col-span-3 overflow-hidden">
           <div className="footer__item">
             <h3 className="capitalize text-white text-2xl mb-4">Gallery</h3>
             <nav className="flex items-center gap-4 flex-wrap">
@@ -134,7 +134,7 @@ function FooterTop() {
             </nav>
           </div>
         </div>
-        <div className="col-span-6  lg:col-span-3">
+        <div className="col-span-12 md:col-span-6  lg:col-span-3">
           <div className="footer__item text-white ">
             <h3 className="capitalize text-2xl mb-4">Newsletter</h3>
             <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>

@@ -10,12 +10,12 @@ function About() {
     <section className={`${styles.about} py-[3rem]`}>
       <section className="container mx-auto">
         <section className="grid grid-cols-12 gap-8">
-          <div className="col-span-12  lg:col-span-6 fadeInUp">
+          <div className="col-span-12 lg:col-span-6 fadeInUp">
             <div className={`${styles["about-item"]}`}>
               <img src={about} />
             </div>
           </div>
-          <div className="col-span-12  lg:col-span-6 fadeInUp">
+          <div className="col-span-12 lg:col-span-6 fadeInUp">
             <div className={`${styles["about-item"]} px-4`}>
               <h6 className="uppercase mb-4">About us</h6>
 
@@ -34,7 +34,7 @@ function About() {
               </p>
 
               <div className="grid grid-cols-12">
-                <div className="col-span-6">
+                <div className=" col-span-12 md:col-span-6">
                   <nav>
                     <div className="flex gap-3 mb-3">
                       <ArrowForwardIcon sx={{ color: "#06bbcc" }} />
@@ -54,7 +54,7 @@ function About() {
                     </div>
                   </nav>
                 </div>
-                <div className="col-span-6">
+                <div className="col-span-12 md:col-span-6">
                   <nav>
                     <div className="flex gap-3 mb-3">
                       <ArrowForwardIcon sx={{ color: "#06bbcc" }} />

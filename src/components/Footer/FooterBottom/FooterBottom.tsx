@@ -7,8 +7,8 @@ function FooterBottom() {
       className={`${styles["footer__bottom"]} border-t-2 border-c-[#ffffff1a]`}
     >
       <section className="py-6">
-        <div className="flex items-center justify-between text-white">
-          <p>
+        <div className="flex items-center justify-between text-white flex-col gap-6 md:gap-0 md:flex-row">
+          <p className="text-center md:text-left">
             &copy; eLEARNING,
             <span className="capitalize">All Right Reserved</span>
             .Design by HTMLCodex

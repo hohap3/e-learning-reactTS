@@ -114,7 +114,7 @@ function CourseItemLayout({ courseItem }: Props) {
         </div>
       </div>
       <div className={`${styles["course-item-detail"]}`}>
-        <div className="px-6 pt-6 text-center">
+        <div className="px-2 pt-2 lg:px-6 lg:pt-6 text-center">
           <div className={`${styles["course-item-ranting"]} my-2`}>
             <Rating
               value={value}
@@ -124,7 +124,7 @@ function CourseItemLayout({ courseItem }: Props) {
             />
           </div>
 
-          <h2 className="capitalize text-xl font-medium">
+          <h2 className="capitalize text-xl font-medium h-[56px]">
             {limitWordLength(tenKhoaHoc, 36)}
           </h2>
           <p> Date: {ngayTao}</p>
@@ -133,7 +133,9 @@ function CourseItemLayout({ courseItem }: Props) {
           <div className="grid grid-cols-12 gap-0 border border-t-2">
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center">
-                <PersonIcon sx={{ color: "#06bbcc" }} />
+                <div className={`${styles["course-item-footer-icon"]}`}>
+                  <PersonIcon sx={{ color: "#06bbcc" }} />
+                </div>
                 <p className="text-[12px] lg:text-base">
                   {limitWordLength(hoTen, 10)}
                 </p>
@@ -141,13 +143,17 @@ function CourseItemLayout({ courseItem }: Props) {
             </div>
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center border border-x-2 border-t-0 border-b-0">
-                <WatchLaterIcon sx={{ color: "#06bbcc" }} />
+                <div className={`${styles["course-item-footer-icon"]}`}>
+                  <WatchLaterIcon sx={{ color: "#06bbcc" }} />
+                </div>
                 <p className="text-[12px] lg:text-base">5.0 Hrs</p>
               </div>
             </div>
             <div className="col-span-4">
               <div className="flex items-center gap-2 py-2 justify-center">
-                <RemoveRedEyeIcon sx={{ color: "#06bbcc" }} />
+                <div className={`${styles["course-item-footer-icon"]}`}>
+                  <RemoveRedEyeIcon sx={{ color: "#06bbcc" }} />
+                </div>
                 <p className="text-[12px] lg:text-base">{luotXem} Views</p>
               </div>
             </div>
