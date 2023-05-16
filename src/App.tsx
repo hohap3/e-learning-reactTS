@@ -16,20 +16,19 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const res = await userApi.getUserInfo();
-      const res2: CourseItem[] = await courseAPI.getAllCourse({
-        MaNhom: COURSE_GROUP,
-      });
-
-      const { matKhau, chiTietKhoaHocGhiDanh, ...restProps } = res;
-      const courseListUserRegisterd = res2.filter((course) =>
-        chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
-      );
-
       try {
+        const res = await userApi.getUserInfo();
+        // const res2: CourseItem[] = await courseAPI.getAllCourse({
+        //   MaNhom: COURSE_GROUP,
+        // });
+
+        const { matKhau, chiTietKhoaHocGhiDanh, ...restProps } = res;
+        // const courseListUserRegisterd = res2.filter((course) =>
+        //   chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
+        // );
         dispatch(
           userAction.fetchLoginSuccess({
-            chiTietKhoaHocGhiDanh: courseListUserRegisterd,
+            chiTietKhoaHocGhiDanh: [],
             ...restProps,
           })
         );
