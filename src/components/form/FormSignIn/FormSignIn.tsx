@@ -1,17 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import userApi from "api/userAPI";
 import { useAppDispatch } from "app/hooks";
-import { ToastType } from "../../../constants";
-import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
+import { ACCESS_TOKEN } from "constants/common";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { userAction } from "redux/User/userSlice";
 import Swal from "sweetalert2";
+import { ToastType } from "../../../constants";
 import {
   CourseItem,
-  CourseItemRegister,
-  ListResponse,
   ListResponseAccount,
   SignInParams,
   UserSignIn,
@@ -19,7 +17,6 @@ import {
 import { signInSchema } from "../../../schemas";
 import { saveLocalStorage, toastMessage } from "../../../utils";
 import InputField from "../form-control/InputField";
-import courseAPI from "api/courseAPI";
 
 function FormSignIn() {
   const dispatch = useAppDispatch();
@@ -40,10 +37,6 @@ function FormSignIn() {
   async function handleSignIn(formValues: SignInParams) {
     try {
       const res: UserSignIn = await userApi.signIn(formValues);
-      const res2: CourseItem[] = await courseAPI.getAllCourse({
-        MaNhom: COURSE_GROUP,
-      });
-
       const { accessToken } = res;
 
       // save Localstorage
@@ -51,17 +44,11 @@ function FormSignIn() {
       const secondRes: ListResponseAccount<CourseItem> =
         await userApi.getUserInfo();
 
-      console.log(secondRes);
-
       const { matKhau, chiTietKhoaHocGhiDanh, ...restResponse } = secondRes;
-
-      const courseListUserRegisterd = res2.filter((course) =>
-        chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
-      );
 
       dispatch(
         userAction.fetchLogin({
-          chiTietKhoaHocGhiDanh: courseListUserRegisterd,
+          chiTietKhoaHocGhiDanh: [],
           ...restResponse,
         })
       );
