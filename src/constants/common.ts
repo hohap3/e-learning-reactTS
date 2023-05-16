@@ -46,3 +46,5 @@ export const UpdateInfoProps = [
   "maNhom",
   "email",
 ];
+
+export const IS_ADMIN = "IS_ADMIN";

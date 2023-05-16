@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import userApi from "api/userAPI";
 import { useAppDispatch } from "app/hooks";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, IS_ADMIN } from "constants/common";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,6 +56,8 @@ function FormSignIn() {
         await userApi.getUserInfo();
 
       const { matKhau, chiTietKhoaHocGhiDanh, ...restResponse } = secondRes;
+      const { maLoaiNguoiDung } = restResponse;
+      if (maLoaiNguoiDung === "GV") saveLocalStorage(IS_ADMIN, true);
 
       dispatch(
         userAction.fetchLogin({

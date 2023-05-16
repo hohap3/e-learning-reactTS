@@ -8,7 +8,7 @@ import {
   userAction,
 } from "redux/User/userSlice";
 import { getLocalStorageData, toastMessage } from "../../../utils";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, IS_ADMIN } from "constants/common";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useRef, useState } from "react";
@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { ToastType } from "../../../constants";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 function HeaderNavbar() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function HeaderNavbar() {
   const navbarLoginNav = useRef<null | HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const isAdmin = getLocalStorageData(IS_ADMIN);
 
   function moveToSignIn() {
     document.documentElement.scrollTop = 0;
@@ -41,9 +43,6 @@ function HeaderNavbar() {
     const hasReachHeight = navbarLoginNav.current.clientHeight === 118;
     if (hasReachHeight) navbarLoginNav.current.style.overflowY = "scroll";
   }
-
-  // #d33
-  // #3085d6
 
   function handleLogout() {
     Swal.fire({
@@ -146,10 +145,21 @@ function HeaderNavbar() {
           <div
             className={clsx(`${styles["header__navbar-item-login-overlay"]}`)}
           ></div>
+
           <div
             ref={navbarLoginNav}
             className={`${styles["header__navbar-item-login-nav"]}`}
           >
+            {isAdmin && (
+              <button
+                className="flex gap-2 mb-4"
+                onClick={() => navigate("/admin/home")}
+              >
+                <AdminPanelSettingsIcon />
+                Admin's Page
+              </button>
+            )}
+
             <button
               className="flex gap-2 mb-4"
               onClick={() => navigate("/personal-info/home")}

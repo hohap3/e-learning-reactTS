@@ -73,8 +73,6 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-
-      max-height: 40vh;
       z-index: 10;
       border-radius: 0 0 2px 2px;
       display: none;
@@ -89,7 +87,7 @@
 
   &-item-login.open {
     .header__navbar-item-login-nav {
-      display: block;
+      display: flex;
     }
 
     .header__navbar-item-login-overlay {

@@ -11,6 +11,8 @@ import PersonalMainPage from "pages/PersonalMainPage";
 import AboutPage from "pages/AboutPage";
 import ContactPage from "pages/ContactPage";
 import CoursePage from "pages/CoursePage";
+import AdminMainPage from "pages/admin/AdminMainPage";
+import AdminHomePage from "pages/admin/AdminHomePage";
 
 const clientRoute: Route[] = [
   {
@@ -50,6 +52,19 @@ const clientRoute: Route[] = [
       {
         path: "/courses",
         component: CoursePage,
+      },
+    ],
+  },
+];
+
+export const adminRoutes: Route[] = [
+  {
+    path: "/admin",
+    component: AdminMainPage,
+    children: [
+      {
+        path: "home",
+        component: AdminHomePage,
       },
     ],
   },
