@@ -34,6 +34,17 @@ function FormSignIn() {
     resolver: yupResolver(signInSchema),
   });
 
+  function submitErrorHandler(error: any) {
+    if (Object.keys(error).length > 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please insert all field",
+      });
+      return;
+    }
+  }
+
   async function handleSignIn(formValues: SignInParams) {
     try {
       const res: UserSignIn = await userApi.signIn(formValues);
@@ -71,7 +82,7 @@ function FormSignIn() {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleSignIn, (error) => console.log(error))}>
+    <form onSubmit={handleSubmit(handleSignIn, submitErrorHandler)}>
       <InputField
         name="taiKhoan"
         control={control}

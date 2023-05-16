@@ -32,6 +32,17 @@ function FormSignUp({ onSubmit }: Props) {
     resolver: yupResolver(signUpSchema),
   });
 
+  function submitErrorHandler(error: any) {
+    if (Object.keys(error).length > 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please insert all field!",
+      });
+      return;
+    }
+  }
+
   async function handleSubmitForm(formValues: SignUpParams) {
     if (!onSubmit) return;
 
@@ -71,9 +82,7 @@ function FormSignUp({ onSubmit }: Props) {
   }, []);
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSubmitForm, (error) => console.log(error))}
-    >
+    <form onSubmit={handleSubmit(handleSubmitForm, submitErrorHandler)}>
       <InputField
         name="taiKhoan"
         control={control}
