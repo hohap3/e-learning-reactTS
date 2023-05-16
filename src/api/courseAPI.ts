@@ -1,6 +1,11 @@
 import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
 import axiosClient from "./axiosClient";
-import { CourseItem, CourseRegister, ListParams } from "../models";
+import {
+  CourseItem,
+  CourseRegister,
+  ListParams,
+  UnregisterCourse,
+} from "../models";
 import { getLocalStorageData } from "../utils";
 
 const courseAPI = {
@@ -47,6 +52,16 @@ const courseAPI = {
   getAllCourse(params: ListParams): Promise<CourseItem[]> {
     const url = `QuanLyKhoaHoc/LayDanhSachKhoaHoc`;
     return axiosClient.get(url, { params });
+  },
+
+  unregisterCourse(data: UnregisterCourse): Promise<string> {
+    const url = `QuanLyKhoaHoc/HuyGhiDanh`;
+    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    return axiosClient.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   },
 };
 

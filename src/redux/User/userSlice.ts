@@ -44,24 +44,33 @@ const userSlice = createSlice({
       state,
       action: PayloadAction<ListResponseAccount<CourseItem>>
     ): void {
-      return;
+      state.loading = true;
     },
 
     fetchLoginSuccess(
       state,
       action: PayloadAction<ListResponseAccount<CourseItem>>
     ) {
+      state.loading = false;
       state.hasLogin = true;
       state.loginInfo = action.payload;
     },
 
     fetchLoginFailed(state) {
       state.hasLogin = false;
+      state.loading = false;
     },
 
     logout(state) {
       state.hasLogin = false;
       state.loginInfo = {};
+    },
+
+    resetRegisteredCourse(state) {
+      state.loginInfo = {
+        ...state.loginInfo,
+        chiTietKhoaHocGhiDanh: [],
+      };
     },
   },
 });
@@ -82,6 +91,7 @@ export const selectUserListTestimonial = createSelector(
 export const selectHasLogin = (state: RootState) => state.user.hasLogin;
 
 export const selectLoginInfo = (state: RootState) => state.user.loginInfo;
+export const selectLoadingUser = (state: RootState) => state.user.loading;
 
 // reducers
 const userReducer = userSlice.reducer;
