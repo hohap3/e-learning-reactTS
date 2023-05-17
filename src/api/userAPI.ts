@@ -8,6 +8,7 @@ import {
   UpdateInfoProps,
   UserSignIn,
   UserSignUp,
+  UserTypeProps,
 } from "../models";
 import axiosClient from "./axiosClient";
 import { getLocalStorageData } from "../utils";
@@ -52,6 +53,11 @@ const userApi = {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+  },
+
+  getUserType(): Promise<UserTypeProps[]> {
+    const url = `QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`;
+    return axiosClient.get(url);
   },
 };
 

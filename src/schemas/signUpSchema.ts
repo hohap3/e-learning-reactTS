@@ -29,12 +29,7 @@ export const signUpSchema = yup.object({
   hoTen: yup
     .string()
     .required("Please insert this field")
-    .matches(FULL_NAME_REGEX, "User name must be characters only!")
-    .test(
-      "check-length",
-      "User name must have at least 2 words",
-      (value) => value.split(" ").filter((item) => item).length > 1
-    ),
+    .matches(FULL_NAME_REGEX, "User name must be characters only!"),
   soDT: yup
     .string()
     .required("Please insert this field")

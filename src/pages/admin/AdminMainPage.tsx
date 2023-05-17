@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 function AdminMainPage() {
   return (
-    <section className="bg-[#000033]">
+    <section className="bg-[#000033] h-full">
       <div className="container mx-auto">
         <AdminHeader />
         <AdminCommonLayout children={<Outlet />} />

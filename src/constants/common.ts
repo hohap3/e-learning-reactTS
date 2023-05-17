@@ -47,4 +47,23 @@ export const UpdateInfoProps = [
   "email",
 ];
 
+export const GROUP_LIST = [
+  {
+    key: "GP01",
+    value: "GP01",
+  },
+  {
+    key: "GP02",
+    value: "GP02",
+  },
+  {
+    key: "GP03",
+    value: "GP03",
+  },
+  {
+    key: "GP04",
+    value: "GP04",
+  },
+];
+
 export const IS_ADMIN = "IS_ADMIN";

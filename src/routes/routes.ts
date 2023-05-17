@@ -13,6 +13,7 @@ import ContactPage from "pages/ContactPage";
 import CoursePage from "pages/CoursePage";
 import AdminMainPage from "pages/admin/AdminMainPage";
 import AdminHomePage from "pages/admin/AdminHomePage";
+import AdminInfoPage from "pages/admin/AdminInfoPage";
 
 const clientRoute: Route[] = [
   {
@@ -65,6 +66,10 @@ export const adminRoutes: Route[] = [
       {
         path: "home",
         component: AdminHomePage,
+      },
+      {
+        path: "information",
+        component: AdminInfoPage,
       },
     ],
   },

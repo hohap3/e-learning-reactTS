@@ -1,7 +1,7 @@
 import * as yup from "yup";
-import { FULL_NAME_REGEX, PASSWORD_REGEX, PHONE_REGEX } from "../constants";
+import { FULL_NAME_REGEX, PASSWORD_REGEX, PHONE_REGEX } from "../../constants";
 
-const updateUserSchema = yup.object({
+const updateAdminSchema = yup.object({
   hoTen: yup
     .string()
     .required("Please insert this field!")
@@ -28,6 +28,16 @@ const updateUserSchema = yup.object({
       PHONE_REGEX,
       "Phone number must have 10 numbers and doesn't have any letter"
     ),
+  maLoaiNguoiDung: yup
+    .string()
+    .oneOf(["GV", "HV"], "Please select one of user type"),
+  maNhom: yup
+    .string()
+    .test(
+      "if-user-didn't select",
+      "Please select one of group types",
+      (value) => !!value
+    ),
 });
 
-export default updateUserSchema;
+export default updateAdminSchema;

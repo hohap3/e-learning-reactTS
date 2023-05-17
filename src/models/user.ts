@@ -1,4 +1,4 @@
-import { UserTypeCode } from "./courseItem";
+import { UserTypeCode, UserTypeName } from "./courseItem";
 
 export interface SignInParams {
   taiKhoan: string;
@@ -73,4 +73,9 @@ export interface ResponseUpdateUserInfo extends UpdateInfoProps {
   maLoaiNguoiDungNavigation: null | string;
   hocVienKhoaHoc: [];
   khoaHoc: [];
+}
+
+export interface UserTypeProps {
+  maLoaiNguoiDung: UserTypeCode;
+  tenLoaiNguoiDung: UserTypeName;
 }

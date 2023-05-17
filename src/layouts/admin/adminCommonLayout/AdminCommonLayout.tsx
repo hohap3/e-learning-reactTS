@@ -4,6 +4,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HouseIcon from "@mui/icons-material/House";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LaptopChromebookIcon from "@mui/icons-material/LaptopChromebook";
 import {
   Collapse,
   List,
@@ -25,16 +27,29 @@ interface Props {
   children: ReactNode;
 }
 
+interface OpenList {
+  openAccount: boolean;
+  openUserList: boolean;
+  openCourseList: boolean;
+}
+
 function AdminCommonLayout({ children }: Props) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [{ openAccount, openUserList, openCourseList }, setOpenList] =
+    useState<OpenList>({
+      openAccount: false,
+      openUserList: false,
+      openCourseList: false,
+    });
   const loginInfo = useAppSelector(selectLoginInfo);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { hoTen } = loginInfo;
 
-  function handleClick() {
-    setOpen((prevState) => !prevState);
+  function handleClick(name: string) {
+    setOpenList((prevState) => {
+      return { ...prevState, [name]: !prevState[name as keyof OpenList] };
+    });
   }
 
   function handleLogout() {
@@ -84,21 +99,39 @@ function AdminCommonLayout({ children }: Props) {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
               >
-                <ListItemButton onClick={handleClick}>
+                <ListItemButton onClick={() => handleClick("openAccount")}>
                   <ListItemIcon>
                     <AccountBoxIcon sx={{ color: "#fff", fontSize: "2rem" }} />
                   </ListItemIcon>
                   <ListItemText primary={`${hoTen}`} />
-                  {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  {openAccount ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={openAccount} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4, pb: 2 }}>
-                      <ListItemIcon>
-                        <PersonIcon sx={{ color: "#fff", fontSize: "2rem" }} />
-                      </ListItemIcon>
-                      <ListItemText primary="User's Information" />
-                    </ListItemButton>
+                    <NavLink
+                      to="/admin/information"
+                      className="text-white hover:text-white"
+                    >
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <NavLink
+                          to="/admin/information"
+                          className={({ isActive, isPending }) => {
+                            const commonClass = `flex-1 text-white hover:text-white flex items-center gap-1 p-2`;
+
+                            return isActive
+                              ? `bg-[#000033] ${commonClass}`
+                              : commonClass;
+                          }}
+                        >
+                          <ListItemIcon>
+                            <PersonIcon
+                              sx={{ color: "#fff", fontSize: "2rem" }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText primary="User's Information" />
+                        </NavLink>
+                      </ListItemButton>
+                    </NavLink>
 
                     <ListItemButton
                       sx={{ pl: 4, pb: 2 }}
@@ -126,6 +159,78 @@ function AdminCommonLayout({ children }: Props) {
                 <HouseIcon sx={{ fontSize: "2rem" }} />
                 Home Page
               </NavLink>
+
+              <div>
+                <List
+                  sx={{
+                    width: "100%",
+                    maxWidth: "100%",
+                  }}
+                  component="nav"
+                  aria-labelledby="nested-list-subheader"
+                >
+                  <ListItemButton onClick={() => handleClick("openUserList")}>
+                    <ListItemIcon>
+                      <ManageAccountsIcon
+                        sx={{ color: "#fff", fontSize: "2rem" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={`User Manager`} />
+                    {openUserList ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </ListItemButton>
+                  <Collapse in={openUserList} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="User List" />
+                      </ListItemButton>
+
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="Add New User" />
+                      </ListItemButton>
+
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="Remove User" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </List>
+              </div>
+
+              <div>
+                <List
+                  sx={{
+                    width: "100%",
+                    maxWidth: "100%",
+                  }}
+                  component="nav"
+                  aria-labelledby="nested-list-subheader"
+                >
+                  <ListItemButton onClick={() => handleClick("openCourseList")}>
+                    <ListItemIcon>
+                      <LaptopChromebookIcon
+                        sx={{ color: "#fff", fontSize: "2rem" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={`Course Manager`} />
+                    {openCourseList ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </ListItemButton>
+                  <Collapse in={openCourseList} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="Course List" />
+                      </ListItemButton>
+
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="Add New Course" />
+                      </ListItemButton>
+
+                      <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                        <ListItemText primary="Remove Course" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                </List>
+              </div>
             </div>
           </div>
         </div>

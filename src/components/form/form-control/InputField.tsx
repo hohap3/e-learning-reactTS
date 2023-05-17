@@ -7,9 +7,17 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   control: Control<any>;
   variant?: "outlined" | "filled" | "standard";
   label?: string;
+  isAdmin?: boolean;
 }
 
-function InputField({ name, control, label, variant, ...restProps }: Props) {
+function InputField({
+  name,
+  control,
+  label,
+  variant,
+  isAdmin,
+  ...restProps
+}: Props) {
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { invalid },
@@ -17,7 +25,7 @@ function InputField({ name, control, label, variant, ...restProps }: Props) {
   } = useController({ name, control });
 
   return (
-    <div className="mb-4">
+    <div className="mb-6">
       <TextField
         value={value}
         fullWidth
