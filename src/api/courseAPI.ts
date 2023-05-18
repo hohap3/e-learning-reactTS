@@ -1,15 +1,17 @@
 import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
 import axiosClient from "./axiosClient";
 import {
+  Category,
   CourseItem,
   CourseRegister,
   ListParams,
+  ListResponse,
   UnregisterCourse,
 } from "../models";
 import { getLocalStorageData } from "../utils";
 
 const courseAPI = {
-  getAllCourseCategory() {
+  getAllCourseCategory(): Promise<Category[]> {
     const url = `QuanLyKhoaHoc/LayDanhMucKhoaHoc`;
     return axiosClient.get(url);
   },
@@ -24,7 +26,7 @@ const courseAPI = {
     });
   },
 
-  getCourseListByPage(params: ListParams) {
+  getCourseListByPage(params: ListParams): Promise<ListResponse<CourseItem>> {
     const url = `QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang`;
     return axiosClient.get(url, { params });
   },
