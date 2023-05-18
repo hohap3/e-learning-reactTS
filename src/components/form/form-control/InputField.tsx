@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, TextField } from "@mui/material";
 import React, { InputHTMLAttributes } from "react";
 import { Control, useController } from "react-hook-form";
 
@@ -26,19 +26,21 @@ function InputField({
 
   return (
     <div className="mb-6">
-      <TextField
-        value={value}
-        fullWidth
-        size="small"
-        inputRef={ref}
-        onChange={onChange}
-        onBlur={onBlur}
-        inputProps={restProps}
-        label={label}
-        error={invalid}
-        helperText={errors[name]?.message && `${errors[name]?.message}`}
-        variant={variant}
-      />
+      <FormControl fullWidth>
+        <TextField
+          value={value}
+          fullWidth
+          size="small"
+          inputRef={ref}
+          onChange={onChange}
+          onBlur={onBlur}
+          inputProps={restProps}
+          label={label}
+          error={invalid}
+          helperText={errors[name]?.message && `${errors[name]?.message}`}
+          variant={variant}
+        />
+      </FormControl>
     </div>
   );
 }

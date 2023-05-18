@@ -58,6 +58,7 @@ function HeaderNavbar() {
         const accessToken = getLocalStorageData(ACCESS_TOKEN);
         if (!accessToken) return;
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(IS_ADMIN);
         dispatch(userAction.logout());
 
         const successToast = toastMessage(
