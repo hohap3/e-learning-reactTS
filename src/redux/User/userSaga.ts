@@ -4,8 +4,11 @@ import userApi from "api/userAPI";
 import {
   CourseItem,
   CourseItemRegister,
+  ListParams,
+  ListResponse,
   ListResponseAccount,
   User,
+  UserProps,
   UserSignIn,
 } from "../../models";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -28,9 +31,24 @@ function* fetchLogin(action: PayloadAction<ListResponseAccount<CourseItem>>) {
   yield put(userAction.fetchLoginSuccess(action.payload));
 }
 
+function* fetchUserPagination(action: PayloadAction<ListParams>) {
+  try {
+    const res: ListResponse<UserProps> = yield call(() =>
+      userApi.getUserListPagination(action.payload)
+    );
+
+    yield put(userAction.fetchUserPaginationSuccess(res));
+    yield put(userAction.insertUserPaginationFilter(action.payload));
+  } catch (error) {
+    yield put(userAction.fetchUserPaginationFailed());
+    console.log(error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest(userAction.fetchUserList.type, fetchUserList);
   yield takeLatest(userAction.fetchLogin.type, fetchLogin);
+  yield takeLatest(userAction.fetchUserPagination.type, fetchUserPagination);
 }
 
 export default userSaga;

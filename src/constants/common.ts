@@ -8,6 +8,7 @@ import student1 from "assets/student/testimonial-1.jpg";
 import student2 from "assets/student/testimonial-2.jpg";
 import student3 from "assets/student/testimonial-3.jpg";
 import student4 from "assets/student/testimonial-4.jpg";
+import { GROUP_ITEM } from "models";
 
 export const COURSE_GROUP = "GP01";
 export const categoryImage = [
@@ -47,7 +48,7 @@ export const UpdateInfoProps = [
   "email",
 ];
 
-export const GROUP_LIST = [
+export const GROUP_LIST: GROUP_ITEM[] = [
   {
     key: "GP01",
     value: "GP01",
@@ -63,6 +64,31 @@ export const GROUP_LIST = [
   {
     key: "GP04",
     value: "GP04",
+  },
+
+  {
+    key: "GP05",
+    value: "GP05",
+  },
+
+  {
+    key: "GP06",
+    value: "GP06",
+  },
+
+  {
+    key: "GP07",
+    value: "GP07",
+  },
+
+  {
+    key: "GP08",
+    value: "GP08",
+  },
+
+  {
+    key: "GP09",
+    value: "GP09",
   },
 ];
 

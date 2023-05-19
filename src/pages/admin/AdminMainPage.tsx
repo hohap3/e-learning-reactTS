@@ -41,7 +41,7 @@ function AdminMainPage() {
   }, []);
 
   return (
-    <section className="bg-[#000033] h-full">
+    <section className="bg-[#000033] min-h-screen">
       <div className="container mx-auto">
         <AdminHeader />
         <AdminCommonLayout children={<Outlet />} />

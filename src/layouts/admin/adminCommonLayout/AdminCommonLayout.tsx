@@ -121,7 +121,7 @@ function AdminCommonLayout({ children }: Props) {
                         <NavLink
                           to="/admin/information"
                           className={({ isActive, isPending }) => {
-                            const commonClass = `flex-1 text-white hover:text-white flex items-center gap-1 p-2`;
+                            const commonClass = `flex-1 text-white hover:text-white flex items-center gap-1`;
 
                             return isActive
                               ? `bg-[#000033] ${commonClass}`
@@ -188,9 +188,20 @@ function AdminCommonLayout({ children }: Props) {
                     </ListItemButton>
                     <Collapse in={openUserList} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4, pb: 2 }}>
-                          <ListItemText primary="User List" />
-                        </ListItemButton>
+                        <NavLink
+                          to="/admin/user-list"
+                          className={({ isActive, isPending }) => {
+                            const commonClass = `flex-1 text-white hover:text-white flex items-center gap-1`;
+
+                            return isActive
+                              ? `bg-[#000033] ${commonClass}`
+                              : commonClass;
+                          }}
+                        >
+                          <ListItemButton sx={{ pl: 4, pb: 2 }}>
+                            <ListItemText primary="User List" />
+                          </ListItemButton>
+                        </NavLink>
 
                         <ListItemButton sx={{ pl: 4, pb: 2 }}>
                           <ListItemText primary="Add New User" />

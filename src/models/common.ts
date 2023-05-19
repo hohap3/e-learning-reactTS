@@ -30,6 +30,7 @@ export interface RouteItem {
   path?: string;
   name?: string;
   component: FC<any>;
+  children?: RouteItem[];
 }
 
 export interface Route {
@@ -64,4 +65,9 @@ export interface CommonStyleToast {
   draggable?: boolean;
   progress?: undefined;
   theme?: "light";
+}
+
+export interface GROUP_ITEM {
+  key: string;
+  value: string;
 }

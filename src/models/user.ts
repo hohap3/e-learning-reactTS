@@ -79,3 +79,13 @@ export interface UserTypeProps {
   maLoaiNguoiDung: UserTypeCode;
   tenLoaiNguoiDung: UserTypeName;
 }
+
+export interface UserProps {
+  taiKhoan: string;
+  hoTen: string;
+  soDT: string;
+  maNhom: null;
+  email: string;
+  maLoaiNguoiDung: UserTypeCode;
+  tenLoaiNguoiDung: UserTypeName;
+}

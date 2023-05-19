@@ -37,6 +37,10 @@ function AdminHomePage() {
     return () => {
       dispatch(dashboardAction.resetAllData());
     };
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
   }, []);
 
   return (
@@ -52,9 +56,7 @@ function AdminHomePage() {
           </div>
         </div>
         <div className="col-span-6">
-          <div>
-            <StaticCourseList courseList={popularCourse} />
-          </div>
+          <StaticCourseList courseList={popularCourse} />
         </div>
         <div className="col-span-12">
           <AdminChart />

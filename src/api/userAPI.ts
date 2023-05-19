@@ -2,10 +2,13 @@ import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
 import {
   CourseItem,
   CourseItemRegister,
+  ListParams,
+  ListResponse,
   ListResponseAccount,
   ResponseUpdateUserInfo,
   SignInParams,
   UpdateInfoProps,
+  UserProps,
   UserSignIn,
   UserSignUp,
   UserTypeProps,
@@ -58,6 +61,11 @@ const userApi = {
   getUserType(): Promise<UserTypeProps[]> {
     const url = `QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`;
     return axiosClient.get(url);
+  },
+
+  getUserListPagination(params: ListParams): Promise<ListResponse<UserProps>> {
+    const url = `QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang`;
+    return axiosClient.get(url, { params });
   },
 };
 

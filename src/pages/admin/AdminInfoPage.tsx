@@ -80,7 +80,7 @@ function AdminInfoPage() {
   }
 
   return (
-    <section className="bg-white pt-2 px-4 pb-8">
+    <section className="bg-white pt-2 px-4 pb-8 rounded-md">
       <h2 className="text-center uppercase text-2xl mb-6">
         User's Information
       </h2>

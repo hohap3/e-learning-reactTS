@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { limitWordLength } from "../../../utils";
 
 interface Props {
   courseList: CourseItem[];
@@ -17,7 +18,7 @@ interface Props {
 
 function StaticCourseList({ courseList }: Props) {
   return (
-    <div className="bg-white py-10 rounded-md text-center">
+    <div className="bg-white pt-10 pb-20 rounded-md text-center">
       <h2 className="capitalize text-xl mb-6">Top 25 best courses</h2>
 
       {courseList.length < 1 && <LoadingCircle />}
@@ -28,7 +29,7 @@ function StaticCourseList({ courseList }: Props) {
               <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell align="right">Views</TableCell>
-                <TableCell align="right">Date</TableCell>
+                <TableCell align="left">Date</TableCell>
                 <TableCell align="right">Student Count</TableCell>
               </TableRow>
             </TableHead>
@@ -39,7 +40,7 @@ function StaticCourseList({ courseList }: Props) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {course.tenKhoaHoc}
+                    {limitWordLength(course.tenKhoaHoc, 40)}
                   </TableCell>
                   <TableCell align="right">{course.luotXem}</TableCell>
                   <TableCell align="right">{course.ngayTao}</TableCell>

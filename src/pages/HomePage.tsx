@@ -22,6 +22,10 @@ function HomePage() {
   useEffect(() => {
     dispatch(courseAction.fetchCourse());
     dispatch(userAction.fetchUserList());
+
+    return () => {
+      dispatch(userAction.fetchUserListSuccess([]));
+    };
   }, [dispatch]);
 
   useEffect(() => {
