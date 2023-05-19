@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { Category, CourseItem, User } from "../../models";
 import { RootState } from "app/store";
+import { getMultipleRandom } from "../../utils";
 
 export interface StatisticDashboard {
   studentList: User[];
@@ -81,6 +82,11 @@ export const selectDashboardCategoryList = (state: RootState) =>
   state.dashboard.statisticInfo.categoryList;
 export const selectDashboardCourseList = (state: RootState) =>
   state.dashboard.statisticInfo.courseList;
+
+export const selectDashboardPopularCourses = createSelector(
+  selectDashboardCourseList,
+  (courseList) => getMultipleRandom(courseList, 25)
+);
 
 // reducer
 const dashboardReducer = dashboardSlice.reducer;

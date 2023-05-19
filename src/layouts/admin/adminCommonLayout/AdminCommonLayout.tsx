@@ -195,10 +195,6 @@ function AdminCommonLayout({ children }: Props) {
                         <ListItemButton sx={{ pl: 4, pb: 2 }}>
                           <ListItemText primary="Add New User" />
                         </ListItemButton>
-
-                        <ListItemButton sx={{ pl: 4, pb: 2 }}>
-                          <ListItemText primary="Remove User" />
-                        </ListItemButton>
                       </List>
                     </Collapse>
                   </List>
@@ -232,10 +228,6 @@ function AdminCommonLayout({ children }: Props) {
 
                         <ListItemButton sx={{ pl: 4, pb: 2 }}>
                           <ListItemText primary="Add New Course" />
-                        </ListItemButton>
-
-                        <ListItemButton sx={{ pl: 4, pb: 2 }}>
-                          <ListItemText primary="Remove Course" />
                         </ListItemButton>
                       </List>
                     </Collapse>

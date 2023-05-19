@@ -6,15 +6,16 @@ import {
   ResponseUpdateUserInfo,
   UserInfo,
 } from "../../models";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { selectLoginInfo } from "redux/User/userSlice";
 import updateAdminSchema from "schemas/admin/updateAdminSchema";
 import { UpdateInfoProps } from "constants/common";
 import userApi from "api/userAPI";
 import { userAction } from "redux/User/userSlice";
-import { toastMessage } from "../../utils";
+import { fetchCourseRegisterDetail, toastMessage } from "../../utils";
 import { ToastType } from "../../constants";
+import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 
 function AdminInfoPage() {
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -70,6 +71,8 @@ function AdminInfoPage() {
         ToastType.SUCCESS
       );
 
+      setEditMode(false);
+
       successMessage();
     } catch (error) {
       console.log(error);
@@ -77,7 +80,7 @@ function AdminInfoPage() {
   }
 
   return (
-    <section className="bg-white py-2 px-4">
+    <section className="bg-white pt-2 px-4 pb-8">
       <h2 className="text-center uppercase text-2xl mb-6">
         User's Information
       </h2>
@@ -95,13 +98,16 @@ function AdminInfoPage() {
         </FormGroup>
       </div>
 
-      <ShowEditForm
-        isAdmin={true}
-        initialValues={initialValues}
-        isEditMode={editMode}
-        onSubmitEdit={handleSubmitEditForm}
-        formSchema={updateAdminSchema}
-      />
+      {Object.keys(restLoginInfo).length < 1 && <LoadingCircle />}
+      {Object.keys(restLoginInfo).length > 0 && (
+        <ShowEditForm
+          isAdmin={true}
+          initialValues={initialValues}
+          isEditMode={editMode}
+          onSubmitEdit={handleSubmitEditForm}
+          formSchema={updateAdminSchema}
+        />
+      )}
     </section>
   );
 }

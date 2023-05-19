@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, ReactNode, SVGProps } from "react";
 import styles from "./adminStaticItem.module.scss";
 import clsx from "clsx";
+import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 
 interface Props {
   amount: number;
@@ -23,7 +24,8 @@ function AdminStatisticItem({ amount, text, icon: Icon, position }: Props) {
         <p className="text-base uppercase">{text}</p>
         {Icon}
       </div>
-      <p className="mt-2 text-2xl">{amount}</p>
+      {amount < 1 && <LoadingCircle />}
+      {amount > 0 && <p className="mt-2 text-2xl">{amount}</p>}
     </div>
   );
 }

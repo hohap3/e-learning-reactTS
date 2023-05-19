@@ -23,6 +23,7 @@
     "clsx": "^1.2.1",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
@@ -39,6 +40,7 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
