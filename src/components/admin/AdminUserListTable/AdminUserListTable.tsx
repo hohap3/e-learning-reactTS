@@ -20,9 +20,14 @@ import {
 } from "redux/User/userSlice";
 import Swal from "sweetalert2";
 import { ToastType } from "../../../constants";
-import { ListParams, UserListPaginationMap } from "../../../models";
+import {
+  ListParams,
+  UserListPaginationMap,
+  UserTypeCode,
+} from "../../../models";
 import { toastMessage } from "../../../utils";
 import NotFoundAdminTable from "./NotFoundAdminTable/NotFoundAdminTable";
+import { ColumnsType } from "antd/es/table";
 
 const { Column, ColumnGroup } = Table;
 
@@ -114,6 +119,70 @@ function AdminUserListTable({ group }: Props) {
     });
   }
 
+  const columns: ColumnsType<UserListPaginationMap> = [
+    {
+      title: "Account",
+      dataIndex: "taiKhoan",
+      key: "taiKhoan",
+    },
+
+    {
+      title: "Name",
+      dataIndex: "hoTen",
+      key: "hoTen",
+    },
+
+    {
+      title: "Phone",
+      dataIndex: "soDT",
+      key: "soDT",
+    },
+
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+
+    {
+      title: "User Type",
+      dataIndex: "maLoaiNguoiDung",
+      key: "maLoaiNguoiDung",
+      filters: [
+        {
+          text: "GV",
+          value: "GV",
+        },
+        {
+          text: "HV",
+          value: "HV",
+        },
+      ],
+      onFilter: (value: string, record) => record.maLoaiNguoiDung === value,
+    },
+
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_: any, record: UserListPaginationMap) => {
+        return (
+          <div className="flex items-center gap-4">
+            <button className="py-1 px-4 rounded-md bg-green-500 text-white">
+              Edit
+            </button>
+            <button
+              onClick={() => handleRemoveUser(record.taiKhoan)}
+              className="py-1 px-4 rounded-md bg-red-500 text-white"
+            >
+              Remove
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
+
   if (userPaginationMap.length < 1) return <LoadingCircle />;
 
   return (
@@ -129,8 +198,12 @@ function AdminUserListTable({ group }: Props) {
         </Button>
       </div>
 
-      <Table dataSource={userPaginationMap} pagination={false}>
-        <Column title="Account" dataIndex="taiKhoan" key="taiKhoan"></Column>
+      <Table
+        columns={columns}
+        dataSource={userPaginationMap}
+        pagination={false}
+      >
+        {/* <Column title="Account" dataIndex="taiKhoan" key="taiKhoan"></Column>
         <Column title="Name" dataIndex="hoTen" key="hoTen"></Column>
         <Column title="Phone" dataIndex="soDT" key="soDT"></Column>
         <Column title="Email" dataIndex="email" key="email"></Column>
@@ -157,7 +230,7 @@ function AdminUserListTable({ group }: Props) {
               </div>
             );
           }}
-        ></Column>
+        ></Column> */}
       </Table>
 
       <div className="my-10 flex justify-center">
