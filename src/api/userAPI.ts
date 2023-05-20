@@ -67,6 +67,21 @@ const userApi = {
     const url = `QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang`;
     return axiosClient.get(url, { params });
   },
+
+  removeUserByAccount(account: string): Promise<string> {
+    const url = `QuanLyNguoiDung/XoaNguoiDung`;
+
+    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+
+    return axiosClient.delete(url, {
+      params: {
+        TaiKhoan: account,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
 };
 
 export default userApi;

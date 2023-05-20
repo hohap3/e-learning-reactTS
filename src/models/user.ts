@@ -89,3 +89,12 @@ export interface UserProps {
   maLoaiNguoiDung: UserTypeCode;
   tenLoaiNguoiDung: UserTypeName;
 }
+
+export interface UserListPaginationMap {
+  key: string;
+  taiKhoan: string;
+  hoTen: string;
+  soDT: string;
+  email: string;
+  maLoaiNguoiDung: UserTypeCode;
+}

@@ -35,11 +35,11 @@ const initialState: UserState = {
     userList: [],
     filter: {
       page: 1,
-      pageSize: 10,
+      pageSize: 15,
     },
     pagination: {
       currentPage: 1,
-      count: 10,
+      count: 15,
     },
   },
 };
@@ -125,11 +125,11 @@ const userSlice = createSlice({
         userList: [],
         filter: {
           page: 1,
-          pageSize: 10,
+          pageSize: 15,
         },
         pagination: {
           currentPage: 1,
-          count: 10,
+          count: 15,
         },
       };
     },
@@ -172,6 +172,9 @@ export const selectUserPaginationMapList = createSelector(
 
 export const selectUserPagination = (state: RootState) =>
   state.user.userListPagination.pagination;
+
+export const selectUserFilter = (state: RootState) =>
+  state.user.userListPagination.filter;
 
 // reducers
 const userReducer = userSlice.reducer;

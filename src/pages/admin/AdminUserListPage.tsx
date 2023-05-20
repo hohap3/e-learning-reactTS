@@ -1,6 +1,5 @@
 import AdminUserListTable from "components/admin/AdminUserListTable/AdminUserListTable";
 import { GROUP_LIST } from "constants/common";
-import React from "react";
 import { useSearchParams } from "react-router-dom";
 
 function AdminUserListPage() {
@@ -34,7 +33,9 @@ function AdminUserListPage() {
           </div>
         )}
         {searchParams.get("group") && (
-          <AdminUserListTable group={searchParams.get("group")} />
+          <>
+            <AdminUserListTable group={searchParams.get("group")} />
+          </>
         )}
       </div>
     </section>

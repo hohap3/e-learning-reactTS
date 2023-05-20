@@ -27,14 +27,14 @@
       "components": ["./src/components/*"],
       "assets": ["./src/assets/*"],
       "HOC": ["./src/HOC/*"],
-      "constants": ["./src/constants/*"],
+      "constants": ["./src/constants"],
       "hooks": ["./src/hooks/*"],
       "models": ["./src/models/*"],
       "redux": ["./src/redux/*"],
       "routes": ["./src/routes/*"],
-      "schemas": ["./src/schemas/*"],
+      "schemas": ["./src/schemas"],
       "SCSS": ["./src/SCSS/*"],
-      "utils": ["./src/utils/*"],
+      "utils": ["./src/utils"],
       "pages": ["./src/pages/*"]
     }
   },
