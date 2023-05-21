@@ -106,6 +106,7 @@ function AdminInfoPage() {
           isEditMode={editMode}
           onSubmitEdit={handleSubmitEditForm}
           formSchema={updateAdminSchema}
+          allowUpdatePassword={true}
         />
       )}
     </section>

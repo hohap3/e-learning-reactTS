@@ -8,6 +8,7 @@ export interface ListParams {
   maKhoaHoc?: string;
   maDanhMuc?: string;
   tenKhoaHoc?: string;
+  tuKhoa?: string;
 }
 
 export interface Pagination {

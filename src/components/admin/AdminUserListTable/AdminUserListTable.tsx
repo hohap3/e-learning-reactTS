@@ -1,6 +1,7 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button, Pagination } from "@mui/material";
 import { Table } from "antd";
+import { ColumnsType } from "antd/es/table";
 import userApi from "api/userAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import axios, { AxiosError } from "axios";
@@ -20,22 +21,21 @@ import {
 } from "redux/User/userSlice";
 import Swal from "sweetalert2";
 import { ToastType } from "../../../constants";
-import {
-  ListParams,
-  UserListPaginationMap,
-  UserTypeCode,
-} from "../../../models";
+import { ListParams, UserListPaginationMap } from "../../../models";
 import { toastMessage } from "../../../utils";
 import NotFoundAdminTable from "./NotFoundAdminTable/NotFoundAdminTable";
-import { ColumnsType } from "antd/es/table";
 
-const { Column, ColumnGroup } = Table;
+export interface DataUpdate {
+  group: string;
+  account: string;
+}
 
 interface Props {
   group: string | null;
+  onEdit: (data: DataUpdate) => void;
 }
 
-function AdminUserListTable({ group }: Props) {
+function AdminUserListTable({ group, onEdit }: Props) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userPaginationMap = useAppSelector(selectUserPaginationMapList);
@@ -119,6 +119,11 @@ function AdminUserListTable({ group }: Props) {
     });
   }
 
+  function handleEditUser(data: DataUpdate) {
+    if (!onEdit) return;
+    onEdit(data);
+  }
+
   const columns: ColumnsType<UserListPaginationMap> = [
     {
       title: "Account",
@@ -168,7 +173,12 @@ function AdminUserListTable({ group }: Props) {
       render: (_: any, record: UserListPaginationMap) => {
         return (
           <div className="flex items-center gap-4">
-            <button className="py-1 px-4 rounded-md bg-green-500 text-white">
+            <button
+              onClick={() =>
+                handleEditUser({ account: record.taiKhoan, group: `${group}` })
+              }
+              className="py-1 px-4 rounded-md bg-green-500 text-white"
+            >
               Edit
             </button>
             <button
@@ -202,36 +212,7 @@ function AdminUserListTable({ group }: Props) {
         columns={columns}
         dataSource={userPaginationMap}
         pagination={false}
-      >
-        {/* <Column title="Account" dataIndex="taiKhoan" key="taiKhoan"></Column>
-        <Column title="Name" dataIndex="hoTen" key="hoTen"></Column>
-        <Column title="Phone" dataIndex="soDT" key="soDT"></Column>
-        <Column title="Email" dataIndex="email" key="email"></Column>
-        <Column
-          title="User Type"
-          dataIndex="maLoaiNguoiDung"
-          key="maLoaiNguoiDung"
-        ></Column>
-        <Column
-          title="Action"
-          key="action"
-          render={(_: any, record: UserListPaginationMap) => {
-            return (
-              <div className="flex items-center gap-4">
-                <button className="py-1 px-4 rounded-md bg-green-500 text-white">
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleRemoveUser(record.taiKhoan)}
-                  className="py-1 px-4 rounded-md bg-red-500 text-white"
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          }}
-        ></Column> */}
-      </Table>
+      ></Table>
 
       <div className="my-10 flex justify-center">
         <Pagination

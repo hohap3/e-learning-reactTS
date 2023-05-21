@@ -1,4 +1,4 @@
-export type UserTypeCode = "GV" | "HV";
+export type UserTypeCode = "GV" | "HV" | "";
 export type UserTypeName = "Giáo vụ" | "Học viên";
 
 export interface CourseCategory {

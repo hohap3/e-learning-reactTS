@@ -20,6 +20,7 @@ interface Props {
   onSubmitEdit: (formValues: UserInfo) => void;
   isAdmin: boolean;
   formSchema: any;
+  allowUpdatePassword?: boolean;
 }
 
 function ShowEditForm({
@@ -28,6 +29,7 @@ function ShowEditForm({
   onSubmitEdit,
   isAdmin,
   formSchema,
+  allowUpdatePassword,
 }: Props) {
   const {
     control,
@@ -35,6 +37,7 @@ function ShowEditForm({
     formState: { isSubmitting },
   } = useForm<UserInfo>({
     defaultValues: initialValues,
+    values: initialValues,
     mode: "all",
     resolver: yupResolver(formSchema),
   });
@@ -122,7 +125,7 @@ function ShowEditForm({
         readOnly={!isEditMode}
       />
 
-      {(!isAdmin || isAdmin) && isEditMode && (
+      {allowUpdatePassword && (!isAdmin || isAdmin) && isEditMode && (
         <InputField
           name="matKhau"
           label="New Password"
@@ -132,7 +135,7 @@ function ShowEditForm({
         />
       )}
 
-      {(!isAdmin || isAdmin) && isEditMode && (
+      {allowUpdatePassword && (!isAdmin || isAdmin) && isEditMode && (
         <InputField
           name="nhapLaiMatKhau"
           label="Retype Password"

@@ -1,12 +1,17 @@
 import { RootState } from "./../../app/store";
 
-import { User, UserProps, UserSignIn } from "./../../models/user";
+import {
+  User,
+  UserInformation,
+  UserProps,
+  UserPropsGet,
+  UserSignIn,
+} from "./../../models/user";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { studentImage } from "constants/common";
 import {
   ListResponseAccount,
   CourseItem,
-  CourseItemRegister,
   ListParams,
   Pagination,
   ListResponse,
@@ -24,6 +29,7 @@ export interface UserState {
   hasLogin: boolean;
   loginInfo: Partial<ListResponseAccount<CourseItem>>;
   userListPagination: UserListPagination;
+  selectedUpdateUser: null | UserInformation;
 }
 
 const initialState: UserState = {
@@ -42,6 +48,7 @@ const initialState: UserState = {
       count: 15,
     },
   },
+  selectedUpdateUser: null,
 };
 
 const userSlice = createSlice({
@@ -133,6 +140,24 @@ const userSlice = createSlice({
         },
       };
     },
+
+    fetchUserInfoProps(state, action: PayloadAction<ListParams>) {
+      state.loading = true;
+    },
+
+    fetchUserInfoPropsSuccess(state, action: PayloadAction<UserInformation>) {
+      state.loading = false;
+      state.selectedUpdateUser = action.payload;
+    },
+
+    fetchUserInfoPropsFailed(state) {
+      state.loading = false;
+    },
+
+    resetUserInfo(state) {
+      state.loading = false;
+      state.selectedUpdateUser = null;
+    },
   },
 });
 
@@ -175,6 +200,9 @@ export const selectUserPagination = (state: RootState) =>
 
 export const selectUserFilter = (state: RootState) =>
   state.user.userListPagination.filter;
+
+export const selectUserInfo = (state: RootState) =>
+  state.user.selectedUpdateUser;
 
 // reducers
 const userReducer = userSlice.reducer;

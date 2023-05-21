@@ -8,7 +8,10 @@ import {
   ResponseUpdateUserInfo,
   SignInParams,
   UpdateInfoProps,
+  UserInfoDetail,
   UserProps,
+  UserPropsGet,
+  UserPropsPreview,
   UserSignIn,
   UserSignUp,
   UserTypeProps,
@@ -81,6 +84,18 @@ const userApi = {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+  },
+
+  findUserDetail(params: ListParams): Promise<ListResponse<UserProps>> {
+    const url = `QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang`;
+    return axiosClient.get(url, {
+      params,
+    });
+  },
+
+  findUserMoreDetail(params: ListParams): Promise<UserInfoDetail[]> {
+    const url = `QuanLyNguoiDung/TimKiemNguoiDung`;
+    return axiosClient.get(url, { params });
   },
 };
 

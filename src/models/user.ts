@@ -90,11 +90,36 @@ export interface UserProps {
   tenLoaiNguoiDung: UserTypeName;
 }
 
+export type UserPropsPreview = Omit<UserProps, "maNhom">;
+
+export interface UserPropsGet extends UserPropsPreview {
+  matKhau: string;
+}
+
 export interface UserListPaginationMap {
   key: string;
   taiKhoan: string;
   hoTen: string;
   soDT: string;
   email: string;
+  maLoaiNguoiDung: UserTypeCode;
+}
+
+export interface UserInfoDetail {
+  taiKhoan: string;
+  hoTen: string;
+  email: string;
+  soDt: string;
+  matKhau: null;
+  maLoaiNguoiDung: UserTypeCode;
+  tenLoaiNguoiDung: UserTypeName;
+}
+
+export interface UserInformation {
+  taiKhoan: string;
+  hoTen: string;
+  email: string;
+  soDT: string;
+  matKhau: string;
   maLoaiNguoiDung: UserTypeCode;
 }

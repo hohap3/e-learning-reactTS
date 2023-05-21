@@ -111,6 +111,7 @@ function PersonalMainPage() {
           isEditMode={editMode}
           onSubmitEdit={handleSubmitForm}
           formSchema={updateUserSchema}
+          allowUpdatePassword={true}
         />
       </div>
     </div>
