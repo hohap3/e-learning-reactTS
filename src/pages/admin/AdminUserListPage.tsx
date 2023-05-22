@@ -88,9 +88,7 @@ function AdminUserListPage() {
   return (
     <section className="bg-white py-8 px-4 rounded-md">
       <h2 className="capitalize text-2xl text-center">
-        {!searchParams.get("group")
-          ? "Select one of groups below"
-          : "User List"}
+        {!searchParams.get("group") ? "Select one of groups below" : ""}
       </h2>
 
       <div className="my-4">

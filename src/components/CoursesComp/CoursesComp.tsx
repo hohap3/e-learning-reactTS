@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./courseComp.module.scss";
 import CourseCompList from "components/CourseCompList/CourseCompList";
 import {
@@ -9,14 +9,17 @@ import {
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Pagination } from "@mui/material";
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
-import SearchCourse from "components/searchCourse/SearchCourse";
+import SearchComp from "components/searchCourse/SearchCourse";
+import { ListParams } from "models/index";
 
 function CoursesComp() {
   const filter = useAppSelector(selectFilter);
   const pagination = useAppSelector(selectPagination);
-  const [searchParams, setSearchParams] = useSearchParams({
-    page: `${filter.page ?? 1}`,
-  } as URLSearchParamsInit);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filterParams, setFilterParams] = useState<ListParams>({
+    ...filter,
+    page: Number(searchParams.get("page")) || 1,
+  });
 
   const dispatch = useAppDispatch();
 
@@ -24,20 +27,25 @@ function CoursesComp() {
     event: React.ChangeEvent<unknown>,
     page: number
   ): void {
-    dispatch(courseAction.insertFilter({ ...filter, page }));
+    setFilterParams((prevState) => ({ ...prevState, page }));
     setSearchParams((prevParams) => ({ ...prevParams, page }));
   }
 
   useEffect(() => {
-    dispatch(courseAction.fetchCourseListPagination(filter));
-  }, [filter]);
+    setSearchParams({
+      page: `${searchParams.get("page") ?? 1}`,
+      courseSearch: `${searchParams.get("courseSearch") ?? ""}`,
+    });
+  }, []);
 
   useEffect(() => {
-    setSearchParams((prevParams) => ({
-      ...prevParams,
-      page: `${searchParams.get("page") ?? 1}`,
-    }));
-  }, []);
+    dispatch(
+      courseAction.fetchCourseListPagination({
+        ...filterParams,
+        page: Number(searchParams.get("page")),
+      })
+    );
+  }, [filterParams]);
 
   function handleSearchCourse(searchValue: string) {
     setSearchParams((prevParams) => ({
@@ -61,7 +69,11 @@ function CoursesComp() {
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12">
               <div className={`${styles["courses-item"]}`}>
-                <SearchCourse onSearchChange={handleSearchCourse} />
+                <SearchComp
+                  onSearchChange={handleSearchCourse}
+                  placeholder="Search Course"
+                  searchParamsValue="courseSearch"
+                />
 
                 <CourseCompList />
 

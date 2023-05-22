@@ -1,5 +1,5 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Button, Pagination } from "@mui/material";
+import { Button, Pagination, TextField } from "@mui/material";
 import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import userApi from "api/userAPI";
@@ -24,6 +24,7 @@ import { ToastType } from "../../../constants";
 import { ListParams, UserListPaginationMap } from "../../../models";
 import { toastMessage } from "../../../utils";
 import NotFoundAdminTable from "./NotFoundAdminTable/NotFoundAdminTable";
+import debounce from "lodash.debounce";
 
 export interface DataUpdate {
   group: string;
@@ -45,10 +46,8 @@ function AdminUserListTable({ group, onEdit }: Props) {
     ...userFilter,
     MaNhom: group ? group : "",
   });
-  const [searchParams, setSearchParams] = useSearchParams({
-    page: `${userFilter.page ?? 1}`,
-    group,
-  } as URLSearchParamsInit);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValues, setSearchValues] = useState<string>("");
 
   // move to user list page if group is null or empty
   useEffect(() => {
@@ -62,7 +61,12 @@ function AdminUserListTable({ group, onEdit }: Props) {
 
   useEffect(() => {
     if (!group) return;
-    dispatch(userAction.fetchUserPagination(filter));
+    dispatch(
+      userAction.fetchUserPagination({
+        ...filter,
+        page: Number(searchParams.get("page")),
+      })
+    );
 
     return () => {
       dispatch(userAction.resetUserPagination());
@@ -124,6 +128,12 @@ function AdminUserListTable({ group, onEdit }: Props) {
     onEdit(data);
   }
 
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    debounce(() => {
+      setSearchValues(e.target.value);
+    }, 500);
+  }
+
   const columns: ColumnsType<UserListPaginationMap> = [
     {
       title: "Account",
@@ -160,18 +170,6 @@ function AdminUserListTable({ group, onEdit }: Props) {
       title: "User Type",
       dataIndex: "maLoaiNguoiDung",
       key: "maLoaiNguoiDung",
-      filters: [
-        {
-          text: "GV",
-          value: "GV",
-        },
-        {
-          text: "HV",
-          value: "HV",
-        },
-      ],
-
-      onFilter: (value: string, record) => record.maLoaiNguoiDung === value,
     },
 
     {
@@ -205,6 +203,8 @@ function AdminUserListTable({ group, onEdit }: Props) {
 
   return (
     <div className="mt-8">
+      <h2 className="capitalize text-2xl text-center">User List</h2>
+
       <div className="mb-6">
         <Button
           onClick={() => navigate("/admin/user-list")}
@@ -214,6 +214,15 @@ function AdminUserListTable({ group, onEdit }: Props) {
           <ArrowBackIcon />
           Go back to user group page
         </Button>
+      </div>
+
+      <div>
+        <TextField
+          size="small"
+          fullWidth
+          placeholder="Find user..."
+          onChange={handleSearch}
+        />
       </div>
 
       <Table

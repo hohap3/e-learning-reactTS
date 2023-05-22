@@ -4,14 +4,16 @@ import { useSearchParams } from "react-router-dom";
 
 interface Props {
   onSearchChange: (searchValue: string) => void;
+  placeholder: string;
+  searchParamsValue: string;
 }
 
-function SearchCourse({ onSearchChange }: Props) {
+function SearchComp({ onSearchChange, placeholder, searchParamsValue }: Props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState<string>(() => {
     return `${
-      searchParams.get("courseSearch")
-        ? `${searchParams.get("courseSearch")}`
+      searchParams.get(`${searchParamsValue}`)
+        ? `${searchParams.get(`${searchParamsValue}`)}`
         : ""
     }`;
   });
@@ -33,7 +35,7 @@ function SearchCourse({ onSearchChange }: Props) {
       <TextField
         value={searchValue}
         onChange={handleChange}
-        placeholder="Search Course Name..."
+        placeholder={placeholder}
         size="small"
         fullWidth
       />
@@ -41,4 +43,4 @@ function SearchCourse({ onSearchChange }: Props) {
   );
 }
 
-export default SearchCourse;
+export default SearchComp;
