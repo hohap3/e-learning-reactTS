@@ -43,6 +43,7 @@ function CoursesComp() {
       courseAction.fetchCourseListPagination({
         ...filterParams,
         page: Number(searchParams.get("page")),
+        tenKhoaHoc: `${searchParams.get("courseSearch") ?? ""}`,
       })
     );
   }, [filterParams]);
@@ -50,12 +51,10 @@ function CoursesComp() {
   function handleSearchCourse(searchValue: string) {
     setSearchParams((prevParams) => ({
       ...prevParams,
-      page: `${filter.page ?? 1}`,
+      page: 1,
       courseSearch: searchValue,
     }));
-    dispatch(
-      courseAction.insertFilter({ ...filter, tenKhoaHoc: searchValue, page: 1 })
-    );
+    setFilterParams((prevState) => ({ ...prevState, tenKhoaHoc: searchValue }));
   }
 
   return (
