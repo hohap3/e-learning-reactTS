@@ -8,6 +8,7 @@ import {
   ResponseUpdateUserInfo,
   SignInParams,
   UpdateInfoProps,
+  UserCreate,
   UserInfoDetail,
   UserProps,
   UserPropsGet,
@@ -96,6 +97,17 @@ const userApi = {
   findUserMoreDetail(params: ListParams): Promise<UserInfoDetail[]> {
     const url = `QuanLyNguoiDung/TimKiemNguoiDung`;
     return axiosClient.get(url, { params });
+  },
+
+  createNewUser(data: UserCreate) {
+    const url = `QuanLyNguoiDung/ThemNguoiDung`;
+    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+
+    return axiosClient.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   },
 };
 

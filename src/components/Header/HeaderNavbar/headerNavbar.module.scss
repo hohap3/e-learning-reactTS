@@ -69,7 +69,7 @@
       top: 100%;
       right: 0;
       background-color: $bg-white;
-      width: calc(100% + 80px);
+      min-width: calc(100% + 100px);
       text-align: center;
       display: flex;
       flex-direction: column;

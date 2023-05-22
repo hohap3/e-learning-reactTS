@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button, Pagination } from "@mui/material";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import userApi from "api/userAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
@@ -129,6 +129,13 @@ function AdminUserListTable({ group, onEdit }: Props) {
       title: "Account",
       dataIndex: "taiKhoan",
       key: "taiKhoan",
+      render: (text, record, index) => {
+        return (
+          <Tag key={record.taiKhoan} color="geekblue">
+            {record.taiKhoan}
+          </Tag>
+        );
+      },
     },
 
     {
@@ -163,6 +170,7 @@ function AdminUserListTable({ group, onEdit }: Props) {
           value: "HV",
         },
       ],
+
       onFilter: (value: string, record) => record.maLoaiNguoiDung === value,
     },
 

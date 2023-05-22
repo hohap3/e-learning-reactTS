@@ -6,7 +6,7 @@ import InputField from "../form-control/InputField";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { ToastType } from "../../../constants";
-import { toastMessage } from "../../../utils";
+import { handleSubmitError, toastMessage } from "../../../utils";
 import clsx from "clsx";
 
 import SelectField from "../form-control/SelectField";
@@ -73,17 +73,6 @@ function ShowEditForm({
         ToastType.ERROR
       );
       errorMessage();
-    }
-  }
-
-  function handleSubmitError(error: any) {
-    if (Object.keys(error).length > 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please insert all field",
-      });
-      return;
     }
   }
 

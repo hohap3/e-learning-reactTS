@@ -15,6 +15,7 @@ import AdminInfoPage from "pages/admin/AdminInfoPage";
 import AdminMainPage from "pages/admin/AdminMainPage";
 import AdminUserListPage from "pages/admin/AdminUserListPage";
 import { Route } from "../models";
+import AdminAddUserPage from "pages/admin/AdminAddUserPage";
 
 const clientRoute: Route[] = [
   {
@@ -75,6 +76,10 @@ export const adminRoutes: Route[] = [
       {
         path: "user-list",
         component: AdminUserListPage,
+      },
+      {
+        path: "add-user",
+        component: AdminAddUserPage,
       },
     ],
   },

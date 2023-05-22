@@ -35,6 +35,10 @@ export interface UserSignUp {
   email: string;
 }
 
+export interface UserCreate extends UserSignUp {
+  maLoaiNguoiDung: UserTypeCode;
+}
+
 export interface User {
   taiKhoan: string;
   hoTen: string;

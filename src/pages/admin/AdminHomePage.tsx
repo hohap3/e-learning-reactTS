@@ -1,10 +1,11 @@
 import { useAppSelector } from "app/hooks";
+import ScrollToTop from "components/ScrollToTopBtn/ScrollToTop";
 import AdminChart from "components/admin/AdminChart/AdminChart";
 import AdminLineChart from "components/admin/AdminLineChart/AdminLineChart";
 import AdminStatistic from "components/admin/AdminStatistic/AdminStatistic";
 import AdminStatisticChart from "components/admin/AdminStatisticChart/AdminStatisticChart";
 import StaticCourseList from "components/admin/StaticCourseList/StaticCourseList";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   dashboardAction,
@@ -21,6 +22,7 @@ function AdminHomePage() {
   const studentList = useAppSelector(selectDashboardStudentList);
   const teacherList = useAppSelector(selectDashboardTeacherList);
   const popularCourse = useAppSelector(selectDashboardPopularCourses);
+  const [showScrollBtn, setShowScrollBtn] = useState<boolean>(false);
 
   const statisticList: number[] = [
     categoryList.length,
@@ -43,6 +45,18 @@ function AdminHomePage() {
     document.documentElement.scrollTop = 0;
   }, []);
 
+  useEffect(() => {
+    function handleShowScrollBtn() {
+      setShowScrollBtn(window.scrollY >= 600);
+    }
+
+    window.addEventListener("scroll", handleShowScrollBtn);
+
+    return () => {
+      window.removeEventListener("scroll", handleShowScrollBtn);
+    };
+  }, []);
+
   return (
     <section className="rounded">
       <AdminStatistic />
@@ -62,6 +76,8 @@ function AdminHomePage() {
           <AdminChart />
         </div>
       </div>
+
+      {showScrollBtn && <ScrollToTop />}
     </section>
   );
 }
