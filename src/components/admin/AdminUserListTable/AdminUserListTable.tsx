@@ -24,7 +24,8 @@ import { ToastType } from "../../../constants";
 import { ListParams, UserListPaginationMap } from "../../../models";
 import { toastMessage } from "../../../utils";
 import NotFoundAdminTable from "./NotFoundAdminTable/NotFoundAdminTable";
-import debounce from "lodash.debounce";
+
+import SearchComp from "components/searchCourse/SearchCourse";
 
 export interface DataUpdate {
   group: string;
@@ -47,7 +48,6 @@ function AdminUserListTable({ group, onEdit }: Props) {
     MaNhom: group ? group : "",
   });
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValues, setSearchValues] = useState<string>("");
 
   // move to user list page if group is null or empty
   useEffect(() => {
@@ -56,6 +56,7 @@ function AdminUserListTable({ group, onEdit }: Props) {
       setSearchParams({
         group,
         page: `${searchParams.get("page") ?? 1}`,
+        search: `${searchParams.get("search") ?? ""}`,
       });
   }, []);
 
@@ -65,6 +66,7 @@ function AdminUserListTable({ group, onEdit }: Props) {
       userAction.fetchUserPagination({
         ...filter,
         page: Number(searchParams.get("page")),
+        tuKhoa: searchParams.get("search") || undefined,
       })
     );
 
@@ -128,10 +130,9 @@ function AdminUserListTable({ group, onEdit }: Props) {
     onEdit(data);
   }
 
-  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-    debounce(() => {
-      setSearchValues(e.target.value);
-    }, 500);
+  function handleSearch(searchValues: string) {
+    setSearchParams({ group: `${group}`, page: `1`, search: searchValues });
+    setFilter((prevState) => ({ ...prevState, tuKhoa: searchValues }));
   }
 
   const columns: ColumnsType<UserListPaginationMap> = [
@@ -217,11 +218,10 @@ function AdminUserListTable({ group, onEdit }: Props) {
       </div>
 
       <div>
-        <TextField
-          size="small"
-          fullWidth
-          placeholder="Find user..."
-          onChange={handleSearch}
+        <SearchComp
+          onSearchChange={handleSearch}
+          placeholder="Search user"
+          searchParamsValue="search"
         />
       </div>
 

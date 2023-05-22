@@ -120,6 +120,10 @@ const courseSlice = createSlice({
       state.loading = false;
       state.courseListByCategory = [];
     },
+
+    resetCourseList(state) {
+      state.courseList = [];
+    },
   },
 });
 

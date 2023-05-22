@@ -42,6 +42,8 @@ function* fetchUserPagination(action: PayloadAction<ListParams>) {
       userApi.getUserListPagination(action.payload)
     );
 
+    console.log(res);
+
     yield put(userAction.fetchUserPaginationSuccess(res));
     yield put(userAction.insertUserPaginationFilter(action.payload));
   } catch (error) {
