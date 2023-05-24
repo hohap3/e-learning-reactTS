@@ -52,10 +52,10 @@ function SelectField({
           {data.length > 0 &&
             data.map((item) => (
               <MenuItem
-                value={item.maLoaiNguoiDung || item.key}
-                key={item.maLoaiNguoiDung || item.key}
+                value={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
+                key={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
               >
-                {item.tenLoaiNguoiDung || item.value}
+                {item.tenLoaiNguoiDung || item.value || item.tenDanhMuc}
               </MenuItem>
             ))}
         </Select>

@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 import AddNewUserForm from "components/form/admin/AddNewUserForm/AddNewUserForm";
 import { ToastType } from "constants/index";
+import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
 import { UserCreate } from "models/index";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,25 +56,29 @@ function AdminAddUserPage() {
   }
 
   return (
-    <section className="bg-white py-8 px-4 rounded-md">
-      <h2 className="capitalize text-2xl text-center">Add new User</h2>
+    <AdminLayoutPage title="Add User">
+      <>
+        <div className="my-8">
+          <AddNewUserForm
+            initialValues={initialValues}
+            onSubmitForm={handleSubmitForm}
+            formSchema={addUserSchema}
+          />
+        </div>
 
-      <div className="my-8">
-        <AddNewUserForm
-          initialValues={initialValues}
-          onSubmitForm={handleSubmitForm}
-          formSchema={addUserSchema}
-        />
-      </div>
-
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <LoadingCircle />
-      </Backdrop>
-    </section>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loading}
+        >
+          <LoadingCircle />
+        </Backdrop>
+      </>
+    </AdminLayoutPage>
   );
 }
 
 export default AdminAddUserPage;
+
+{
+  /*  */
+}

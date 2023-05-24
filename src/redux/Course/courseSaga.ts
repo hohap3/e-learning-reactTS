@@ -59,8 +59,6 @@ function* fetchCourseListByPagination(action: PayloadAction<ListParams>) {
       courseAPI.getCourseListByPage(action.payload)
     );
 
-    console.log(res);
-
     yield put(courseAction.fetchCourseListPaginationSuccess(res));
     yield put(courseAction.insertFilter(action.payload));
   } catch (error) {

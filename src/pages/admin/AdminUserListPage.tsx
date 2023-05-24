@@ -17,6 +17,7 @@ import { toastMessage } from "../../utils";
 import { useState } from "react";
 import { Backdrop } from "@mui/material";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
+import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
 
 function AdminUserListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -86,11 +87,9 @@ function AdminUserListPage() {
   }
 
   return (
-    <section className="bg-white py-8 px-4 rounded-md">
-      <h2 className="capitalize text-2xl text-center">
-        {!searchParams.get("group") ? "Select one of groups below" : ""}
-      </h2>
-
+    <AdminLayoutPage
+      title={!searchParams.get("group") ? "Select one of groups below" : ""}
+    >
       <div className="my-4">
         {!searchParams.get("group") && (
           <div className="grid grid-cols-2 gap-4">
@@ -138,7 +137,7 @@ function AdminUserListPage() {
           <LoadingCircle />
         </Backdrop>
       </div>
-    </section>
+    </AdminLayoutPage>
   );
 }
 

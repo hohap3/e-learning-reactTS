@@ -82,6 +82,8 @@ export async function fetchCourseRegisterDetail(): Promise<
 
 export function handleSubmitError(error: any) {
   if (Object.keys(error).length > 0) {
+    console.log(error);
+
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -89,4 +91,14 @@ export function handleSubmitError(error: any) {
     });
     return;
   }
+}
+
+export function getCurrentDate(): string {
+  const date = new Date();
+
+  const day = date.getDay();
+  const month = `${date.getMonth() + 1}`;
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
 }

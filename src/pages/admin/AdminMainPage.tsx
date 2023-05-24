@@ -1,5 +1,5 @@
 import { List, ListSubheader } from "@mui/material";
-import { ACCESS_TOKEN, IS_ADMIN } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN, IS_ADMIN } from "constants/common";
 import AdminCommonLayout from "layouts/admin/adminCommonLayout/AdminCommonLayout";
 import AdminHeader from "layouts/admin/adminHeader/AdminHeader";
 import React, { useEffect, useRef } from "react";
@@ -8,7 +8,7 @@ import { getLocalStorageData } from "../../utils";
 import Swal from "sweetalert2";
 
 function AdminMainPage() {
-  const accessToken = getLocalStorageData(ACCESS_TOKEN) ?? null;
+  const accessToken = getLocalStorageData(ADMIN_TOKEN) ?? null;
   const isAdmin = getLocalStorageData(IS_ADMIN) ?? null;
   const timeIntervalId = useRef<null | number>(null);
   const navigate = useNavigate();

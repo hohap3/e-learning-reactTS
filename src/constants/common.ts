@@ -8,7 +8,7 @@ import student1 from "assets/student/testimonial-1.jpg";
 import student2 from "assets/student/testimonial-2.jpg";
 import student3 from "assets/student/testimonial-3.jpg";
 import student4 from "assets/student/testimonial-4.jpg";
-import { GROUP_ITEM } from "models";
+import { GROUP_ITEM } from "models/index";
 
 export const COURSE_GROUP = "GP01";
 export const categoryImage = [
@@ -28,6 +28,7 @@ export const studentImage = [
 ];
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
+export const ADMIN_TOKEN = "ADMIN_TOKEN";
 
 export const SignUpProps = [
   "email",
@@ -90,6 +91,38 @@ export const GROUP_LIST: GROUP_ITEM[] = [
     key: "GP09",
     value: "GP09",
   },
+
+  {
+    key: "GP10",
+    value: "GP10",
+  },
+
+  {
+    key: "GP11",
+    value: "GP11",
+  },
+
+  {
+    key: "GP12",
+    value: "GP12",
+  },
+
+  {
+    key: "GP13",
+    value: "GP13",
+  },
+
+  {
+    key: "GP14",
+    value: "GP14",
+  },
+
+  {
+    key: "GP15",
+    value: "GP15",
+  },
 ];
 
 export const IS_ADMIN = "IS_ADMIN";
+export const MAX_IMAGE_SIZE = 1024 * 1024;
+export const SUPPORT_FORMATS_IMAGE = ["image/jpg", "image/jpeg", "image/png"];

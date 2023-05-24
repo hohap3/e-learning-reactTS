@@ -1,9 +1,10 @@
-import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN, COURSE_GROUP } from "constants/common";
 import axiosClient from "./axiosClient";
 import {
   Category,
   CourseItem,
   CourseRegister,
+  CreateCourse,
   ListParams,
   ListResponse,
   UnregisterCourse,
@@ -42,7 +43,8 @@ const courseAPI = {
 
   registerCourse(data: Partial<CourseRegister>) {
     const url = `QuanLyKhoaHoc/DangKyKhoaHoc`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.post(url, data, {
       headers: {
@@ -58,7 +60,19 @@ const courseAPI = {
 
   unregisterCourse(data: UnregisterCourse): Promise<string> {
     const url = `QuanLyKhoaHoc/HuyGhiDanh`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
+    return axiosClient.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  createCourse(data: CreateCourse) {
+    const url = `QuanLyKhoaHoc/ThemKhoaHoc`;
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
     return axiosClient.post(url, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,

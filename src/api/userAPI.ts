@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN, COURSE_GROUP } from "constants/common";
 import {
   CourseItem,
   CourseItemRegister,
@@ -42,7 +42,8 @@ const userApi = {
 
   getUserInfo(): Promise<ListResponseAccount<CourseItem>> {
     const url = `QuanLyNguoiDung/ThongTinNguoiDung`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.post(url, null, {
       headers: {
@@ -53,7 +54,8 @@ const userApi = {
 
   updateUserInfo(data: UpdateInfoProps): Promise<ResponseUpdateUserInfo> {
     const url = `QuanLyNguoiDung/CapNhatThongTinNguoiDung`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.put(url, data, {
       headers: {
@@ -75,7 +77,8 @@ const userApi = {
   removeUserByAccount(account: string): Promise<string> {
     const url = `QuanLyNguoiDung/XoaNguoiDung`;
 
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.delete(url, {
       params: {
@@ -101,7 +104,8 @@ const userApi = {
 
   createNewUser(data: UserCreate) {
     const url = `QuanLyNguoiDung/ThemNguoiDung`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.post(url, data, {
       headers: {

@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, TextField } from "@mui/material";
-import React, { InputHTMLAttributes } from "react";
+import React, { ChangeEvent, InputHTMLAttributes } from "react";
 import { Control, useController } from "react-hook-form";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -16,6 +16,7 @@ function InputField({
   label,
   variant,
   isAdmin,
+
   ...restProps
 }: Props) {
   const {
