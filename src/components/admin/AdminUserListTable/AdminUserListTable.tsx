@@ -8,11 +8,7 @@ import axios, { AxiosError } from "axios";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 import { GROUP_LIST } from "constants/common";
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  URLSearchParamsInit,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   selectUserFilter,
   selectUserPagination,
@@ -23,7 +19,7 @@ import Swal from "sweetalert2";
 import { ToastType } from "../../../constants";
 import { ListParams, UserListPaginationMap } from "../../../models";
 import { toastMessage } from "../../../utils";
-import NotFoundAdminTable from "./NotFoundAdminTable/NotFoundAdminTable";
+import NotFoundGroup from "../../NotFoundGroup/NotFoundGroup";
 
 import SearchComp from "components/searchCourse/SearchCourse";
 
@@ -82,7 +78,7 @@ function AdminUserListTable({ group, onEdit }: Props) {
 
   // Not found group page
   if (group && !GROUP_LIST.find((groupItem) => groupItem.value === group)) {
-    return <NotFoundAdminTable />;
+    return <NotFoundGroup previousPage="/admin/user-list" />;
   }
 
   function handleRemoveUser(account: string) {

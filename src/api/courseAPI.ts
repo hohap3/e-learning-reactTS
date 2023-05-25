@@ -79,6 +79,17 @@ const courseAPI = {
       },
     });
   },
+
+  removeCourse(courseId: string): Promise<string> {
+    const url = `QuanLyKhoaHoc/XoaKhoaHoc`;
+    const adminToken = getLocalStorageData(ADMIN_TOKEN);
+    return axiosClient.delete(url, {
+      params: {
+        MaKhoaHoc: courseId,
+      },
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+  },
 };
 
 export default courseAPI;

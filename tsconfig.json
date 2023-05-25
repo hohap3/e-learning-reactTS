@@ -38,6 +38,6 @@
       "pages": ["./src/pages/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/components/NotFoundGroup"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

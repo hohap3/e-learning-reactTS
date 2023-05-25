@@ -124,6 +124,19 @@ const courseSlice = createSlice({
     resetCourseList(state) {
       state.courseList = [];
     },
+
+    resetCourseListPagination(state) {
+      state.loading = false;
+      state.courseList = [];
+      state.filter = {
+        page: 1,
+        pageSize: 10,
+      };
+      state.pagination = {
+        currentPage: 1,
+        count: 10,
+      };
+    },
   },
 });
 
@@ -154,6 +167,31 @@ export const selectCourseListCategory = (state: RootState) =>
 export const selectFilter = (state: RootState) => state.course.filter;
 export const selectCourseList = (state: RootState) => state.course.courseList;
 export const selectPagination = (state: RootState) => state.course.pagination;
+export const selectCourseListMapTable = createSelector(
+  selectCourseList,
+  (courseList) =>
+    courseList.map(
+      ({
+        maKhoaHoc,
+        tenKhoaHoc,
+        moTa,
+        hinhAnh,
+        maNhom,
+        ngayTao,
+        nguoiTao: { taiKhoan },
+        danhMucKhoaHoc: { maDanhMucKhoahoc },
+      }) => ({
+        maKhoaHoc,
+        tenKhoaHoc,
+        moTa,
+        hinhAnh,
+        maNhom,
+        ngayTao,
+        taiKhoan,
+        maDanhMucKhoahoc,
+      })
+    )
+);
 
 // reducers
 const courseReducer = courseSlice.reducer;

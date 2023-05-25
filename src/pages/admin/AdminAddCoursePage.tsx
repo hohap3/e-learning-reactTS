@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { RootState } from "app/store";
 import axios, { AxiosError } from "axios";
 import AddNewCourseForm from "components/form/admin/AddNewCourseForm/AddNewCourseForm";
-import { ToastType } from "constants";
+import { ToastType } from "constants/index";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
 import { CreateCourse } from "models/index";
 import React, { useEffect, useState } from "react";

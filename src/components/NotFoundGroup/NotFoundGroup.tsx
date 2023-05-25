@@ -4,18 +4,22 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-function NotFoundAdminTable() {
+interface Props {
+  previousPage: string;
+}
+
+function NotFoundGroup({ previousPage }: Props) {
   const navigate = useNavigate();
 
   return (
     <div>
       <Button
-        onClick={() => navigate("/admin/user-list")}
+        onClick={() => navigate(`${previousPage}`)}
         variant="outlined"
         className="flex gap-4"
       >
         <ArrowBackIcon />
-        Go back to user group page
+        Go back to list group page
       </Button>
       <div className="my-6">
         <img src={notFound} />
@@ -33,4 +37,4 @@ function NotFoundAdminTable() {
   );
 }
 
-export default NotFoundAdminTable;
+export default NotFoundGroup;

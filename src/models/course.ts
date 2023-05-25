@@ -19,3 +19,14 @@ export interface CreateCourse {
   maDanhMucKhoaHoc: string;
   taiKhoanNguoiTao: string;
 }
+
+export interface CourseListMapTable {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  moTa: string;
+  hinhAnh: string;
+  maNhom: string;
+  ngayTao: string;
+  taiKhoan: string;
+  maDanhMucKhoahoc: string;
+}
