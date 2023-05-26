@@ -128,7 +128,7 @@ function AdminUserListTable({ group, onEdit }: Props) {
 
   function handleSearch(searchValues: string) {
     setSearchParams({ group: `${group}`, page: `1`, search: searchValues });
-    setFilter((prevState) => ({ ...prevState, tuKhoa: searchValues }));
+    setFilter((prevState) => ({ ...prevState, tuKhoa: searchValues, page: 1 }));
   }
 
   const columns: ColumnsType<UserListPaginationMap> = [

@@ -1,4 +1,4 @@
-import { Backdrop, Pagination } from "@mui/material";
+import { Backdrop, Button, Pagination } from "@mui/material";
 import { ColumnsType } from "antd/es/table";
 import courseAPI from "api/courseAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
@@ -10,6 +10,7 @@ import { ToastType } from "constants/index";
 import { GROUP_LIST } from "constants/common";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
 import { CourseListMapTable, ListParams } from "models/index";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
   ChangeEvent,
@@ -32,6 +33,7 @@ import {
   toastMessage,
 } from "utils/index";
 import axios, { AxiosError } from "axios";
+import SearchComp from "components/searchCourse/SearchCourse";
 
 function AdminCourseListPage() {
   const courseListMapTable = useAppSelector(selectCourseListMapTable);
@@ -57,7 +59,7 @@ function AdminCourseListPage() {
         page: `${searchParams.get("page") ?? 1}`,
         search: `${searchParams.get("search") ?? ""}`,
       });
-  }, []);
+  }, [searchParams.get("group")]);
 
   // call api
   useEffect(() => {
@@ -67,6 +69,7 @@ function AdminCourseListPage() {
       courseAction.fetchCourseListPagination({
         ...filterParams,
         MaNhom: `${searchParams.get("group")}`,
+        tenKhoaHoc: `${searchParams.get("search") ?? ""}`,
       })
     );
     return () => {
@@ -137,6 +140,19 @@ function AdminCourseListPage() {
         }, 500);
       }
     });
+  }
+
+  function handleSearch(searchValues: string) {
+    setSearchParams({
+      group: `${searchParams.get("group")}`,
+      page: `1`,
+      search: searchValues,
+    });
+    setFilterParams((prevState) => ({
+      ...prevState,
+      tenKhoaHoc: searchValues,
+      page: 1,
+    }));
   }
 
   const columns: ColumnsType<CourseListMapTable> = [
@@ -219,9 +235,29 @@ function AdminCourseListPage() {
 
         {searchParams.get("group") && (
           <>
+            <h2 className="capitalize text-2xl text-center mb-6">
+              Course List
+            </h2>
+
+            <div className="mb-6">
+              <Button
+                onClick={() => navigate(`/admin/course-list`)}
+                variant="outlined"
+                className="flex gap-4"
+              >
+                <ArrowBackIcon />
+                Go back to list page
+              </Button>
+            </div>
+
+            <SearchComp
+              placeholder="Search course..."
+              searchParamsValue="search"
+              onSearchChange={handleSearch}
+            />
+
             <AdminTable
-              title="Course list"
-              previousPage="/admin/course-list"
+              title=""
               group={`${searchParams.get("group")}`}
               columns={columns}
               dataSource={courseListMapTable}
