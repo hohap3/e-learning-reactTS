@@ -9,7 +9,7 @@ import { ToastType } from "constants/index";
 
 import { GROUP_LIST } from "constants/common";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
-import { CourseListMapTable, ListParams } from "models/index";
+import { CourseItem, CourseListMapTable, ListParams } from "models/index";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
@@ -22,6 +22,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   courseAction,
+  selectCourseList,
   selectCourseListMapTable,
   selectFilter,
   selectPagination,
@@ -94,6 +95,9 @@ function AdminCourseListPage() {
 
   function handleSelectGroup(group: string) {
     setSearchParams({ group });
+  }
+  function handleEdit(courseItem: CourseListMapTable) {
+    console.log(courseItem);
   }
 
   function handleRemoveCourse(courseItem: CourseListMapTable) {
@@ -173,7 +177,11 @@ function AdminCourseListPage() {
       ),
     },
     { title: "Course Date", dataIndex: "ngayTao", key: "ngayTao" },
-    { title: "Account Create", dataIndex: "taiKhoan", key: "taiKhoan" },
+    {
+      title: "Account Create",
+      dataIndex: "taiKhoanNguoiTao",
+      key: "taiKhoanNguoiTao",
+    },
     {
       title: "Account Category",
       dataIndex: "maDanhMucKhoahoc",
@@ -197,6 +205,7 @@ function AdminCourseListPage() {
             <button
               title="Edit course"
               className="py-1 px-4 rounded-md bg-green-500 text-white"
+              onClick={() => handleEdit(record)}
             >
               Edit
             </button>

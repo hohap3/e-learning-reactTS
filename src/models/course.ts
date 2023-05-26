@@ -22,11 +22,13 @@ export interface CreateCourse {
 
 export interface CourseListMapTable {
   maKhoaHoc: string;
+  bidanh: string;
   tenKhoaHoc: string;
   moTa: string;
+  luotXem: number;
   hinhAnh: string;
   maNhom: string;
   ngayTao: string;
-  taiKhoan: string;
-  maDanhMucKhoahoc: string;
+  maDanhMucKhoaHoc: string;
+  taiKhoanNguoiTao: string;
 }

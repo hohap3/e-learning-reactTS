@@ -3,6 +3,7 @@ import { RootState } from "app/store";
 import {
   Category,
   CourseItem,
+  CourseListMapTable,
   ListParams,
   ListResponse,
   Pagination,
@@ -18,7 +19,7 @@ export interface CourseState {
   pagination: Pagination;
   popularCourseList: CourseItem[];
   courseList: CourseItem[];
-  selectCourseItem: Partial<CourseItem>;
+  selectCourseItem: Partial<CourseItem | CourseListMapTable>;
   courseInfo: {
     detail: CourseItem | null;
     studentRegisteredList: UserHadRegister[];
@@ -115,7 +116,10 @@ const courseSlice = createSlice({
       return;
     },
 
-    insertSelectCourseItem(state, action: PayloadAction<CourseItem>) {
+    insertSelectCourseItem(
+      state,
+      action: PayloadAction<CourseItem | CourseListMapTable>
+    ) {
       state.selectCourseItem = action.payload;
     },
 
@@ -210,22 +214,26 @@ export const selectCourseListMapTable = createSelector(
     courseList.map(
       ({
         maKhoaHoc,
+        biDanh,
         tenKhoaHoc,
         moTa,
         hinhAnh,
+        luotXem,
         maNhom,
         ngayTao,
-        nguoiTao: { taiKhoan },
+        nguoiTao: { taiKhoan: taiKhoanNguoiTao },
         danhMucKhoaHoc: { maDanhMucKhoahoc },
       }) => ({
+        biDanh,
         maKhoaHoc,
         tenKhoaHoc,
         moTa,
         hinhAnh,
         maNhom,
         ngayTao,
-        taiKhoan,
+        taiKhoanNguoiTao,
         maDanhMucKhoahoc,
+        luotXem,
       })
     )
 );
