@@ -18,7 +18,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   courseAction,
   selectCourseListMapTable,
@@ -46,6 +46,7 @@ function AdminCourseListPage() {
     MaNhom: `${searchParams.get("group")}`,
   });
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // set default url searchpParams
   useEffect(() => {
@@ -62,7 +63,12 @@ function AdminCourseListPage() {
   useEffect(() => {
     if (!searchParams.get("group")) return;
 
-    dispatch(courseAction.fetchCourseListPagination(filterParams));
+    dispatch(
+      courseAction.fetchCourseListPagination({
+        ...filterParams,
+        MaNhom: `${searchParams.get("group")}`,
+      })
+    );
     return () => {
       dispatch(courseAction.resetCourseListPagination());
     };
@@ -167,6 +173,7 @@ function AdminCourseListPage() {
             <button
               title="Show course detail"
               className="py-1 px-4 rounded-md bg-blue-500 text-white"
+              onClick={() => navigate(`/admin/course-info/${record.maKhoaHoc}`)}
             >
               Detail
             </button>
@@ -218,6 +225,7 @@ function AdminCourseListPage() {
               group={`${searchParams.get("group")}`}
               columns={columns}
               dataSource={courseListMapTable}
+              enablePagination={false}
             />
 
             <div className="my-10 flex justify-center">

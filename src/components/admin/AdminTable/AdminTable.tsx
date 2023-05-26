@@ -11,10 +11,11 @@ import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 
 interface Props {
   title: string;
-  previousPage: string;
+  previousPage?: string;
   columns: ColumnsType<any>;
   dataSource: any[];
-  group: string;
+  group?: string;
+  enablePagination?: false;
 }
 
 function AdminTable({
@@ -23,6 +24,7 @@ function AdminTable({
   columns,
   dataSource,
   group,
+  enablePagination,
 }: Props) {
   const navigate = useNavigate();
   const loadingCourse = useAppSelector(selectLoadingCourse);
@@ -34,23 +36,25 @@ function AdminTable({
 
   return (
     <div className="mt-8">
-      <h2 className="capitalize text-2xl text-center">{title}</h2>
+      <h2 className="capitalize text-2xl text-center mb-6">{title}</h2>
 
-      <div className="mb-6">
-        <Button
-          onClick={() => navigate(`${previousPage}`)}
-          variant="outlined"
-          className="flex gap-4"
-        >
-          <ArrowBackIcon />
-          Go back to list page
-        </Button>
-      </div>
+      {previousPage !== undefined && (
+        <div className="mb-6">
+          <Button
+            onClick={() => navigate(`${previousPage}`)}
+            variant="outlined"
+            className="flex gap-4"
+          >
+            <ArrowBackIcon />
+            Go back to list page
+          </Button>
+        </div>
+      )}
 
       <Table
         columns={columns}
         dataSource={dataSource}
-        pagination={false}
+        pagination={enablePagination}
         loading={loadingCourse}
         scroll={{ x: true }}
       ></Table>

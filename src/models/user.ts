@@ -127,3 +127,9 @@ export interface UserInformation {
   matKhau: string;
   maLoaiNguoiDung: UserTypeCode;
 }
+
+export interface UserHadRegister {
+  taiKhoan: string;
+  biDanh: string;
+  hoTen: string;
+}

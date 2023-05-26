@@ -18,6 +18,7 @@ import { Route } from "../models";
 import AdminAddUserPage from "pages/admin/AdminAddUserPage";
 import AdminAddCoursePage from "pages/admin/AdminAddCoursePage";
 import AdminCourseListPage from "pages/admin/AdminCourseListPage";
+import AdminCourseDetailPage from "pages/admin/AdminCourseDetailPage";
 
 const clientRoute: Route[] = [
   {
@@ -90,6 +91,10 @@ export const adminRoutes: Route[] = [
       {
         path: "course-list",
         component: AdminCourseListPage,
+      },
+      {
+        path: "course-info/:courseId",
+        component: AdminCourseDetailPage,
       },
     ],
   },

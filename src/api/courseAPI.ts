@@ -90,6 +90,15 @@ const courseAPI = {
       headers: { Authorization: `Bearer ${adminToken}` },
     });
   },
+
+  registerCourseByAdmin(data: CourseRegister): Promise<string> {
+    const url = `QuanLyKhoaHoc/GhiDanhKhoaHoc`;
+    const adminToken = getLocalStorageData(ADMIN_TOKEN);
+
+    return axiosClient.post(url, data, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+  },
 };
 
 export default courseAPI;

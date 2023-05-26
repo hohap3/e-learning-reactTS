@@ -9,6 +9,7 @@ import {
   SignInParams,
   UpdateInfoProps,
   UserCreate,
+  UserHadRegister,
   UserInfoDetail,
   UserProps,
   UserPropsGet,
@@ -112,6 +113,38 @@ const userApi = {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+  },
+
+  getUserRegisteredList(courseId: string): Promise<UserHadRegister[]> {
+    const url = `QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc`;
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
+
+    return axiosClient.post(
+      url,
+      { MaKhoaHoc: courseId },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
+  getUserWaitingList(courseId: string): Promise<UserHadRegister[]> {
+    const url = `QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet`;
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
+
+    return axiosClient.post(
+      url,
+      { MaKhoaHoc: courseId },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   },
 };
 

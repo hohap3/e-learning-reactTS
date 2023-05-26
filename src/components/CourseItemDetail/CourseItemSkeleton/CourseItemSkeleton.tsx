@@ -64,7 +64,6 @@ function CourseDetailSkeleton() {
                       </p>
                     </div>
                     <p className="mb-2">
-                      {" "}
                       <Skeleton
                         animation="wave"
                         variant="text"
@@ -73,7 +72,6 @@ function CourseDetailSkeleton() {
                     </p>
                     <div className="flex items-center gap-2">
                       <p>
-                        {" "}
                         <Skeleton
                           animation="wave"
                           variant="text"

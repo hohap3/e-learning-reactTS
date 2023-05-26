@@ -6,6 +6,7 @@ import {
   ListParams,
   ListResponse,
   Pagination,
+  UserHadRegister,
 } from "../../models";
 import { categoryImage } from "constants/common";
 
@@ -18,6 +19,11 @@ export interface CourseState {
   popularCourseList: CourseItem[];
   courseList: CourseItem[];
   selectCourseItem: Partial<CourseItem>;
+  courseInfo: {
+    detail: CourseItem | null;
+    studentRegisteredList: UserHadRegister[];
+    studentWaitingList: UserHadRegister[];
+  };
 }
 
 const initialState: CourseState = {
@@ -35,6 +41,11 @@ const initialState: CourseState = {
   popularCourseList: [],
   selectCourseItem: {},
   courseList: [],
+  courseInfo: {
+    detail: null,
+    studentRegisteredList: [],
+    studentWaitingList: [],
+  },
 };
 
 const courseSlice = createSlice({
@@ -106,6 +117,32 @@ const courseSlice = createSlice({
 
     insertSelectCourseItem(state, action: PayloadAction<CourseItem>) {
       state.selectCourseItem = action.payload;
+    },
+
+    fetchCourseInfo(state, action: PayloadAction<string>) {
+      state.loading = true;
+    },
+
+    insertCourseInfoDetail(state, action: PayloadAction<CourseItem>) {
+      state.loading = false;
+      state.courseInfo.detail = action.payload;
+    },
+
+    insertStudentRegisteredCourse(
+      state,
+      action: PayloadAction<UserHadRegister[]>
+    ) {
+      state.loading = false;
+      state.courseInfo.studentRegisteredList = action.payload;
+    },
+
+    insertStudentWaitingList(state, action: PayloadAction<UserHadRegister[]>) {
+      state.loading = false;
+      state.courseInfo.studentWaitingList = action.payload;
+    },
+
+    fetchCourseInfoFailed(state) {
+      state.loading = false;
     },
 
     startLoading(state) {
@@ -192,6 +229,15 @@ export const selectCourseListMapTable = createSelector(
       })
     )
 );
+
+export const selectCourseInfoDetail = (state: RootState) =>
+  state.course.courseInfo.detail;
+
+export const selectUserRegisterList = (state: RootState) =>
+  state.course.courseInfo.studentRegisteredList;
+
+export const selectUserWaitingList = (state: RootState) =>
+  state.course.courseInfo.studentWaitingList;
 
 // reducers
 const courseReducer = courseSlice.reducer;

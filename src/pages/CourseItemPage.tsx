@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CourseItem } from "../models";
 
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN } from "constants/common";
 import { selectLoginInfo } from "redux/User/userSlice";
 import Swal from "sweetalert2";
 import { getLocalStorageData, toastMessage } from "../utils";
@@ -21,7 +21,8 @@ function CourseItemPage() {
   const loading = useAppSelector(selectLoadingCourse);
   const { courseId } = useParams();
   const [showScrollBtn, setShowScrollBtn] = useState<boolean>(false);
-  const accessToken = getLocalStorageData(ACCESS_TOKEN);
+  const accessToken =
+    getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
   const loginInfo = useAppSelector(selectLoginInfo);
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ function CourseItemPage() {
   }, []);
 
   async function handleRegisterCourse() {
-    if (!accessToken || Object.keys(loginInfo).length < 1) {
+    if (!accessToken) {
       Swal.fire({
         title: "You're not log in!",
         text: "You need to log in so that you can register this course !",
