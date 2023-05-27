@@ -2,13 +2,13 @@ import courseAPI from "api/courseAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { RootState } from "app/store";
 import axios, { AxiosError } from "axios";
-import AddNewCourseForm from "components/form/admin/AddNewCourseForm/AddNewCourseForm";
+import AddNewCourseForm from "components/form/admin/AddNewCourseForm/AddEditCourseForm";
 import { ToastType } from "constants/index";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
-import { CreateCourse } from "models/index";
+import { CourseProps } from "models/index";
 import React, { useEffect, useState } from "react";
 import { courseAction } from "redux/Course/courseSlice";
-import { addCourseSchema } from "schemas/index";
+import { addEditCourseSchema } from "schemas/index";
 import { getCurrentDate, toastMessage } from "utils/index";
 
 function AdminAddCoursePage() {
@@ -20,7 +20,7 @@ function AdminAddCoursePage() {
     dispatch(courseAction.fetchCourse());
   }, []);
 
-  const initialValues: CreateCourse = {
+  const initialValues: CourseProps = {
     maKhoaHoc: "",
     biDanh: "",
     tenKhoaHoc: "",
@@ -34,7 +34,7 @@ function AdminAddCoursePage() {
     taiKhoanNguoiTao: `${loginInfo.taiKhoan}`,
   };
 
-  async function handleSubmitForm(formValues: CreateCourse) {
+  async function handleSubmitForm(formValues: CourseProps) {
     setLoading(true);
     setTimeout(async () => {
       try {
@@ -67,7 +67,8 @@ function AdminAddCoursePage() {
         <AddNewCourseForm
           initialValues={initialValues}
           onSubmitCourse={handleSubmitForm}
-          formSchema={addCourseSchema}
+          formSchema={addEditCourseSchema}
+          isEdit={false}
         />
       </div>
     </AdminLayoutPage>

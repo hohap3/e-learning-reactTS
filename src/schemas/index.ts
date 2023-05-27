@@ -4,4 +4,4 @@ export * from "./contactSchema";
 export * from "./admin/updateAdminSchema";
 export * from "./admin/updateUserAdminSchema";
 export * from "./admin/addUserSchema";
-export * from "./admin/addCourseSchema";
+export * from "./admin/addEditCourseSchema";

@@ -9,10 +9,14 @@ import axios, { AxiosError } from "axios";
 import ShowEditForm from "components/form/ShowEditForm/ShowEditForm";
 import { GROUP_LIST, UpdateInfoProps } from "constants/common";
 import { useSearchParams } from "react-router-dom";
-import { selectUserInfo, userAction } from "redux/User/userSlice";
+import {
+  selectUserFilter,
+  selectUserInfo,
+  userAction,
+} from "redux/User/userSlice";
 import { updateUserAdminSchema } from "schemas/admin/updateUserAdminSchema";
 import { ToastType } from "../../constants";
-import { UserInfo } from "../../models";
+import { ListParams, UserInfo } from "../../models";
 import { toastMessage } from "../../utils";
 import { useState } from "react";
 import { Backdrop } from "@mui/material";
@@ -23,6 +27,11 @@ function AdminUserListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const userInformation = useAppSelector(selectUserInfo);
   const [loading, setLoading] = useState<boolean>(false);
+  const userFilter = useAppSelector(selectUserFilter);
+  const [filter, setFilter] = useState<ListParams>({
+    ...userFilter,
+    MaNhom: searchParams.get("group") ? `${searchParams.get("group")}` : "",
+  });
   const dispatch = useAppDispatch();
 
   const initialValues: UserInfo = {
@@ -73,6 +82,13 @@ function AdminUserListPage() {
         successMessage();
 
         setLoading(false);
+        dispatch(
+          userAction.fetchUserPagination({
+            ...filter,
+            page: Number(searchParams.get("page")),
+            tuKhoa: searchParams.get("search") || undefined,
+          })
+        );
       } catch (error: any | AxiosError) {
         console.log(error);
         if (axios.isAxiosError(error)) {

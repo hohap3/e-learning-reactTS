@@ -7,7 +7,6 @@ import { GROUP_LIST } from "constants/common";
 import NotFoundGroup from "components/NotFoundGroup/NotFoundGroup";
 import { useAppSelector } from "app/hooks";
 import { selectLoadingCourse } from "redux/Course/courseSlice";
-import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 
 interface Props {
   title: string;

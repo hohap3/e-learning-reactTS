@@ -72,3 +72,7 @@ export interface GROUP_ITEM {
   key: string;
   value: string;
 }
+
+export interface MyObject extends File {
+  [key: string]: any;
+}

@@ -4,7 +4,7 @@ import {
   Category,
   CourseItem,
   CourseRegister,
-  CreateCourse,
+  CourseProps,
   ListParams,
   ListResponse,
   UnregisterCourse,
@@ -69,7 +69,7 @@ const courseAPI = {
     });
   },
 
-  createCourse(data: CreateCourse) {
+  createCourse(data: CourseProps) {
     const url = `QuanLyKhoaHoc/ThemKhoaHoc`;
     const accessToken =
       getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
@@ -98,6 +98,11 @@ const courseAPI = {
     return axiosClient.post(url, data, {
       headers: { Authorization: `Bearer ${adminToken}` },
     });
+  },
+
+  updateCourseInfo(data: CourseProps): Promise<string> {
+    const url = `QuanLyKhoaHoc/CapNhatKhoaHoc`;
+    return axiosClient.put(url, data);
   },
 };
 

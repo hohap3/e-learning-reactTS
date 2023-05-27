@@ -4,6 +4,7 @@ import {
   Category,
   CourseItem,
   CourseListMapTable,
+  CourseProps,
   ListParams,
   ListResponse,
   Pagination,
@@ -19,7 +20,7 @@ export interface CourseState {
   pagination: Pagination;
   popularCourseList: CourseItem[];
   courseList: CourseItem[];
-  selectCourseItem: Partial<CourseItem | CourseListMapTable>;
+  selectCourseItem: Partial<CourseItem | CourseProps> | null;
   courseInfo: {
     detail: CourseItem | null;
     studentRegisteredList: UserHadRegister[];
@@ -40,7 +41,7 @@ const initialState: CourseState = {
     count: 10,
   },
   popularCourseList: [],
-  selectCourseItem: {},
+  selectCourseItem: null,
   courseList: [],
   courseInfo: {
     detail: null,
@@ -118,7 +119,7 @@ const courseSlice = createSlice({
 
     insertSelectCourseItem(
       state,
-      action: PayloadAction<CourseItem | CourseListMapTable>
+      action: PayloadAction<CourseItem | CourseListMapTable | null>
     ) {
       state.selectCourseItem = action.payload;
     },
@@ -246,6 +247,9 @@ export const selectUserRegisterList = (state: RootState) =>
 
 export const selectUserWaitingList = (state: RootState) =>
   state.course.courseInfo.studentWaitingList;
+
+export const selectCourseItem = (state: RootState) =>
+  state.course.selectCourseItem;
 
 // reducers
 const courseReducer = courseSlice.reducer;

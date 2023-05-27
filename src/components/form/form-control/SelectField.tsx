@@ -8,12 +8,12 @@ import {
 import React, { SelectHTMLAttributes } from "react";
 import { Control, useController } from "react-hook-form";
 
-interface Props<Type> extends SelectHTMLAttributes<HTMLInputElement> {
+interface Props extends SelectHTMLAttributes<HTMLInputElement> {
   name: string;
   control: Control<any>;
   label?: string;
   variant?: "outlined" | "filled" | "standard";
-  data: Type[];
+  data: any[];
 }
 
 function SelectField({
@@ -22,9 +22,8 @@ function SelectField({
   label,
   variant,
   data,
-
   ...restProps
-}: Props<any>) {
+}: Props) {
   const {
     field: { value, onChange, ref },
     fieldState: { invalid },
@@ -47,17 +46,17 @@ function SelectField({
           inputProps={restProps}
           name={name}
           style={{ width: "100%" }}
+          defaultValue=""
         >
           <MenuItem value="">Select one of these</MenuItem>
-          {data.length > 0 &&
-            data.map((item) => (
-              <MenuItem
-                value={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
-                key={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
-              >
-                {item.tenLoaiNguoiDung || item.value || item.tenDanhMuc}
-              </MenuItem>
-            ))}
+          {data.map((item) => (
+            <MenuItem
+              value={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
+              key={item.maLoaiNguoiDung || item.key || item.maDanhMuc}
+            >
+              {item.tenLoaiNguoiDung || item.value || item.tenDanhMuc}
+            </MenuItem>
+          ))}
         </Select>
 
         <FormHelperText>

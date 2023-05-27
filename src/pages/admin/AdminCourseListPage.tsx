@@ -9,7 +9,12 @@ import { ToastType } from "constants/index";
 
 import { GROUP_LIST } from "constants/common";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
-import { CourseItem, CourseListMapTable, ListParams } from "models/index";
+import {
+  CourseItem,
+  CourseListMapTable,
+  CourseProps,
+  ListParams,
+} from "models/index";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
@@ -22,6 +27,7 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   courseAction,
+  selectCourseItem,
   selectCourseList,
   selectCourseListMapTable,
   selectFilter,
@@ -35,9 +41,14 @@ import {
 } from "utils/index";
 import axios, { AxiosError } from "axios";
 import SearchComp from "components/searchCourse/SearchCourse";
+import DrawerModel from "components/Drawer/DrawerModel";
+import AddEditCourseForm from "components/form/admin/AddNewCourseForm/AddEditCourseForm";
+import { addEditCourseSchema } from "schemas/index";
+import { ToastContainer } from "react-toastify";
 
 function AdminCourseListPage() {
   const courseListMapTable = useAppSelector(selectCourseListMapTable);
+  const courseItem = useAppSelector(selectCourseItem);
   const coursePagination = useAppSelector(selectPagination);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
@@ -97,7 +108,7 @@ function AdminCourseListPage() {
     setSearchParams({ group });
   }
   function handleEdit(courseItem: CourseListMapTable) {
-    console.log(courseItem);
+    dispatch(courseAction.insertSelectCourseItem(courseItem));
   }
 
   function handleRemoveCourse(courseItem: CourseListMapTable) {
@@ -222,76 +233,134 @@ function AdminCourseListPage() {
     },
   ];
 
+  const initialValues: CourseProps = {
+    maKhoaHoc: "",
+    biDanh: "",
+    ngayTao: "",
+    taiKhoanNguoiTao: "",
+    luotXem: 0,
+    hinhAnh: "",
+    danhGia: 0,
+    tenKhoaHoc: "",
+    moTa: "",
+    ...courseItem,
+    maNhom: `${courseItem?.maNhom?.toUpperCase()}`,
+  };
+
+  function handleSubmitCourse(formValues: CourseProps) {
+    setLoading(true);
+    setTimeout(async () => {
+      try {
+        const res = await courseAPI.updateCourseInfo(formValues);
+        setLoading(false);
+        const successMessage = toastMessage(res, ToastType.SUCCESS);
+        successMessage();
+
+        dispatch(
+          courseAction.fetchCourseListPagination({
+            ...filterParams,
+            MaNhom: `${searchParams.get("group")}`,
+            tenKhoaHoc: `${searchParams.get("search") ?? ""}`,
+          })
+        );
+      } catch (error: any | AxiosError) {
+        setLoading(false);
+        if (axios.isAxiosError(AxiosError)) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...Something went wrong!",
+            text: `${error.response?.data}`,
+          });
+        }
+      }
+    }, 500);
+  }
+
   return (
     <AdminLayoutPage
       title={!searchParams.get("group") ? "Select one of groups below" : ""}
     >
-      <div className="my-4">
-        {!searchParams.get("group") && (
-          <div className="grid grid-cols-2 gap-4">
-            {GROUP_LIST.map((group) => (
-              <div key={group.key} className="col-span-1">
-                <button
-                  className="h-[4rem] text-[16px] w-full relative border border-[#0868FD] text-black rounded-2xl"
-                  onClick={() => handleSelectGroup(group.value)}
+      <>
+        <div className="my-4">
+          {!searchParams.get("group") && (
+            <div className="grid grid-cols-2 gap-4">
+              {GROUP_LIST.map((group) => (
+                <div key={group.key} className="col-span-1">
+                  <button
+                    className="h-[4rem] text-[16px] w-full relative border border-[#0868FD] text-black rounded-2xl"
+                    onClick={() => handleSelectGroup(group.value)}
+                  >
+                    {group.value}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {searchParams.get("group") && (
+            <>
+              <h2 className="capitalize text-2xl text-center mb-6">
+                Course List
+              </h2>
+
+              <div className="mb-6">
+                <Button
+                  onClick={() => navigate(`/admin/course-list`)}
+                  variant="outlined"
+                  className="flex gap-4"
                 >
-                  {group.value}
-                </button>
+                  <ArrowBackIcon />
+                  Go back to list page
+                </Button>
               </div>
-            ))}
-          </div>
-        )}
 
-        {searchParams.get("group") && (
-          <>
-            <h2 className="capitalize text-2xl text-center mb-6">
-              Course List
-            </h2>
-
-            <div className="mb-6">
-              <Button
-                onClick={() => navigate(`/admin/course-list`)}
-                variant="outlined"
-                className="flex gap-4"
-              >
-                <ArrowBackIcon />
-                Go back to list page
-              </Button>
-            </div>
-
-            <SearchComp
-              placeholder="Search course..."
-              searchParamsValue="search"
-              onSearchChange={handleSearch}
-            />
-
-            <AdminTable
-              title=""
-              group={`${searchParams.get("group")}`}
-              columns={columns}
-              dataSource={courseListMapTable}
-              enablePagination={false}
-            />
-
-            <div className="my-10 flex justify-center">
-              <Pagination
-                count={coursePagination.totalPages}
-                variant="outlined"
-                shape="rounded"
-                page={Number(searchParams.get("page")) || 1}
-                onChange={handleChangePage}
+              <SearchComp
+                placeholder="Search course..."
+                searchParamsValue="search"
+                onSearchChange={handleSearch}
               />
-            </div>
-          </>
-        )}
 
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
+              <AdminTable
+                title=""
+                group={`${searchParams.get("group")}`}
+                columns={columns}
+                dataSource={courseListMapTable}
+                enablePagination={false}
+              />
+
+              <div className="my-10 flex justify-center">
+                <Pagination
+                  count={coursePagination.totalPages}
+                  variant="outlined"
+                  shape="rounded"
+                  page={Number(searchParams.get("page")) || 1}
+                  onChange={handleChangePage}
+                />
+              </div>
+            </>
+          )}
+
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <LoadingCircle />
+          </Backdrop>
+        </div>
+
+        <DrawerModel
+          openDrawer={!!courseItem}
+          onClose={() => dispatch(courseAction.insertSelectCourseItem(null))}
+          title="Edit Course"
         >
-          <LoadingCircle />
-        </Backdrop>
-      </div>
+          <AddEditCourseForm
+            initialValues={initialValues}
+            isEdit={true}
+            formSchema={addEditCourseSchema}
+            onSubmitCourse={handleSubmitCourse}
+          />
+        </DrawerModel>
+      </>
     </AdminLayoutPage>
   );
 }

@@ -6,7 +6,7 @@ export interface UnregisterCourse {
   taiKhoan: string;
 }
 
-export interface CreateCourse {
+export interface CourseProps {
   maKhoaHoc: string;
   biDanh: string;
   tenKhoaHoc: string;
@@ -16,7 +16,7 @@ export interface CreateCourse {
   hinhAnh: string;
   maNhom: string;
   ngayTao: string;
-  maDanhMucKhoaHoc: string;
+  maDanhMucKhoaHoc?: string;
   taiKhoanNguoiTao: string;
 }
 
