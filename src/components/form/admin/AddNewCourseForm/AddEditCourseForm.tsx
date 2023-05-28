@@ -22,11 +22,12 @@ import { useController, useForm } from "react-hook-form";
 import { courseAction, selectCategoryList } from "redux/Course/courseSlice";
 
 import { getDefaultImagePath, handleSubmitError } from "utils/index";
+import * as yup from "yup";
 
 interface Props {
   initialValues: CourseProps;
   onSubmitCourse: (formValues: CourseProps) => void;
-  formSchema: any;
+  formSchema: yup.AnyObjectSchema;
   isEdit: boolean;
 }
 
