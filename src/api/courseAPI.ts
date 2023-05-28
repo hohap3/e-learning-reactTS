@@ -100,7 +100,7 @@ const courseAPI = {
     });
   },
 
-  updateCourseInfo(data: CourseProps): Promise<string> {
+  updateCourseInfo(data: CourseProps) {
     const url = `QuanLyKhoaHoc/CapNhatKhoaHoc`;
     return axiosClient.put(url, data);
   },

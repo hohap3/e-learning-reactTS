@@ -251,9 +251,12 @@ function AdminCourseListPage() {
     setLoading(true);
     setTimeout(async () => {
       try {
-        const res = await courseAPI.updateCourseInfo(formValues);
+        await courseAPI.updateCourseInfo(formValues);
         setLoading(false);
-        const successMessage = toastMessage(res, ToastType.SUCCESS);
+        const successMessage = toastMessage(
+          "Update Course Successfully",
+          ToastType.SUCCESS
+        );
         successMessage();
 
         dispatch(
@@ -265,7 +268,14 @@ function AdminCourseListPage() {
         );
       } catch (error: any | AxiosError) {
         setLoading(false);
-        if (axios.isAxiosError(AxiosError)) {
+        if (axios.isAxiosError(error)) {
+          console.log(error);
+          const errorMessage = toastMessage(
+            `${error.message}`,
+            ToastType.ERROR
+          );
+          errorMessage();
+
           Swal.fire({
             icon: "error",
             title: "Oops...Something went wrong!",
@@ -298,7 +308,7 @@ function AdminCourseListPage() {
           )}
 
           {searchParams.get("group") && (
-            <>
+            <div>
               <h2 className="capitalize text-2xl text-center mb-6">
                 Course List
               </h2>
@@ -337,7 +347,7 @@ function AdminCourseListPage() {
                   onChange={handleChangePage}
                 />
               </div>
-            </>
+            </div>
           )}
 
           <Backdrop
