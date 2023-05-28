@@ -6,7 +6,14 @@ export const addEditCourseSchema = yup.object({
   biDanh: yup.string().required("Please insert this field"),
   tenKhoaHoc: yup.string().required("Please insert this field"),
   moTa: yup.string(),
-  hinhAnh: yup.string().required("Please insert an image"),
+  hinhAnhFile: yup
+    .mixed()
+    .required("Please insert an image")
+    .test(
+      "check-size",
+      "Size image must be lower than 2mb",
+      (value) => value && (value as HTMLInputElement).size <= MAX_IMAGE_SIZE
+    ),
   maNhom: yup
     .string()
     .test(

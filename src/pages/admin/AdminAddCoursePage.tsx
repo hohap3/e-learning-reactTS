@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { RootState } from "app/store";
 import axios, { AxiosError } from "axios";
 import AddNewCourseForm from "components/form/admin/AddNewCourseForm/AddEditCourseForm";
+import { COURSE_PROP_LIST } from "constants/common";
 import { ToastType } from "constants/index";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
-import { CourseProps } from "models/index";
+import { CourseProps, CoursePropsMap } from "models/index";
 import React, { useEffect, useState } from "react";
 import { courseAction } from "redux/Course/courseSlice";
 import { addEditCourseSchema } from "schemas/index";
@@ -26,19 +27,38 @@ function AdminAddCoursePage() {
     tenKhoaHoc: "",
     moTa: "",
     luotXem: 0,
+    maDanhMucKhoaHoc: "",
     danhGia: 0,
     hinhAnh: "",
     maNhom: "",
     ngayTao: getCurrentDate(),
-    maDanhMucKhoaHoc: "",
+    hinhAnhFile: "",
     taiKhoanNguoiTao: `${loginInfo.taiKhoan}`,
   };
 
   async function handleSubmitForm(formValues: CourseProps) {
+    const { name } = formValues.hinhAnhFile;
+
+    const formData = new FormData();
+
+    formData.append("file", formValues.hinhAnhFile);
+    formData.append("tenKhoaHoc", formValues.tenKhoaHoc);
+
+    const mapFormValues: CoursePropsMap = {
+      ...formValues,
+      hinhAnh: name,
+    };
+
+    for (const key of Object.keys(mapFormValues)) {
+      if (!COURSE_PROP_LIST.includes(key))
+        delete mapFormValues[key as keyof CoursePropsMap];
+    }
+
     setLoading(true);
     setTimeout(async () => {
       try {
-        await courseAPI.createCourse(formValues);
+        await courseAPI.createCourse(mapFormValues);
+        await courseAPI.uploadCourseImage(formData);
 
         const successMessage = toastMessage(
           "Add new course successfully",

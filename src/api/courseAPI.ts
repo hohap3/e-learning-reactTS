@@ -8,6 +8,7 @@ import {
   ListParams,
   ListResponse,
   UnregisterCourse,
+  CoursePropsMap,
 } from "../models";
 import { getLocalStorageData } from "../utils";
 
@@ -69,7 +70,7 @@ const courseAPI = {
     });
   },
 
-  createCourse(data: CourseProps) {
+  createCourse(data: CoursePropsMap) {
     const url = `QuanLyKhoaHoc/ThemKhoaHoc`;
     const accessToken =
       getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
@@ -100,9 +101,36 @@ const courseAPI = {
     });
   },
 
-  updateCourseInfo(data: CourseProps) {
+  updateCourseInfo(data: CoursePropsMap) {
     const url = `QuanLyKhoaHoc/CapNhatKhoaHoc`;
     return axiosClient.put(url, data);
+  },
+
+  addCourseImageUpload(data: any) {
+    const url = `QuanLyKhoaHoc/ThemKhoaHocUploadHinh`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  updateCourseImageUpload(data: any) {
+    const url = `QuanLyKhoaHoc/CapNhatKhoaHocUpload`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  uploadCourseImage(data: any) {
+    const url = `QuanLyKhoaHoc/UploadHinhAnhKhoaHoc`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 };
 

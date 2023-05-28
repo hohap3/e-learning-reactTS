@@ -7,12 +7,13 @@ import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 import AdminTable from "components/admin/AdminTable/AdminTable";
 import { ToastType } from "constants/index";
 
-import { GROUP_LIST } from "constants/common";
+import { COURSE_PROP_LIST, GROUP_LIST } from "constants/common";
 import AdminLayoutPage from "layouts/admin/adminLayoutPage/AdminLayoutPage";
 import {
   CourseItem,
   CourseListMapTable,
   CourseProps,
+  CoursePropsMap,
   ListParams,
 } from "models/index";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -44,7 +45,6 @@ import SearchComp from "components/searchCourse/SearchCourse";
 import DrawerModel from "components/Drawer/DrawerModel";
 import AddEditCourseForm from "components/form/admin/AddNewCourseForm/AddEditCourseForm";
 import { addEditCourseSchema } from "schemas/index";
-import { ToastContainer } from "react-toastify";
 
 function AdminCourseListPage() {
   const courseListMapTable = useAppSelector(selectCourseListMapTable);
@@ -242,16 +242,38 @@ function AdminCourseListPage() {
     hinhAnh: "",
     danhGia: 0,
     tenKhoaHoc: "",
+    hinhAnhFile: "",
     moTa: "",
     ...courseItem,
     maNhom: `${courseItem?.maNhom?.toUpperCase()}`,
+    maDanhMucKhoaHoc: `${
+      courseItem?.maDanhMucKhoahoc ? courseItem.maDanhMucKhoahoc : ""
+    }`,
   };
 
   function handleSubmitCourse(formValues: CourseProps) {
+    const { name } = formValues.hinhAnhFile;
+
+    const formData = new FormData();
+
+    formData.append("file", formValues.hinhAnhFile);
+    formData.append("tenKhoaHoc", formValues.tenKhoaHoc);
+
+    const mapFormValues: CoursePropsMap = {
+      ...formValues,
+      hinhAnh: name,
+    };
+
+    for (const key of Object.keys(mapFormValues)) {
+      if (!COURSE_PROP_LIST.includes(key))
+        delete mapFormValues[key as keyof CoursePropsMap];
+    }
+
     setLoading(true);
     setTimeout(async () => {
       try {
-        await courseAPI.updateCourseInfo(formValues);
+        await courseAPI.updateCourseInfo(mapFormValues);
+        await courseAPI.uploadCourseImage(formData);
         setLoading(false);
         const successMessage = toastMessage(
           "Update Course Successfully",

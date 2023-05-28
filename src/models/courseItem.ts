@@ -25,6 +25,7 @@ export interface CourseItem {
   soLuongHocVien: 0;
   nguoiTao: AdminCreate;
   danhMucKhoaHoc: CourseCategory;
+  maDanhMucKhoahoc?: string;
 }
 
 export interface CourseItemRegister {

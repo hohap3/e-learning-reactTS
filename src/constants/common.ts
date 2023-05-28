@@ -124,5 +124,19 @@ export const GROUP_LIST: GROUP_ITEM[] = [
 ];
 
 export const IS_ADMIN = "IS_ADMIN";
-export const MAX_IMAGE_SIZE = 1024 * 1024;
+export const MAX_IMAGE_SIZE = 1024 * 1024 * 2;
 export const SUPPORT_FORMATS_IMAGE = ["image/jpg", "image/jpeg", "image/png"];
+
+export const COURSE_PROP_LIST = [
+  "maKhoaHoc",
+  "biDanh",
+  "tenKhoaHoc",
+  "moTa",
+  "luotXem",
+  "danhGia",
+  "hinhAnh",
+  "maNhom",
+  "ngayTao",
+  "maDanhMucKhoaHoc",
+  "taiKhoanNguoiTao",
+];

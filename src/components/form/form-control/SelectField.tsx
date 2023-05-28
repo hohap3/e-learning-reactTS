@@ -4,8 +4,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from "@mui/material";
-import React, { SelectHTMLAttributes } from "react";
+import React, { ChangeEvent, SelectHTMLAttributes } from "react";
 import { Control, useController } from "react-hook-form";
 
 interface Props extends SelectHTMLAttributes<HTMLInputElement> {

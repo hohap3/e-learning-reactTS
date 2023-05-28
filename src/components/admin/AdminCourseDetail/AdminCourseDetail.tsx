@@ -47,9 +47,10 @@ function AdminCourseDetail({ courseItem }: Props) {
                 </p>
               </div>
               <p className="mb-2">Created by {hoTen}</p>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-2">
                 <p>Post date : {ngayTao}</p>
                 <p className="flex gap-2">
+                  Language:
                   <PublicIcon />
                   English , Vietnamese
                 </p>

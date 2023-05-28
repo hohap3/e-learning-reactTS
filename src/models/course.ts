@@ -14,11 +14,15 @@ export interface CourseProps {
   luotXem: number;
   danhGia: number | string;
   hinhAnh: string;
+  hinhAnhFile: string | any;
   maNhom: string;
   ngayTao: string;
   maDanhMucKhoaHoc?: string;
+  maDanhMucKhoahoc?: string;
   taiKhoanNguoiTao: string;
 }
+
+export type CoursePropsMap = Omit<CourseProps, "hinhAnhFile">;
 
 export interface CourseListMapTable {
   maKhoaHoc: string;

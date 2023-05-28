@@ -44,6 +44,12 @@ function AddEditCourseForm({
     dispatch(courseAction.fetchCourse());
   }, []);
 
+  useEffect(() => {
+    return () => {
+      avatar && URL.revokeObjectURL(avatar.preview);
+    };
+  }, [avatar]);
+
   const {
     handleSubmit,
     control,
@@ -59,16 +65,17 @@ function AddEditCourseForm({
     field: { onChange },
     fieldState: { invalid },
     formState: { errors },
-  } = useController({ name: "hinhAnh", control });
+  } = useController({ name: "hinhAnhFile", control });
 
   function handleChangeImage(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
     const file: MyObject = e.target.files[0];
-
+    e.target.value = "";
+    // create temp url
     file.preview = URL.createObjectURL(file);
     setAvatar(file);
 
-    onChange(`${file.name}`);
+    onChange(file);
   }
 
   function handleSubmitForm(formValues: CourseProps) {
@@ -120,7 +127,7 @@ function AddEditCourseForm({
       <SelectField name="maNhom" data={GROUP_LIST} control={control} />
 
       <SelectField
-        name="maDanhMucKhoahoc"
+        name="maDanhMucKhoaHoc"
         data={categoryList}
         control={control}
       />
@@ -128,24 +135,31 @@ function AddEditCourseForm({
       <div className="mb-6">
         <FormControl error={invalid}>
           <FilledInput
-            name="hinhAnh"
+            name="hinhAnhFile"
             type="file"
             onChange={handleChangeImage}
           />
           <FormHelperText>
-            {errors["hinhAnh"]?.message ? `${errors["hinhAnh"].message}` : ""}
+            {errors["hinhAnhFile"]?.message
+              ? `${errors["hinhAnhFile"].message}`
+              : ""}
           </FormHelperText>
         </FormControl>
 
         <div className="my-6">
-          {initialValues.hinhAnh && (
+          {avatar ? (
+            <img
+              src={avatar.preview}
+              className="w-40 border"
+              onError={handleErrorImage}
+            />
+          ) : (
             <img
               src={initialValues.hinhAnh}
               className="w-40 border"
               onError={handleErrorImage}
             />
           )}
-          {avatar && <img src={avatar.preview} className="w-40 border" />}
         </div>
       </div>
 
