@@ -140,3 +140,13 @@ export const COURSE_PROP_LIST = [
   "maDanhMucKhoaHoc",
   "taiKhoanNguoiTao",
 ];
+
+export const LOGIN_INFO = [
+  "chiTietKhoaHocGhiDanh",
+  "taiKhoan",
+  "hoTen",
+  "soDT",
+  "maLoaiNguoiDung",
+  "maNhom",
+  "email",
+];

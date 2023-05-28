@@ -25,7 +25,7 @@ function PersonalPage() {
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    (async () => {
+    (() => {
       if (!accessToken) {
         Swal.fire({
           title: "You can't go to this page!",

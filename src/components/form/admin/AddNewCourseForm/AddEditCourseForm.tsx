@@ -46,6 +46,7 @@ function AddEditCourseForm({
 
   useEffect(() => {
     return () => {
+      // URL.revokeObjectURL used for remove temp url
       avatar && URL.revokeObjectURL(avatar.preview);
     };
   }, [avatar]);
