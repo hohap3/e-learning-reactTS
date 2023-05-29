@@ -76,3 +76,7 @@ export interface GROUP_ITEM {
 export interface MyObject extends File {
   [key: string]: any;
 }
+
+export interface Navbar {
+  hiddenNavbar: boolean;
+}

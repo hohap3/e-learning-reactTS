@@ -15,7 +15,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { ReactNode, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { selectLoginInfo, userAction } from "redux/User/userSlice";
 import Swal from "sweetalert2";
@@ -23,6 +23,8 @@ import { ToastType } from "../../../constants";
 import { ACCESS_TOKEN, IS_ADMIN } from "../../../constants/common";
 import { getLocalStorageData, toastMessage } from "../../../utils";
 import "animate.css";
+import clsx from "clsx";
+import { selectHiddenNavbar } from "redux/Navbar/navbar";
 
 interface Props {
   children: ReactNode;
@@ -48,6 +50,7 @@ function AdminCommonLayout({ children }: Props) {
   const loginInfo = useAppSelector(selectLoginInfo);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const hiddenNavbar = useAppSelector(selectHiddenNavbar);
 
   const { hoTen } = loginInfo;
 
@@ -93,7 +96,11 @@ function AdminCommonLayout({ children }: Props) {
   return (
     <div className="py-5">
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-3">
+        <div
+          className={clsx(`col-span-3 transition-all`, {
+            hidden: hiddenNavbar,
+          })}
+        >
           <div>
             <div className="text-white bg-[#2b2b4b] mb-5">
               <List
@@ -309,7 +316,14 @@ function AdminCommonLayout({ children }: Props) {
             </div>
           </div>
         </div>
-        <div className="col-span-9">{children}</div>
+        <div
+          className={clsx({
+            "col-span-9": !hiddenNavbar,
+            "col-span-12": hiddenNavbar,
+          })}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

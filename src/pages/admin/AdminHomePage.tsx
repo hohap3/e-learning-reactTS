@@ -5,7 +5,7 @@ import AdminLineChart from "components/admin/AdminLineChart/AdminLineChart";
 import AdminStatistic from "components/admin/AdminStatistic/AdminStatistic";
 import AdminStatisticChart from "components/admin/AdminStatisticChart/AdminStatisticChart";
 import StaticCourseList from "components/admin/StaticCourseList/StaticCourseList";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   dashboardAction,

@@ -9,10 +9,11 @@ import { UserCreate, UserTypeProps } from "models/index";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { handleSubmitError } from "utils/index";
+import * as yup from "yup";
 
 interface Props {
   initialValues: UserCreate;
-  formSchema: any;
+  formSchema: yup.AnyObjectSchema;
   onSubmitForm: (formValues: UserCreate) => void;
 }
 

@@ -1,12 +1,19 @@
-import React from "react";
-import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import SearchIcon from "@mui/icons-material/Search";
+import ViewWeekIcon from "@mui/icons-material/ViewWeek";
+import { useAppDispatch } from "app/hooks";
+import { navbarAction } from "redux/Navbar/navbar";
 
 function AdminHeader() {
+  const dispatch = useAppDispatch();
+
+  function handleToggleNavbar() {
+    dispatch(navbarAction.toggleNavbar());
+  }
+
   return (
     <header className="py-5 px-8 h-[80px] bg-[#2b2b4b]">
       <div className="flex items-center h-full gap-10">
-        <button className="text-white">
+        <button className="text-white" onClick={handleToggleNavbar}>
           <ViewWeekIcon />
         </button>
 

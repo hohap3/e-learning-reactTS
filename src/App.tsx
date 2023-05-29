@@ -14,6 +14,7 @@ import { COURSE_GROUP } from "constants/common";
 function App() {
   const dispatch = useAppDispatch();
 
+  // call api user right after they access to website
   useEffect(() => {
     (async () => {
       try {

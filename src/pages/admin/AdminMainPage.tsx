@@ -1,11 +1,11 @@
-import { List, ListSubheader } from "@mui/material";
-import { ACCESS_TOKEN, ADMIN_TOKEN, IS_ADMIN } from "constants/common";
+import errorResponsive from "assets/notFound/error-4a19709e.png";
+import { ADMIN_TOKEN, IS_ADMIN } from "constants/common";
 import AdminCommonLayout from "layouts/admin/adminCommonLayout/AdminCommonLayout";
 import AdminHeader from "layouts/admin/adminHeader/AdminHeader";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getLocalStorageData } from "../../utils";
 import Swal from "sweetalert2";
+import { getLocalStorageData } from "../../utils";
 
 function AdminMainPage() {
   const accessToken = getLocalStorageData(ADMIN_TOKEN) ?? null;
@@ -41,10 +41,23 @@ function AdminMainPage() {
   }, []);
 
   return (
-    <section className="bg-[#000033] min-h-screen">
-      <div className="container mx-auto">
-        <AdminHeader />
-        <AdminCommonLayout children={<Outlet />} />
+    <section>
+      <div className="bg-[#000033] min-h-screen hidden xl:block">
+        <div className="container mx-auto">
+          <AdminHeader />
+          <AdminCommonLayout children={<Outlet />} />
+        </div>
+      </div>
+
+      <div className="xl:hidden block bg-white relative w=full min-h-screen max-h-screen">
+        <div>
+          <img src={errorResponsive} />
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <p className="py-4 px-6 bg-red-700 rounded-md text-white text-[18px] capitalize font-bold">
+            Sorry, admin dashboard is not supported for handheld devices!
+          </p>
+        </div>
       </div>
     </section>
   );

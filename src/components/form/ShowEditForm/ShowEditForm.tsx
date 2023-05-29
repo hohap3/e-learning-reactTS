@@ -13,13 +13,14 @@ import SelectField from "../form-control/SelectField";
 import { useEffect, useState } from "react";
 import userApi from "api/userAPI";
 import { GROUP_LIST } from "constants/common";
+import * as yup from "yup";
 
 interface Props {
   initialValues: UserInfo;
   isEditMode: boolean;
   onSubmitEdit: (formValues: UserInfo) => void;
   isAdmin: boolean;
-  formSchema: any;
+  formSchema: yup.AnyObjectSchema;
   allowUpdatePassword?: boolean;
 }
 
