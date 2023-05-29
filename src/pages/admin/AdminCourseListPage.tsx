@@ -172,7 +172,13 @@ function AdminCourseListPage() {
 
   const columns: ColumnsType<CourseListMapTable> = [
     { title: "Course Code", dataIndex: "maKhoaHoc", key: "maKhoaHoc" },
-    { title: "Course Name", dataIndex: "tenKhoaHoc", key: "tenKhoaHoc" },
+    {
+      title: "Course Name",
+      dataIndex: "tenKhoaHoc",
+      key: "tenKhoaHoc",
+      sorter: (a, b) => a.tenKhoaHoc.length - b.tenKhoaHoc.length,
+      sortDirections: ["ascend", "descend"],
+    },
     {
       title: "Course Description",
       dataIndex: "moTa",

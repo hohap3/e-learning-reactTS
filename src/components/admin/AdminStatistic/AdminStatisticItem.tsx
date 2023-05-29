@@ -29,7 +29,7 @@ function AdminStatisticItem({ amount, text, icon: Icon, position }: Props) {
       <CountUp
         start={0}
         end={amount}
-        duration={5}
+        duration={4}
         enableScrollSpy={true}
         scrollSpyOnce={true}
       >

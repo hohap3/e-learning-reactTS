@@ -143,12 +143,16 @@ function AdminUserListTable({ group, onEdit }: Props) {
           </Tag>
         );
       },
+      sorter: (a, b) => a.taiKhoan.length - b.taiKhoan.length,
+      sortDirections: ["ascend", "descend"],
     },
 
     {
       title: "Name",
       dataIndex: "hoTen",
       key: "hoTen",
+      sorter: (a, b) => a.hoTen.length - b.hoTen.length,
+      sortDirections: ["ascend", "descend"],
     },
 
     {
@@ -176,6 +180,13 @@ function AdminUserListTable({ group, onEdit }: Props) {
       render: (_: any, record: UserListPaginationMap) => {
         return (
           <div className="flex items-center gap-4">
+            <button
+              title="Show course detail"
+              className="py-1 px-4 rounded-md bg-blue-500 text-white"
+              onClick={() => navigate(`/admin/user-info/${record.taiKhoan}`)}
+            >
+              Check
+            </button>
             <button
               onClick={() =>
                 handleEditUser({ account: record.taiKhoan, group: `${group}` })
