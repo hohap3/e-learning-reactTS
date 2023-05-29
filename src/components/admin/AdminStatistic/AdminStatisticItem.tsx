@@ -2,6 +2,7 @@ import React, { FC, ReactElement, ReactNode, SVGProps } from "react";
 import styles from "./adminStaticItem.module.scss";
 import clsx from "clsx";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
+import CountUp from "react-countup";
 
 interface Props {
   amount: number;
@@ -24,8 +25,20 @@ function AdminStatisticItem({ amount, text, icon: Icon, position }: Props) {
         <p className="text-base uppercase">{text}</p>
         {Icon}
       </div>
-      {amount < 1 && <LoadingCircle />}
-      {amount > 0 && <p className="mt-2 text-2xl">{amount}</p>}
+
+      <CountUp
+        start={0}
+        end={amount}
+        duration={5}
+        enableScrollSpy={true}
+        scrollSpyOnce={true}
+      >
+        {({ countUpRef }) => (
+          <div>
+            <span className="text-2xl text-white" ref={countUpRef}></span>
+          </div>
+        )}
+      </CountUp>
     </div>
   );
 }

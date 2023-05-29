@@ -1,47 +1,40 @@
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import clsx from "clsx";
+import { ACCESS_TOKEN, ADMIN_TOKEN, IS_ADMIN } from "constants/common";
+import { Ref, forwardRef, useRef, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   selectHasLogin,
   selectLoginInfo,
   userAction,
 } from "redux/User/userSlice";
-import { getLocalStorageData, toastMessage } from "../../../utils";
-import { ACCESS_TOKEN } from "constants/common";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { useRef, useState } from "react";
-import clsx from "clsx";
 import Swal from "sweetalert2";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { ToastType } from "../../../constants";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { ToastType, mobileNavbarList } from "../../../constants";
+import { getLocalStorageData, toastMessage } from "../../../utils";
 import styles from "./headerNavMobile.module.scss";
 
-function HeaderNavMobile() {
-  const location = useLocation();
+interface HeaderMobileState {
+  toggleNavbar: boolean;
+}
+
+function HeaderNavMobile(
+  { toggleNavbar }: HeaderMobileState,
+  ref: Ref<HTMLDivElement>
+) {
   const navigate = useNavigate();
   const loginInfo = useAppSelector(selectLoginInfo);
-  const hasLogin = useAppSelector(selectHasLogin);
   const accessToken = getLocalStorageData(ACCESS_TOKEN);
-  const navbarRef = useRef<null | HTMLDivElement>(null);
-  const navbarLoginNav = useRef<null | HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-
-  function moveToSignIn() {
-    document.documentElement.scrollTop = 0;
-    navigate("/signIn");
-  }
-
-  function handleToggleClick() {
-    setOpenNav((prevState) => !prevState);
-    if (!navbarLoginNav.current) return;
-
-    const hasReachHeight = navbarLoginNav.current.clientHeight === 118;
-    if (hasReachHeight) navbarLoginNav.current.style.overflowY = "scroll";
-  }
+  const adminToken = getLocalStorageData(ADMIN_TOKEN);
+  const isAdmin = getLocalStorageData(IS_ADMIN);
 
   function handleLogout() {
     Swal.fire({
@@ -54,9 +47,12 @@ function HeaderNavMobile() {
       confirmButtonText: "Logout",
     }).then((result) => {
       if (result.isConfirmed) {
-        const accessToken = getLocalStorageData(ACCESS_TOKEN);
+        const accessToken =
+          getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
         if (!accessToken) return;
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(ADMIN_TOKEN);
+        localStorage.removeItem(IS_ADMIN);
         dispatch(userAction.logout());
 
         const successToast = toastMessage(
@@ -67,107 +63,108 @@ function HeaderNavMobile() {
       }
     });
   }
-
   return (
-    <nav className={styles["header__navbar"]}>
-      <div className={styles["header__navbar-item"]}>
-        <NavLink
-          to="/"
-          className={({ isActive, isPending }) => {
-            return isActive ? "text-[#06bbcc]" : "text-black";
-          }}
-          onClick={() => (document.documentElement.scrollTop = 0)}
-        >
-          Home
-        </NavLink>
-      </div>
-      <div className={styles["header__navbar-item"]}>
-        <NavLink
-          to="/about"
-          className={({ isActive, isPending }) => {
-            return isActive ? "text-[#06bbcc]" : "text-black";
-          }}
-          onClick={() => (document.documentElement.scrollTop = 0)}
-        >
-          About
-        </NavLink>
-      </div>
-      <div className={styles["header__navbar-item"]}>
-        <NavLink
-          to="/courses"
-          className={({ isActive, isPending }) => {
-            return isActive ? "text-[#06bbcc]" : "text-black";
-          }}
-          onClick={() => (document.documentElement.scrollTop = 0)}
-        >
-          Courses
-        </NavLink>
-      </div>
-      <div className={styles["header__navbar-item"]}>
-        <NavLink
-          to="/contact"
-          className={({ isActive, isPending }) => {
-            return isActive ? "text-[#06bbcc]" : "text-black";
-          }}
-          onClick={() => (document.documentElement.scrollTop = 0)}
-        >
-          Contact
-        </NavLink>
-      </div>
-
-      {location.pathname !== "/signIn" &&
-        location.pathname !== "/register" &&
-        Object.keys(loginInfo).length < 1 &&
-        !hasLogin &&
-        !accessToken && (
-          <button
-            className={styles["header__navbar-item-join"]}
-            onClick={moveToSignIn}
+    <div
+      ref={ref}
+      className={clsx(`${styles["header__navbar-mobile"]}`, {
+        [`${styles["open-nav"]}`]: toggleNavbar,
+      })}
+    >
+      <div className="px-4">
+        {mobileNavbarList.map(({ title, path, icon: Icon }, idx) => (
+          <NavLink
+            to={path}
+            className={({ isActive, isPending }) => {
+              return isActive ? "text-[#06bbcc]" : "text-black";
+            }}
+            onClick={() => (document.documentElement.scrollTop = 0)}
           >
-            <h2 className="capitalize text-white">Join Now</h2>
-            <ArrowForwardIcon />
-          </button>
+            <div className="flex gap-4 mb-4">
+              <Icon />
+
+              <p>{title}</p>
+            </div>
+          </NavLink>
+        ))}
+      </div>
+      <div className="mt-10 border-t-2 p-4">
+        {accessToken ?? adminToken ? (
+          <div className={clsx(`${styles["header__navbar-mobile-user"]}`)}>
+            <div
+              className="cursor-pointer flex items-center gap-1"
+              onClick={() => setOpenNav((prevState) => !prevState)}
+            >
+              {openNav ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              <p className="uppercase">{loginInfo.hoTen}</p>
+            </div>
+
+            <div
+              className={clsx(
+                `${styles["header__navbar-mobile-user-navbar"]}`,
+                { [`${styles["open-nav-mobile"]}`]: openNav }
+              )}
+            >
+              {isAdmin && (
+                <button
+                  className="flex gap-2 mb-4"
+                  onClick={() => navigate("/admin/home")}
+                >
+                  <AdminPanelSettingsIcon />
+                  Admin's Page
+                </button>
+              )}
+
+              <button
+                className="flex gap-2 mb-4"
+                onClick={() => navigate("/personal-info/home")}
+              >
+                <ManageAccountsIcon />
+                Personal's Info
+              </button>
+
+              <button
+                onClick={handleLogout}
+                className="text-[1.1rem] flex gap-2 items-center"
+              >
+                <LogoutIcon />
+                Logout
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <NavLink
+              to="/signIn"
+              className={({ isActive, isPending }) => {
+                return isActive ? "text-[#06bbcc]" : "text-black";
+              }}
+              onClick={() => (document.documentElement.scrollTop = 0)}
+            >
+              <div className="flex gap-4 mb-4">
+                <VpnKeyIcon />
+
+                <p>Sign In</p>
+              </div>
+            </NavLink>
+
+            <NavLink
+              to="/register"
+              className={({ isActive, isPending }) => {
+                return isActive ? "text-[#06bbcc]" : "text-black";
+              }}
+              onClick={() => (document.documentElement.scrollTop = 0)}
+            >
+              <div className="flex gap-4 mb-4">
+                <HowToRegIcon />
+
+                <p>Register</p>
+              </div>
+            </NavLink>
+          </>
         )}
-
-      {((loginInfo && hasLogin) || accessToken) && (
-        <div
-          ref={navbarRef}
-          className={clsx(`${styles["header__navbar-item-login"]}`, {
-            [`${styles["open"]}`]: openNav,
-          })}
-          onClick={handleToggleClick}
-        >
-          <div className="cursor-pointer flex items-center gap-1">
-            <p className="uppercase">{loginInfo.hoTen}</p>
-            {openNav ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </div>
-          <div
-            className={clsx(`${styles["header__navbar-item-login-overlay"]}`)}
-          ></div>
-          <div
-            ref={navbarLoginNav}
-            className={`${styles["header__navbar-item-login-nav"]}`}
-          >
-            <button
-              className="flex gap-2 mb-4"
-              onClick={() => navigate("/personal-info/home")}
-            >
-              <ManageAccountsIcon />
-              Personal's Info
-            </button>
-
-            <button
-              onClick={handleLogout}
-              className="text-[1.1rem] flex gap-2 items-center"
-            >
-              <LogoutIcon />
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
-    </nav>
+      </div>
+    </div>
   );
 }
 
-export default HeaderNavMobile;
+export default forwardRef(HeaderNavMobile);
