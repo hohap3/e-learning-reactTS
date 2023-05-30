@@ -1,5 +1,19 @@
-User: String => Account : string, password: Phuc54321!
-Admin: Admin => tài khoản: admin_test, password: Phuc54321!
+User: String => Account : string, Password: Phuc54321!
+Admin: Admin => Account: admin_test, Password: Phuc54321!
+
+## Function of e-learning
+
+# On clients side:
+
+- Client can explore the website , sign in or sign up , register course , also search course that they like to register in
+- Client also can update their information , unregister course that they don't like
+
+# On admin side (Dashboard):
+
+- Admins can update their information as well
+- Add , Update , Delete Course or User Information
+- Verify user to register the course
+- Admin dashboard don't support for handheld devices (like smartphone , tablet ,...) or old computer screen has display 4:3
 
 # Folders of reactTS
 
