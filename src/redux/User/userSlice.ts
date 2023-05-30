@@ -1,21 +1,15 @@
 import { RootState } from "./../../app/store";
 
-import {
-  User,
-  UserInformation,
-  UserProps,
-  UserPropsGet,
-  UserSignIn,
-} from "./../../models/user";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { studentImage } from "constants/common";
 import {
-  ListResponseAccount,
   CourseItem,
   ListParams,
-  Pagination,
   ListResponse,
+  ListResponseAccount,
+  Pagination,
 } from "../../models";
+import { User, UserInformation, UserProps } from "./../../models/user";
 
 export interface UserListPagination {
   userList: UserProps[];

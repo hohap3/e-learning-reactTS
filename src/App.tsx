@@ -10,6 +10,7 @@ import { adminRoutes, clientRoute, personalRoute } from "routes/routes";
 
 import courseAPI from "api/courseAPI";
 import { COURSE_GROUP } from "constants/common";
+import { fetchCourseRegisterDetail } from "utils/index";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,16 +19,18 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await userApi.getUserInfo();
+        const result = fetchCourseRegisterDetail();
 
-        const { matKhau, chiTietKhoaHocGhiDanh, ...restProps } = res;
+        result.then((res: any) => {
+          const { chiTietKhoaHocGhiDanh, ...restProps } = res;
 
-        dispatch(
-          userAction.fetchLoginSuccess({
-            chiTietKhoaHocGhiDanh: [],
-            ...restProps,
-          })
-        );
+          dispatch(
+            userAction.fetchLoginSuccess({
+              chiTietKhoaHocGhiDanh,
+              ...restProps,
+            })
+          );
+        });
       } catch (error: any) {
         const { status } = error.response;
         if (status === Status.UNAUTHORIZED) return;

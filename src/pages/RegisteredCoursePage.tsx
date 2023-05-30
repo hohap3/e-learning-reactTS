@@ -1,13 +1,11 @@
 import courseAPI from "api/courseAPI";
-import userApi from "api/userAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
 import CourseTable from "components/courseTable/CourseTable";
-import { COURSE_GROUP } from "constants/common";
 import { useEffect, useState } from "react";
 import { selectLoginInfo, userAction } from "redux/User/userSlice";
 import { ToastType } from "../constants";
-import { CourseItem, ListResponseAccount, UnregisterCourse } from "../models";
+import { UnregisterCourse } from "../models";
 import { fetchCourseRegisterDetail, toastMessage } from "../utils";
 
 function RegisterCoursePage() {

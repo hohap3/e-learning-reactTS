@@ -65,7 +65,7 @@ function FormSignIn() {
 
       dispatch(
         userAction.fetchLogin({
-          chiTietKhoaHocGhiDanh: [],
+          chiTietKhoaHocGhiDanh,
           ...restResponse,
         })
       );
