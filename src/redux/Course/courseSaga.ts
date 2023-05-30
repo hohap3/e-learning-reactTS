@@ -1,9 +1,17 @@
 import { fork, put, all, call, takeLatest, delay } from "redux-saga/effects";
 import { courseAction } from "./courseSlice";
-import { Category, CourseItem, ListParams, ListResponse } from "../../models";
+import {
+  Category,
+  CourseItem,
+  ListParams,
+  ListResponse,
+  UserHadRegister,
+} from "../../models";
 import courseAPI from "api/courseAPI";
 import { getMultipleRandom } from "../../utils";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import userApi from "api/userAPI";
 
 function* fetchCourseCategory() {
   const res: Array<Category> = yield call(() =>
@@ -62,7 +70,43 @@ function* fetchCourseListByPagination(action: PayloadAction<ListParams>) {
     yield put(courseAction.fetchCourseListPaginationSuccess(res));
     yield put(courseAction.insertFilter(action.payload));
   } catch (error) {
+    console.log(error);
     yield put(courseAction.fetchCourseListPaginationFailed());
+    yield put(courseAction.resetCourseList());
+  }
+}
+
+function* fetchCourseInfoDetail(courseId: string) {
+  const res: CourseItem = yield call(() => courseAPI.getCourseInfo(courseId));
+
+  yield put(courseAction.insertCourseInfoDetail(res));
+}
+
+function* fetchCourseInfoUserRegistered(courseId: string) {
+  const res: UserHadRegister[] = yield call(() =>
+    userApi.getUserRegisteredList(courseId)
+  );
+
+  yield put(courseAction.insertStudentRegisteredCourse(res));
+}
+
+function* fetchCourseInfoWaitingList(courseId: string) {
+  const res: UserHadRegister[] = yield call(() =>
+    userApi.getUserWaitingList(courseId)
+  );
+
+  yield put(courseAction.insertStudentWaitingList(res));
+}
+
+function* fetchCourseInfo(action: PayloadAction<string>) {
+  try {
+    yield all([
+      call(() => fetchCourseInfoDetail(action.payload)),
+      call(() => fetchCourseInfoUserRegistered(action.payload)),
+      call(() => fetchCourseInfoWaitingList(action.payload)),
+    ]);
+  } catch (error: any | AxiosError) {
+    yield put(courseAction.fetchCourseInfoFailed());
   }
 }
 
@@ -76,6 +120,7 @@ function* courseSaga() {
     courseAction.fetchCourseListPagination.type,
     fetchCourseListByPagination
   );
+  yield takeLatest(courseAction.fetchCourseInfo.type, fetchCourseInfo);
 }
 
 export default courseSaga;

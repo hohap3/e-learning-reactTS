@@ -8,6 +8,7 @@ export interface ListParams {
   maKhoaHoc?: string;
   maDanhMuc?: string;
   tenKhoaHoc?: string;
+  tuKhoa?: string;
 }
 
 export interface Pagination {
@@ -30,6 +31,7 @@ export interface RouteItem {
   path?: string;
   name?: string;
   component: FC<any>;
+  children?: RouteItem[];
 }
 
 export interface Route {
@@ -64,4 +66,17 @@ export interface CommonStyleToast {
   draggable?: boolean;
   progress?: undefined;
   theme?: "light";
+}
+
+export interface GROUP_ITEM {
+  key: string;
+  value: string;
+}
+
+export interface MyObject extends File {
+  [key: string]: any;
+}
+
+export interface Navbar {
+  hiddenNavbar: boolean;
 }

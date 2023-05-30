@@ -1,15 +1,19 @@
-import { ACCESS_TOKEN, COURSE_GROUP } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN, COURSE_GROUP } from "constants/common";
 import axiosClient from "./axiosClient";
 import {
+  Category,
   CourseItem,
   CourseRegister,
+  CourseProps,
   ListParams,
+  ListResponse,
   UnregisterCourse,
+  CoursePropsMap,
 } from "../models";
 import { getLocalStorageData } from "../utils";
 
 const courseAPI = {
-  getAllCourseCategory() {
+  getAllCourseCategory(): Promise<Category[]> {
     const url = `QuanLyKhoaHoc/LayDanhMucKhoaHoc`;
     return axiosClient.get(url);
   },
@@ -24,7 +28,7 @@ const courseAPI = {
     });
   },
 
-  getCourseListByPage(params: ListParams) {
+  getCourseListByPage(params: ListParams): Promise<ListResponse<CourseItem>> {
     const url = `QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang`;
     return axiosClient.get(url, { params });
   },
@@ -40,7 +44,8 @@ const courseAPI = {
 
   registerCourse(data: Partial<CourseRegister>) {
     const url = `QuanLyKhoaHoc/DangKyKhoaHoc`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
 
     return axiosClient.post(url, data, {
       headers: {
@@ -56,10 +61,74 @@ const courseAPI = {
 
   unregisterCourse(data: UnregisterCourse): Promise<string> {
     const url = `QuanLyKhoaHoc/HuyGhiDanh`;
-    const accessToken = getLocalStorageData(ACCESS_TOKEN);
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
     return axiosClient.post(url, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  createCourse(data: CoursePropsMap) {
+    const url = `QuanLyKhoaHoc/ThemKhoaHoc`;
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
+    return axiosClient.post(url, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  removeCourse(courseId: string): Promise<string> {
+    const url = `QuanLyKhoaHoc/XoaKhoaHoc`;
+    const adminToken = getLocalStorageData(ADMIN_TOKEN);
+    return axiosClient.delete(url, {
+      params: {
+        MaKhoaHoc: courseId,
+      },
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+  },
+
+  registerCourseByAdmin(data: CourseRegister): Promise<string> {
+    const url = `QuanLyKhoaHoc/GhiDanhKhoaHoc`;
+    const adminToken = getLocalStorageData(ADMIN_TOKEN);
+
+    return axiosClient.post(url, data, {
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
+  },
+
+  updateCourseInfo(data: CoursePropsMap) {
+    const url = `QuanLyKhoaHoc/CapNhatKhoaHoc`;
+    return axiosClient.put(url, data);
+  },
+
+  addCourseImageUpload(data: any) {
+    const url = `QuanLyKhoaHoc/ThemKhoaHocUploadHinh`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  updateCourseImageUpload(data: any) {
+    const url = `QuanLyKhoaHoc/CapNhatKhoaHocUpload`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  uploadCourseImage(data: any) {
+    const url = `QuanLyKhoaHoc/UploadHinhAnhKhoaHoc`;
+    return axiosClient.post(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
     });
   },

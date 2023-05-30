@@ -10,6 +10,7 @@ import {
 import userApi from "api/userAPI";
 import courseAPI from "api/courseAPI";
 import { COURSE_GROUP } from "constants/common";
+import Swal from "sweetalert2";
 
 export function saveLocalStorage(name: string, value: unknown): void {
   localStorage.setItem(name, JSON.stringify(value));
@@ -77,4 +78,27 @@ export async function fetchCourseRegisterDetail(): Promise<
   return new Promise((resolve) => {
     resolve({ chiTietKhoaHocGhiDanh: courseListUserRegistered, ...restProps });
   });
+}
+
+export function handleSubmitError(error: any) {
+  if (Object.keys(error).length > 0) {
+    console.log(error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please insert all field",
+    });
+    return;
+  }
+}
+
+export function getCurrentDate(): string {
+  const date = new Date();
+
+  const day = date.getDate();
+  const month = `${date.getMonth() + 1}`;
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
 }

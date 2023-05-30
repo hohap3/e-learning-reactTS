@@ -5,12 +5,7 @@ const updateUserSchema = yup.object({
   hoTen: yup
     .string()
     .required("Please insert this field!")
-    .matches(FULL_NAME_REGEX, "Full name must be characters only!")
-    .test(
-      "check-length",
-      "User name must have at least 2 words",
-      (value) => value.split(" ").filter((item) => item).length > 1
-    ),
+    .matches(FULL_NAME_REGEX, "Full name must be characters only!"),
   matKhau: yup
     .string()
     .required("Please insert this field!")

@@ -1,32 +1,59 @@
-import { UserInfo } from "../../../models";
-import React from "react";
-import InputField from "../form-control/InputField";
-import { useForm } from "react-hook-form";
-import { Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import updateUserSchema from "schemas/updateSchema";
+import { useForm } from "react-hook-form";
+import { UserInfo, UserTypeProps } from "../../../models";
+import InputField from "../form-control/InputField";
 
 import axios from "axios";
-import { toastMessage } from "../../../utils";
-import { ToastType } from "../../../constants";
 import Swal from "sweetalert2";
+import { ToastType } from "../../../constants";
+import { handleSubmitError, toastMessage } from "../../../utils";
+import clsx from "clsx";
+
+import SelectField from "../form-control/SelectField";
+import { useEffect, useState } from "react";
+import userApi from "api/userAPI";
+import { GROUP_LIST } from "constants/common";
+import * as yup from "yup";
 
 interface Props {
   initialValues: UserInfo;
   isEditMode: boolean;
   onSubmitEdit: (formValues: UserInfo) => void;
+  isAdmin: boolean;
+  formSchema: yup.AnyObjectSchema;
+  allowUpdatePassword?: boolean;
 }
 
-function ShowEditForm({ initialValues, isEditMode, onSubmitEdit }: Props) {
+function ShowEditForm({
+  initialValues,
+  isEditMode,
+  onSubmitEdit,
+  isAdmin,
+  formSchema,
+  allowUpdatePassword,
+}: Props) {
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<UserInfo>({
     defaultValues: initialValues,
+    values: initialValues,
     mode: "all",
-    resolver: yupResolver(updateUserSchema),
+    resolver: yupResolver(formSchema),
   });
+
+  const [userTypeList, setUserTypeList] = useState<UserTypeProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      if (!isAdmin) return;
+
+      const res: UserTypeProps[] = await userApi.getUserType();
+
+      setUserTypeList(res);
+    })();
+  }, [isAdmin]);
 
   async function handleSubmitEditForm(formValues: UserInfo) {
     if (!onSubmitEdit) return;
@@ -51,12 +78,8 @@ function ShowEditForm({ initialValues, isEditMode, onSubmitEdit }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSubmitEditForm, (error) =>
-        console.log(error)
-      )}
-    >
-      {!isEditMode && (
+    <form onSubmit={handleSubmit(handleSubmitEditForm, handleSubmitError)}>
+      {(isAdmin || !isAdmin) && !isEditMode && (
         <InputField
           name="taiKhoan"
           control={control}
@@ -92,7 +115,7 @@ function ShowEditForm({ initialValues, isEditMode, onSubmitEdit }: Props) {
         readOnly={!isEditMode}
       />
 
-      {isEditMode && (
+      {allowUpdatePassword && (!isAdmin || isAdmin) && isEditMode && (
         <InputField
           name="matKhau"
           label="New Password"
@@ -102,7 +125,7 @@ function ShowEditForm({ initialValues, isEditMode, onSubmitEdit }: Props) {
         />
       )}
 
-      {isEditMode && (
+      {allowUpdatePassword && (!isAdmin || isAdmin) && isEditMode && (
         <InputField
           name="nhapLaiMatKhau"
           label="Retype Password"
@@ -112,12 +135,39 @@ function ShowEditForm({ initialValues, isEditMode, onSubmitEdit }: Props) {
         />
       )}
 
+      {isAdmin && (
+        <SelectField
+          name="maLoaiNguoiDung"
+          control={control}
+          label="User Type"
+          disabled={!isEditMode}
+          variant={isEditMode ? "outlined" : "standard"}
+          data={userTypeList}
+        />
+      )}
+
+      {isAdmin && (
+        <SelectField
+          name="maNhom"
+          control={control}
+          label="User Group"
+          disabled={!isEditMode}
+          variant={isEditMode ? "outlined" : "standard"}
+          data={GROUP_LIST}
+        />
+      )}
+
       {isEditMode && (
         <button
           disabled={isSubmitting}
           type="submit"
           title="Save your info!"
-          className="py-2 px-6 bg-[#06bbcc] rounded text-white hover:bg-[#2bc5d4]"
+          className={clsx(`py-2 px-6 rounded text-white`, {
+            ["w-full"]: isAdmin,
+            ["bg-blue-600"]: isAdmin,
+            ["bg-[#06bbcc]"]: !isAdmin,
+            ["hover:bg-[#2bc5d4]"]: !isAdmin,
+          })}
         >
           Save
         </button>

@@ -1,7 +1,7 @@
 import userApi from "api/userAPI";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import Personal from "components/Personal/Personal";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN } from "constants/common";
 import AuthLayout from "layouts/AuthLayout/AuthLayout";
 import Header from "layouts/Header/Header";
 import WithoutFooter from "layouts/WithoutFooter/WithoutFooter";
@@ -17,14 +17,15 @@ import { CourseItem, CourseRegister, ListResponseAccount } from "../models";
 import { getLocalStorageData } from "../utils";
 
 function PersonalPage() {
-  const accessToken = getLocalStorageData(ACCESS_TOKEN) ?? null;
+  const accessToken =
+    getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
   const loginInfo = useAppSelector(selectLoginInfo);
   const hasLogin = useAppSelector(selectHasLogin);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    (async () => {
+    (() => {
       if (!accessToken) {
         Swal.fire({
           title: "You can't go to this page!",

@@ -1,5 +1,5 @@
 import { useAppSelector } from "app/hooks";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN } from "constants/common";
 import AuthLayout from "layouts/AuthLayout/AuthLayout";
 import { FC, useEffect, useRef } from "react";
 import { getLocalStorageData } from "../utils";
@@ -11,12 +11,13 @@ function authHOC(WrapComponent: FC<any>) {
   return function () {
     const hasLogin = useAppSelector(selectHasLogin);
     const accessToken = getLocalStorageData(ACCESS_TOKEN) ?? null;
+    const adminToken = getLocalStorageData(ADMIN_TOKEN) ?? null;
     const timeIntervalId = useRef<null | number>(null);
     const navigate = useNavigate();
 
     // Prevent when user has been logged in and tried to move to login again!
     useEffect(() => {
-      if (hasLogin || accessToken) {
+      if (hasLogin || accessToken || adminToken) {
         Swal.fire({
           title: "You have been logged in!",
           html: "Will return to homepage after <b></b> milliseconds.",

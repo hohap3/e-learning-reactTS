@@ -1,4 +1,4 @@
-export type UserTypeCode = "GV" | "HV";
+export type UserTypeCode = "GV" | "HV" | "";
 export type UserTypeName = "Giáo vụ" | "Học viên";
 
 export interface CourseCategory {
@@ -25,6 +25,7 @@ export interface CourseItem {
   soLuongHocVien: 0;
   nguoiTao: AdminCreate;
   danhMucKhoaHoc: CourseCategory;
+  maDanhMucKhoahoc?: string;
 }
 
 export interface CourseItemRegister {
@@ -36,4 +37,9 @@ export interface CourseItemRegister {
   hinhAnh: string;
   ngayTao: string;
   danhGia: number;
+}
+
+export interface CourseWaitingProps {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
 }

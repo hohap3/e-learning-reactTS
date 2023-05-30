@@ -24,7 +24,7 @@ function NotFound() {
             <h2 className="text-[4.5rem] font-semibold">PAGE NOT FOUND</h2>
             <p className="text-[1.25rem] font-semibold">
               Sorry, the page you're looking for doesn't exist. If you think
-              somethin is broken, report a problem.
+              something is broken, report a problem.
             </p>
           </div>
 

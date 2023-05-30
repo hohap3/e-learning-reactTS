@@ -8,7 +8,7 @@ import {
   userAction,
 } from "redux/User/userSlice";
 import { getLocalStorageData, toastMessage } from "../../../utils";
-import { ACCESS_TOKEN } from "constants/common";
+import { ACCESS_TOKEN, ADMIN_TOKEN, IS_ADMIN } from "constants/common";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useRef, useState } from "react";
@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { ToastType } from "../../../constants";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 function HeaderNavbar() {
   const location = useLocation();
@@ -24,10 +25,12 @@ function HeaderNavbar() {
   const loginInfo = useAppSelector(selectLoginInfo);
   const hasLogin = useAppSelector(selectHasLogin);
   const accessToken = getLocalStorageData(ACCESS_TOKEN);
+  const adminToken = getLocalStorageData(ADMIN_TOKEN);
   const navbarRef = useRef<null | HTMLDivElement>(null);
   const navbarLoginNav = useRef<null | HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const isAdmin = getLocalStorageData(IS_ADMIN);
 
   function moveToSignIn() {
     document.documentElement.scrollTop = 0;
@@ -42,9 +45,6 @@ function HeaderNavbar() {
     if (hasReachHeight) navbarLoginNav.current.style.overflowY = "scroll";
   }
 
-  // #d33
-  // #3085d6
-
   function handleLogout() {
     Swal.fire({
       title: "Do you want to logout?",
@@ -56,9 +56,12 @@ function HeaderNavbar() {
       confirmButtonText: "Logout",
     }).then((result) => {
       if (result.isConfirmed) {
-        const accessToken = getLocalStorageData(ACCESS_TOKEN);
+        const accessToken =
+          getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
         if (!accessToken) return;
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(ADMIN_TOKEN);
+        localStorage.removeItem(IS_ADMIN);
         dispatch(userAction.logout());
 
         const successToast = toastMessage(
@@ -121,7 +124,8 @@ function HeaderNavbar() {
         location.pathname !== "/register" &&
         Object.keys(loginInfo).length < 1 &&
         !hasLogin &&
-        !accessToken && (
+        !accessToken &&
+        !adminToken && (
           <button
             className={styles["header__navbar-item-join"]}
             onClick={moveToSignIn}
@@ -131,7 +135,7 @@ function HeaderNavbar() {
           </button>
         )}
 
-      {((loginInfo && hasLogin) || accessToken) && (
+      {((loginInfo && hasLogin) || accessToken || adminToken) && (
         <div
           ref={navbarRef}
           className={clsx(`${styles["header__navbar-item-login"]}`, {
@@ -146,10 +150,21 @@ function HeaderNavbar() {
           <div
             className={clsx(`${styles["header__navbar-item-login-overlay"]}`)}
           ></div>
+
           <div
             ref={navbarLoginNav}
             className={`${styles["header__navbar-item-login-nav"]}`}
           >
+            {isAdmin && (
+              <button
+                className="flex gap-2 mb-4"
+                onClick={() => navigate("/admin/home")}
+              >
+                <AdminPanelSettingsIcon />
+                Admin's Page
+              </button>
+            )}
+
             <button
               className="flex gap-2 mb-4"
               onClick={() => navigate("/personal-info/home")}

@@ -3,9 +3,12 @@ import { RootState } from "app/store";
 import {
   Category,
   CourseItem,
+  CourseListMapTable,
+  CourseProps,
   ListParams,
   ListResponse,
   Pagination,
+  UserHadRegister,
 } from "../../models";
 import { categoryImage } from "constants/common";
 
@@ -17,7 +20,12 @@ export interface CourseState {
   pagination: Pagination;
   popularCourseList: CourseItem[];
   courseList: CourseItem[];
-  selectCourseItem: Partial<CourseItem>;
+  selectCourseItem: Partial<CourseItem | CourseProps> | null;
+  courseInfo: {
+    detail: CourseItem | null;
+    studentRegisteredList: UserHadRegister[];
+    studentWaitingList: UserHadRegister[];
+  };
 }
 
 const initialState: CourseState = {
@@ -33,8 +41,13 @@ const initialState: CourseState = {
     count: 10,
   },
   popularCourseList: [],
-  selectCourseItem: {},
+  selectCourseItem: null,
   courseList: [],
+  courseInfo: {
+    detail: null,
+    studentRegisteredList: [],
+    studentWaitingList: [],
+  },
 };
 
 const courseSlice = createSlice({
@@ -104,8 +117,37 @@ const courseSlice = createSlice({
       return;
     },
 
-    insertSelectCourseItem(state, action: PayloadAction<CourseItem>) {
+    insertSelectCourseItem(
+      state,
+      action: PayloadAction<CourseItem | CourseListMapTable | null>
+    ) {
       state.selectCourseItem = action.payload;
+    },
+
+    fetchCourseInfo(state, action: PayloadAction<string>) {
+      state.loading = true;
+    },
+
+    insertCourseInfoDetail(state, action: PayloadAction<CourseItem>) {
+      state.loading = false;
+      state.courseInfo.detail = action.payload;
+    },
+
+    insertStudentRegisteredCourse(
+      state,
+      action: PayloadAction<UserHadRegister[]>
+    ) {
+      state.loading = false;
+      state.courseInfo.studentRegisteredList = action.payload;
+    },
+
+    insertStudentWaitingList(state, action: PayloadAction<UserHadRegister[]>) {
+      state.loading = false;
+      state.courseInfo.studentWaitingList = action.payload;
+    },
+
+    fetchCourseInfoFailed(state) {
+      state.loading = false;
     },
 
     startLoading(state) {
@@ -119,6 +161,23 @@ const courseSlice = createSlice({
     resetCourseListCategory(state) {
       state.loading = false;
       state.courseListByCategory = [];
+    },
+
+    resetCourseList(state) {
+      state.courseList = [];
+    },
+
+    resetCourseListPagination(state) {
+      state.loading = false;
+      state.courseList = [];
+      state.filter = {
+        page: 1,
+        pageSize: 10,
+      };
+      state.pagination = {
+        currentPage: 1,
+        count: 10,
+      };
     },
   },
 });
@@ -150,6 +209,47 @@ export const selectCourseListCategory = (state: RootState) =>
 export const selectFilter = (state: RootState) => state.course.filter;
 export const selectCourseList = (state: RootState) => state.course.courseList;
 export const selectPagination = (state: RootState) => state.course.pagination;
+export const selectCourseListMapTable = createSelector(
+  selectCourseList,
+  (courseList) =>
+    courseList.map(
+      ({
+        maKhoaHoc,
+        biDanh,
+        tenKhoaHoc,
+        moTa,
+        hinhAnh,
+        luotXem,
+        maNhom,
+        ngayTao,
+        nguoiTao: { taiKhoan: taiKhoanNguoiTao },
+        danhMucKhoaHoc: { maDanhMucKhoahoc },
+      }) => ({
+        biDanh,
+        maKhoaHoc,
+        tenKhoaHoc,
+        moTa,
+        hinhAnh,
+        maNhom,
+        ngayTao,
+        taiKhoanNguoiTao,
+        maDanhMucKhoahoc,
+        luotXem,
+      })
+    )
+);
+
+export const selectCourseInfoDetail = (state: RootState) =>
+  state.course.courseInfo.detail;
+
+export const selectUserRegisterList = (state: RootState) =>
+  state.course.courseInfo.studentRegisteredList;
+
+export const selectUserWaitingList = (state: RootState) =>
+  state.course.courseInfo.studentWaitingList;
+
+export const selectCourseItem = (state: RootState) =>
+  state.course.selectCourseItem;
 
 // reducers
 const courseReducer = courseSlice.reducer;

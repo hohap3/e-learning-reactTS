@@ -6,32 +6,31 @@ import NotFound from "pages/NotFound";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { userAction } from "redux/User/userSlice";
-import { clientRoute, personalRoute } from "routes/routes";
+import { adminRoutes, clientRoute, personalRoute } from "routes/routes";
 
 import courseAPI from "api/courseAPI";
 import { COURSE_GROUP } from "constants/common";
+import { fetchCourseRegisterDetail } from "utils/index";
 
 function App() {
   const dispatch = useAppDispatch();
 
+  // call api user right after they access to website
   useEffect(() => {
     (async () => {
       try {
-        const res = await userApi.getUserInfo();
-        // const res2: CourseItem[] = await courseAPI.getAllCourse({
-        //   MaNhom: COURSE_GROUP,
-        // });
+        const result = fetchCourseRegisterDetail();
 
-        const { matKhau, chiTietKhoaHocGhiDanh, ...restProps } = res;
-        // const courseListUserRegisterd = res2.filter((course) =>
-        //   chiTietKhoaHocGhiDanh.some((x) => x.maKhoaHoc === course.maKhoaHoc)
-        // );
-        dispatch(
-          userAction.fetchLoginSuccess({
-            chiTietKhoaHocGhiDanh: [],
-            ...restProps,
-          })
-        );
+        result.then((res: any) => {
+          const { chiTietKhoaHocGhiDanh, ...restProps } = res;
+
+          dispatch(
+            userAction.fetchLoginSuccess({
+              chiTietKhoaHocGhiDanh,
+              ...restProps,
+            })
+          );
+        });
       } catch (error: any) {
         const { status } = error.response;
         if (status === Status.UNAUTHORIZED) return;
@@ -71,6 +70,20 @@ function App() {
             </Route>
           );
         })}
+
+        {adminRoutes.map(({ path, component: Component, children }, idx) => (
+          <Route key={idx} path={path} element={<Component />}>
+            {children?.map(({ path, component: ChildComponent }, idx) => {
+              return (
+                <Route
+                  key={idx}
+                  path={path}
+                  element={<ChildComponent />}
+                ></Route>
+              );
+            })}
+          </Route>
+        ))}
 
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
