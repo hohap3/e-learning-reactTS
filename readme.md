@@ -7,6 +7,7 @@ Admin: Admin => Account: admin_test, Password: Phuc54321!
 
 - Client can explore the website , sign in or sign up , register course , also search course that they like to register in
 - Client also can update their information , unregister course that they don't like
+- Client side support for handheld devices
 
 # On admin side (Dashboard):
 
