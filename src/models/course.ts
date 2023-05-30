@@ -36,3 +36,9 @@ export interface CourseListMapTable {
   maDanhMucKhoaHoc: string;
   taiKhoanNguoiTao: string;
 }
+
+export interface UserCourse {
+  maKhoaHoc: string;
+  biDanh: string;
+  tenKhoaHoc: string;
+}

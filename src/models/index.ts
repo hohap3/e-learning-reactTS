@@ -5,3 +5,4 @@ export * from "./status";
 export * from "./course";
 export * from "./contact";
 export * from "./mobileNavbar";
+export * from "./courseItem";

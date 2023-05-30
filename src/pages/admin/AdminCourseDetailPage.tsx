@@ -175,7 +175,7 @@ function AdminCourseDetailPage() {
   ];
 
   return (
-    <AdminLayoutPage title="Course Info">
+    <AdminLayoutPage title="Course's Info">
       <>
         <AdminCourseDetail courseItem={courseInfoDetail} />
 
@@ -191,7 +191,7 @@ function AdminCourseDetailPage() {
           <AdminTable
             columns={columns}
             dataSource={registeredUserList}
-            title="User's Register List"
+            title="User's Registered List"
           />
         </div>
 

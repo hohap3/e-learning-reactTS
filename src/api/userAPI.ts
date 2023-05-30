@@ -1,7 +1,6 @@
 import { ACCESS_TOKEN, ADMIN_TOKEN, COURSE_GROUP } from "constants/common";
 import {
   CourseItem,
-  CourseItemRegister,
   ListParams,
   ListResponse,
   ListResponseAccount,
@@ -12,14 +11,13 @@ import {
   UserHadRegister,
   UserInfoDetail,
   UserProps,
-  UserPropsGet,
-  UserPropsPreview,
   UserSignIn,
   UserSignUp,
   UserTypeProps,
 } from "../models";
-import axiosClient from "./axiosClient";
 import { getLocalStorageData } from "../utils";
+import { CourseWaitingProps } from "./../models/courseItem";
+import axiosClient from "./axiosClient";
 
 const userApi = {
   signIn(data: SignInParams): Promise<UserSignIn> {
@@ -139,6 +137,21 @@ const userApi = {
     return axiosClient.post(
       url,
       { MaKhoaHoc: courseId },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  },
+
+  getWaitingCourse(account: string): Promise<CourseWaitingProps[]> {
+    const url = `QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet`;
+    const accessToken =
+      getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
+    return axiosClient.post(
+      url,
+      { taiKhoan: account },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

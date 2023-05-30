@@ -38,3 +38,8 @@ export interface CourseItemRegister {
   ngayTao: string;
   danhGia: number;
 }
+
+export interface CourseWaitingProps {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+}

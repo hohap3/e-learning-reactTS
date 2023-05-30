@@ -171,6 +171,17 @@ function AdminUserListTable({ group, onEdit }: Props) {
       title: "User Type",
       dataIndex: "maLoaiNguoiDung",
       key: "maLoaiNguoiDung",
+      render: (text, record, index) => {
+        return record.maLoaiNguoiDung === "GV" ? (
+          <Tag key={record.maLoaiNguoiDung} color="gold">
+            {record.maLoaiNguoiDung}
+          </Tag>
+        ) : (
+          <Tag key={record.maLoaiNguoiDung} color="blue">
+            {record.maLoaiNguoiDung}
+          </Tag>
+        );
+      },
     },
 
     {
@@ -181,9 +192,11 @@ function AdminUserListTable({ group, onEdit }: Props) {
         return (
           <div className="flex items-center gap-4">
             <button
-              title="Show course detail"
+              title="Show user detail"
               className="py-1 px-4 rounded-md bg-blue-500 text-white"
-              onClick={() => navigate(`/admin/user-info/${record.taiKhoan}`)}
+              onClick={() =>
+                navigate(`/admin/user-info/${record.taiKhoan}?group=${group}`)
+              }
             >
               Check
             </button>
