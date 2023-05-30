@@ -17,7 +17,7 @@ function SearchComp({ onSearchChange, placeholder, searchParamsValue }: Props) {
         : ""
     }`;
   });
-  const timeoutRef = useRef<null | number>(null);
+  const timeoutRef = useRef<null | any>(null);
 
   // debounce search
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {

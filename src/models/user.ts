@@ -18,7 +18,7 @@ export interface SignUpParams {
 
 export interface UpdateInfoParams {
   taiKhoan: string;
-  matKhau: string;
+  matKhau: string | any;
   nhapLaiMatKhau?: string;
   hoTen: string;
   soDT: string;
@@ -124,7 +124,7 @@ export interface UserInformation {
   hoTen: string;
   email: string;
   soDT: string;
-  matKhau: string;
+  matKhau: string | null;
   maLoaiNguoiDung: UserTypeCode;
 }
 

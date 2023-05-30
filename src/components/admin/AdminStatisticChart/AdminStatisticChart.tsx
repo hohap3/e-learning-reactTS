@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import LoadingCircle from "components/LoadingCircle/LoadingCircle";
+import { Doughnut } from "react-chartjs-2";
 
 interface Props {
   data: number[];

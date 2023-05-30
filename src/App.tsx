@@ -1,6 +1,5 @@
-import userApi from "api/userAPI";
 import { useAppDispatch } from "app/hooks";
-import { CourseItem, Status } from "./models";
+import { Status } from "./models";
 
 import NotFound from "pages/NotFound";
 import { useEffect } from "react";
@@ -8,8 +7,6 @@ import { Route, Routes } from "react-router-dom";
 import { userAction } from "redux/User/userSlice";
 import { adminRoutes, clientRoute, personalRoute } from "routes/routes";
 
-import courseAPI from "api/courseAPI";
-import { COURSE_GROUP } from "constants/common";
 import { fetchCourseRegisterDetail } from "utils/index";
 
 function App() {

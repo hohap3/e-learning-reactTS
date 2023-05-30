@@ -1,5 +1,7 @@
-import React from "react";
-
+import CategoryIcon from "@mui/icons-material/Category";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import Person3Icon from "@mui/icons-material/Person3";
 import { useAppSelector } from "app/hooks";
 import {
   selectDashboardCategoryList,
@@ -8,10 +10,6 @@ import {
   selectDashboardTeacherList,
 } from "redux/Dashboard/dashboardSlice";
 import AdminStatisticItem from "./AdminStatisticItem";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import CategoryIcon from "@mui/icons-material/Category";
-import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
-import Person3Icon from "@mui/icons-material/Person3";
 
 function AdminStatistic() {
   const courseList = useAppSelector(selectDashboardCourseList);

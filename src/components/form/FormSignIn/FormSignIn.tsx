@@ -78,7 +78,7 @@ function FormSignIn() {
       navigate("/");
     } catch (error: any) {
       dispatch(userAction.fetchLoginFailed());
-      const { status, data } = error.response;
+      const { data } = error.response;
       Swal.fire({
         icon: "error",
         title: "Oops...Something wrong!",

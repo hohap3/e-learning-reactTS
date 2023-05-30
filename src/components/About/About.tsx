@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import styles from "./about.module.scss";
-import about from "assets/about/about.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import about from "assets/about/about.jpg";
+import styles from "./about.module.scss";
 
 import "animate.css";
 

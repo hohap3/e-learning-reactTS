@@ -1,4 +1,3 @@
-import React from "react";
 import { LinearProgress, Skeleton } from "@mui/material";
 
 function AdminCourseDetailSkeleton() {

@@ -10,7 +10,7 @@ import { getLocalStorageData } from "../../utils";
 function AdminMainPage() {
   const accessToken = getLocalStorageData(ADMIN_TOKEN) ?? null;
   const isAdmin = getLocalStorageData(IS_ADMIN) ?? null;
-  const timeIntervalId = useRef<null | number>(null);
+  const timeIntervalId = useRef<null | any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {

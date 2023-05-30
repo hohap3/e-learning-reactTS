@@ -1,16 +1,15 @@
 import { ACCESS_TOKEN, ADMIN_TOKEN, COURSE_GROUP } from "constants/common";
-import axiosClient from "./axiosClient";
 import {
   Category,
   CourseItem,
+  CoursePropsMap,
   CourseRegister,
-  CourseProps,
   ListParams,
   ListResponse,
   UnregisterCourse,
-  CoursePropsMap,
 } from "../models";
 import { getLocalStorageData } from "../utils";
+import axiosClient from "./axiosClient";
 
 const courseAPI = {
   getAllCourseCategory(): Promise<Category[]> {

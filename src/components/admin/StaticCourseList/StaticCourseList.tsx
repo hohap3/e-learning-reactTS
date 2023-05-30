@@ -1,6 +1,3 @@
-import LoadingCircle from "components/LoadingCircle/LoadingCircle";
-import { CourseItem } from "../../../models";
-import React from "react";
 import {
   Paper,
   Table,
@@ -10,6 +7,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import LoadingCircle from "components/LoadingCircle/LoadingCircle";
+import { CourseItem } from "../../../models";
 import { limitWordLength } from "../../../utils";
 
 interface Props {

@@ -1,7 +1,7 @@
-import { CourseItem } from "models/index";
-import React, { SyntheticEvent } from "react";
-import { getDefaultImagePath, limitWordLength } from "utils/index";
 import PublicIcon from "@mui/icons-material/Public";
+import { CourseItem } from "models/index";
+import { SyntheticEvent } from "react";
+import { getDefaultImagePath, limitWordLength } from "utils/index";
 
 import AdminCourseDetailSkeleton from "./AdminCourseDetailSkeleton";
 

@@ -24,7 +24,6 @@ function CourseItemPage() {
   const accessToken =
     getLocalStorageData(ACCESS_TOKEN) ?? getLocalStorageData(ADMIN_TOKEN);
   const loginInfo = useAppSelector(selectLoginInfo);
-  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -105,7 +104,7 @@ function CourseItemPage() {
     } catch (error: any) {
       console.log(error);
       dispatch(courseAction.doneLoading());
-      const { status, data } = error.response;
+      const { data } = error.response;
       Swal.fire({
         title: `${data}`,
         text: "This course had been registered!",

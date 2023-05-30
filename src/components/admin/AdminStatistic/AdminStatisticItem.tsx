@@ -1,8 +1,7 @@
-import React, { FC, ReactElement, ReactNode, SVGProps } from "react";
-import styles from "./adminStaticItem.module.scss";
 import clsx from "clsx";
-import LoadingCircle from "components/LoadingCircle/LoadingCircle";
+import { ReactElement } from "react";
 import CountUp from "react-countup";
+import styles from "./adminStaticItem.module.scss";
 
 interface Props {
   amount: number;

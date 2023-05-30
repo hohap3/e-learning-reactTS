@@ -12,7 +12,7 @@ function authHOC(WrapComponent: FC<any>) {
     const hasLogin = useAppSelector(selectHasLogin);
     const accessToken = getLocalStorageData(ACCESS_TOKEN) ?? null;
     const adminToken = getLocalStorageData(ADMIN_TOKEN) ?? null;
-    const timeIntervalId = useRef<null | number>(null);
+    const timeIntervalId = useRef<null | any>(null);
     const navigate = useNavigate();
 
     // Prevent when user has been logged in and tried to move to login again!

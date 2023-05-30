@@ -1,11 +1,10 @@
-import { Button } from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Button } from "@mui/material";
 import Table, { ColumnsType } from "antd/es/table";
-import { GROUP_LIST } from "constants/common";
-import NotFoundGroup from "components/NotFoundGroup/NotFoundGroup";
 import { useAppSelector } from "app/hooks";
+import NotFoundGroup from "components/NotFoundGroup/NotFoundGroup";
+import { GROUP_LIST } from "constants/common";
+import { useNavigate } from "react-router-dom";
 import { selectLoadingCourse } from "redux/Course/courseSlice";
 
 interface Props {

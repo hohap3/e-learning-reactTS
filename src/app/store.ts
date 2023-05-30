@@ -1,11 +1,6 @@
-import {
-  Action,
-  ThunkAction,
-  configureStore,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import rootReducer from "redux/rootReducer";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
+import rootReducer from "redux/rootReducer";
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();

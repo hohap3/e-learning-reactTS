@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import styles from "./carouselItem.module.scss";
-import { Button } from "@mui/material";
-import { useSwiper } from "swiper/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Button } from "@mui/material";
 import "animate.css";
 import { useNavigate } from "react-router-dom";
+import { useSwiper } from "swiper/react";
+import styles from "./carouselItem.module.scss";
 
 interface Props {
   imageSource?: string;
