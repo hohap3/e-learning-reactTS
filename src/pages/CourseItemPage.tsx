@@ -9,12 +9,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CourseItem } from "../models";
 
 import { ACCESS_TOKEN, ADMIN_TOKEN } from "constants/common";
-import { selectLoginInfo } from "redux/User/userSlice";
+import { selectLoginInfo, userAction } from "redux/User/userSlice";
 import Swal from "sweetalert2";
-import { getLocalStorageData, toastMessage } from "../utils";
+import {
+  fetchCourseRegisterDetail,
+  getLocalStorageData,
+  toastMessage,
+} from "../utils";
 import { ToastType } from "../constants";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { courseAction, selectLoadingCourse } from "redux/Course/courseSlice";
+import userApi from "api/userAPI";
 
 function CourseItemPage() {
   const [courseItem, setCourseItem] = useState<null | CourseItem>(null);
@@ -82,35 +87,43 @@ function CourseItemPage() {
         }
       });
     }
+    dispatch(courseAction.startLoading());
+    setTimeout(async () => {
+      try {
+        await courseAPI.registerCourse({
+          maKhoaHoc: courseId,
+          taiKhoan: loginInfo?.taiKhoan as string,
+        });
 
-    try {
-      dispatch(courseAction.startLoading());
+        const successMessage = toastMessage(
+          "Register course successfully!",
+          ToastType.SUCCESS
+        );
+        const result = fetchCourseRegisterDetail();
 
-      await courseAPI.registerCourse({
-        maKhoaHoc: courseId,
-        taiKhoan: loginInfo?.taiKhoan as string,
-      });
+        result.then((res: any) => {
+          const { chiTietKhoaHocGhiDanh, ...restProps } = res;
+          dispatch(
+            userAction.fetchLoginSuccess({
+              chiTietKhoaHocGhiDanh,
+              ...restProps,
+            })
+          );
+        });
 
-      const successMessage = toastMessage(
-        "Register course successfully!",
-        ToastType.SUCCESS
-      );
-
-      dispatch(courseAction.doneLoading());
-      if (!loading) successMessage();
-      setTimeout(() => {
-        window.location.reload();
-      }, 800);
-    } catch (error: any) {
-      console.log(error);
-      dispatch(courseAction.doneLoading());
-      const { data } = error.response;
-      Swal.fire({
-        title: `${data}`,
-        text: "This course had been registered!",
-        icon: "error",
-      });
-    }
+        dispatch(courseAction.doneLoading());
+        if (!loading) successMessage();
+      } catch (error: any) {
+        console.log(error);
+        dispatch(courseAction.doneLoading());
+        const { data } = error.response;
+        Swal.fire({
+          title: `${data}`,
+          text: "This course had been registered!",
+          icon: "error",
+        });
+      }
+    }, 600);
   }
 
   return (
