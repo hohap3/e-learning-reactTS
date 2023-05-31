@@ -86,44 +86,45 @@ function CourseItemPage() {
           navigate("/signIn");
         }
       });
-    }
-    dispatch(courseAction.startLoading());
-    setTimeout(async () => {
-      try {
-        await courseAPI.registerCourse({
-          maKhoaHoc: courseId,
-          taiKhoan: loginInfo?.taiKhoan as string,
-        });
+    } else {
+      dispatch(courseAction.startLoading());
+      setTimeout(async () => {
+        try {
+          await courseAPI.registerCourse({
+            maKhoaHoc: courseId,
+            taiKhoan: loginInfo?.taiKhoan as string,
+          });
 
-        const successMessage = toastMessage(
-          "Register course successfully!",
-          ToastType.SUCCESS
-        );
-        const result = fetchCourseRegisterDetail();
-
-        result.then((res: any) => {
-          const { chiTietKhoaHocGhiDanh, ...restProps } = res;
-          dispatch(
-            userAction.fetchLoginSuccess({
-              chiTietKhoaHocGhiDanh,
-              ...restProps,
-            })
+          const successMessage = toastMessage(
+            "Register course successfully!",
+            ToastType.SUCCESS
           );
-        });
+          const result = fetchCourseRegisterDetail();
 
-        dispatch(courseAction.doneLoading());
-        if (!loading) successMessage();
-      } catch (error: any) {
-        console.log(error);
-        dispatch(courseAction.doneLoading());
-        const { data } = error.response;
-        Swal.fire({
-          title: `${data}`,
-          text: "This course had been registered!",
-          icon: "error",
-        });
-      }
-    }, 600);
+          result.then((res: any) => {
+            const { chiTietKhoaHocGhiDanh, ...restProps } = res;
+            dispatch(
+              userAction.fetchLoginSuccess({
+                chiTietKhoaHocGhiDanh,
+                ...restProps,
+              })
+            );
+          });
+
+          dispatch(courseAction.doneLoading());
+          if (!loading) successMessage();
+        } catch (error: any) {
+          console.log(error);
+          dispatch(courseAction.doneLoading());
+          const { data } = error.response;
+          Swal.fire({
+            title: `${data}`,
+            text: "This course had been registered!",
+            icon: "error",
+          });
+        }
+      }, 600);
+    }
   }
 
   return (
